@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--네비게이션 드로워 바탕화면 ->  공통적으로 학교 이미 넣을 예정-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
+    android:gravity="bottom">
+
+
+    <!--프로필 사진 -> 미설정시 기본 화면 설정가능 -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        app:srcCompat="@drawable/baseline_face_24"
+        android:contentDescription="@string/nav_header_desc"
+        android:id="@+id/imageView"/>
+
+    <!--프로필 이름 -> 사용자의 이름 or 닉네임 들어갈 곳-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="test"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <!--부제목 -> 아마도 학번 ?-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sub title"
+        android:id="@+id/textView"/>
+
+</LinearLayout>
