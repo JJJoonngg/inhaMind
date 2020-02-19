@@ -1,4 +1,4 @@
-package org.techtown.myapplication;
+package com.example.inhamind;
 
 public class MemberInfo {
     private String name;

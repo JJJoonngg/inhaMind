@@ -1,4 +1,4 @@
-package org.techtown.myapplication;
+package com.example.inhamind;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

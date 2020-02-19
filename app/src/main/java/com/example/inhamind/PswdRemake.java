@@ -1,4 +1,4 @@
-package org.techtown.myapplication;
+package com.example.inhamind;
 
 import android.graphics.Color;
 import android.os.Bundle;
