@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".makeAccountActivity"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="정보를 다시 입력해 주세요."
+        android:layout_centerHorizontal="true"
+        android:padding="12.5dp"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:id="@+id/alert_messege"
+        android:layout_marginTop="-50dp"
+        />
+
+    <TextView
+        android:id="@+id/make_account_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:lineSpacingExtra="8dp"
+        android:text="회원가입"
+        android:textColor="@color/colorText"
+        android:textSize="23dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layout_text"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/make_account_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/sign_up_input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:hint="이름"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="15dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/sign_up_student_id"
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="학번"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+            <Button
+                android:id="@+id/student_id_certification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증하기"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/count_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:gravity="end"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/sign_up_confirm"
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="인증번호"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+            <Button
+                android:id="@+id/student_id_confrim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <EditText
+        android:id="@+id/sign_up_input_pswd"
+        android:layout_width="234dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_text"
+        android:layout_marginTop="2dp"
+        android:hint="비밀번호"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="15dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/sign_up_input_pswd_confirm"
+            android:layout_width="234dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_text"
+            android:layout_marginTop="2dp"
+            android:hint="비밀번호 확인"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="15dp"
+            />
+
+        <TextView
+            android:id="@+id/repswd_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            />
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layout_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입시 "
+            android:textColor="#5B5A5A"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용약관"
+            android:textColor="@color/colorText"
+            android:textStyle="bold"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="에 동의한 것으로 간주합니다."
+            android:textColor="#5B5A5A"
+
+
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="95dp"
+        android:layout_marginRight="20sp"
+        android:background="@color/colorText"
+        android:padding="15px"
+        android:text="회원가입"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>

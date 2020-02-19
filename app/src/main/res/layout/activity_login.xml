@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="264dp"
+        android:layout_height="146dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/image_in_ma"
+        android:id="@+id/image_in_ma"
+        android:layout_marginTop="100sp"/>
+
+    <LinearLayout
+        android:id="@+id/studentid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_in_ma"
+        android:layout_marginLeft="70sp"
+        android:layout_marginTop="100sp">
+
+        <TextView
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:text="학번" />
+
+        <EditText
+            android:id="@+id/student_id"
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:hint="12345678" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/repswd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/studentid"
+        android:layout_marginLeft="70sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호" />
+
+        <EditText
+            android:id="@+id/student_pswd"
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:hint="8글자 숫자+영문" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/login_button"
+        android:layout_width="269dp"
+        android:layout_height="74dp"
+        android:layout_below="@id/repswd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:src="@android:color/black"
+        android:text="로그인"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_button"
+        android:layout_marginTop="20sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 찾기"
+            android:id="@+id/pswd_find"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  |  "/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:id="@+id/make_account"/>
+    </LinearLayout>
+</RelativeLayout>
