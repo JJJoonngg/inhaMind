@@ -449,7 +449,7 @@ obj/
 # Edit at https://www.gitignore.io/?templates=gradle
 
 ### Gradle ###
-.gradle
+.gradle/
 build/
 
 # Ignore Gradle GUI config
