@@ -1,5 +1,8 @@
 package com.example.inhamind;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,8 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,8 +32,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class makeAccountActivity extends MainActivity {
-   // final Random rand = new Random();
+
+public class makeAccountActivity extends LoginActivity {
+    // final Random rand = new Random();
     //        final TextView textGenerateNumber = (TextView)findViewById(R.id.generatenumber);
 //        textGenerateNumber.setText(String.valueOf(rand.nextInt(9000)+1000));
     EditText name_input;
@@ -49,7 +51,7 @@ public class makeAccountActivity extends MainActivity {
 
     private Button btn;
     FirebaseAuth mAuth;
-    FirebaseFirestore db;
+    FirebaseFirestore mStore;
 
     final String FIRESTORE_TAG = "[FIRESTORE_TAG]";
     private int checkPwdLength = 0;
@@ -59,20 +61,15 @@ public class makeAccountActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_account);
 
-        name_input = (EditText)findViewById(R.id.sign_up_input_name);
+
+        name_input = (EditText) findViewById(R.id.sign_up_input_name);
         student_id_input = (EditText) findViewById(R.id.sign_up_student_id);
-        confirm_num_input = (EditText)findViewById(R.id.sign_up_confirm);
+        confirm_num_input = (EditText) findViewById(R.id.sign_up_confirm);
         pwd_join_input = (EditText) findViewById(R.id.sign_up_input_pswd);
-        pwd_join_confirm = (EditText)findViewById(R.id.sign_up_input_pswd_confirm);
+        pwd_join_confirm = (EditText) findViewById(R.id.sign_up_input_pswd_confirm);
 
-        count_view = (TextView)findViewById(R.id.count_view);
+        count_view = (TextView) findViewById(R.id.count_view);
         pswd_confirm = (TextView) findViewById(R.id.repswd_confirm);
-
-        final String name = name_input.getText().toString().trim();
-        final String studentid = student_id_input.getText().toString().trim();
-        final String confirmnum = confirm_num_input.getText().toString().trim();
-        final String pwd = pwd_join_input.getText().toString().trim();
-        final String confirmPswd =  pwd_join_confirm.getText().toString().trim();
 
         pwd_join_confirm.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,12 +78,11 @@ public class makeAccountActivity extends MainActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(pwd_join_input.getText().toString().equals(pwd_join_confirm.getText().toString())){
+                if (pwd_join_input.getText().toString().equals(pwd_join_confirm.getText().toString())) {
                     pswd_confirm.setText("일치");
                     pswd_confirm.setTextColor(Color.LTGRAY);
-                }
-                else {
-                     pswd_confirm.setText("불일치");
+                } else {
+                    pswd_confirm.setText("불일치");
                     pswd_confirm.setTextColor(Color.RED);
                 }
             }
@@ -103,11 +99,10 @@ public class makeAccountActivity extends MainActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(pwd_join_input.getText().toString().equals(pwd_join_confirm.getText().toString())){
+                if (pwd_join_input.getText().toString().equals(pwd_join_confirm.getText().toString())) {
                     pswd_confirm.setText("일치");
                     pswd_confirm.setTextColor(Color.LTGRAY);
-                }
-                else {
+                } else {
                     pswd_confirm.setText("불일치");
                     pswd_confirm.setTextColor(Color.RED);
                 }
@@ -118,21 +113,20 @@ public class makeAccountActivity extends MainActivity {
             }
         });
 
-        certification_button = (Button)findViewById(R.id.student_id_certification);
+        certification_button = (Button) findViewById(R.id.student_id_certification);
         certification_button.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) { //TODO : 메일보내기
-                String conversionTime= "0005";
+                String conversionTime = "0005";
                 countDown(conversionTime);
 
             }
         });
 
 
-
-        confrim_button = (Button)findViewById(R.id.student_id_confrim);
+        confrim_button = (Button) findViewById(R.id.student_id_confrim);
         confrim_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { // TODO: 인증번호 맞는지 확인하기
@@ -141,65 +135,74 @@ public class makeAccountActivity extends MainActivity {
         });
 
 
-
-
         btn = (Button) findViewById(R.id.signUpButton);
-        alert_messege = (TextView) findViewById (R.id.alert_messege);
+        alert_messege = (TextView) findViewById(R.id.alert_messege);
 
-        final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alert_messege_animation);
+        final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alert_messege_animation);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance(); //Auth 생성
+        mStore = FirebaseFirestore.getInstance();
+
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null) {
+//            Map<String, Object> userMap = new HashMap<>(); //firestore 사용
+//            userMap.put(FirebaseID.documentID, user.getUid()); //사용자 관리하기 위해
+//            userMap.put(FirebaseID.name,name);
+//            userMap.put(FirebaseID.email, studentid);
+//            userMap.put(FirebaseID.password, pwd);
+//            //userMap.put(FirebaseID.phone,phone);
+//            mStore.collection(FirebaseID.user).document(user.getUid()).set(userMap, SetOptions.merge());//덮어쓰기(추가)
+//            finish();
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(name!=null&&!name.isEmpty()&&studentid!=null&&!studentid.isEmpty()
-                        && confirmnum!=null&&!confirmnum.isEmpty()&&pwd!=null&&!pwd.isEmpty()&&confirmPswd!=null&&!confirmPswd.isEmpty()){
-                    mAuth.createUserWithEmailAndPassword(studentid,pwd) //확인하기 !
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                final String name = name_input.getText().toString().trim();
+                final String studentid = student_id_input.getText().toString().trim();
+                final String confirmnum = confirm_num_input.getText().toString().trim();
+                final String pwd = pwd_join_input.getText().toString().trim();
+                final String confirmPswd = pwd_join_confirm.getText().toString().trim();
+
+                if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
+                        && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())) {
+                    mAuth.createUserWithEmailAndPassword(studentid, pwd) //확인하기 !
+                            .addOnCompleteListener(makeAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()){
-                                        Map<String, Object> user = new HashMap<>();
-                                        user.put("first_name",name);
-                                        user.put("id",studentid);
-                                        user.put("pswd",pwd);
+                                    if (task.isSuccessful()) {
+                                        Map<String, Object> user = new HashMap<>(); //firestore 사용
+                                        //userMap.put(FirebaseID.documentID, user.getUid()); //사용자 관리하기 위해
 
-                                        db.collection("users")
+                                        user.put(FirebaseID.name, name);
+                                        user.put(FirebaseID.email, studentid);
+                                        user.put(FirebaseID.password, pwd);
+
+                                        mStore.collection("users")
                                                 .add(user)
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
-                                                        Log.d(FIRESTORE_TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                        Toast.makeText(makeAccountActivity.this, "success", Toast.LENGTH_SHORT).show();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        Log.w(FIRESTORE_TAG, "Error adding document", e);
+                                                        Toast.makeText(makeAccountActivity.this, "fail", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
-                                        Toast.makeText(makeAccountActivity.this,"success",Toast.LENGTH_SHORT).show();
+
+                                    } else {
+                                        alert_messege.startAnimation(alertMessegeAnim);
                                     }
-                                    else{
-                                        Toast.makeText(makeAccountActivity.this,"fail",Toast.LENGTH_SHORT).show();
-                                    }
-                                }}
-                            );
-                        }
-                else{
-                    alert_messege.startAnimation(alertMessegeAnim);
+                                }
+                            });
+
                 }
             }
         });
     }
-
-
-
-
-
-
 
     public void countDown(String time) {
         long conversionTime = 0;

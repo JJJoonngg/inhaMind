@@ -105,39 +105,39 @@
         </LinearLayout>
 
         <EditText
-        android:id="@+id/sign_up_input_pswd"
-        android:layout_width="234dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_text"
-        android:layout_marginTop="2dp"
-        android:hint="비밀번호"
-        android:inputType="text"
-        android:maxLines="1"
-        android:padding="15dp"
-        />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/sign_up_input_pswd_confirm"
+            android:id="@+id/sign_up_input_pswd"
             android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_text"
             android:layout_marginTop="2dp"
-            android:hint="비밀번호 확인"
+            android:hint="비밀번호"
             android:inputType="text"
             android:maxLines="1"
             android:padding="15dp"
             />
-
-        <TextView
-            android:id="@+id/repswd_confirm"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            />
-    </LinearLayout>
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/sign_up_input_pswd_confirm"
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_text"
+                android:layout_marginTop="2dp"
+                android:hint="비밀번호 확인"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp"
+                />
+
+            <TextView
+                android:id="@+id/repswd_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -168,8 +168,6 @@
             android:layout_height="wrap_content"
             android:text="에 동의한 것으로 간주합니다."
             android:textColor="#5B5A5A"
-
-
             />
 
     </LinearLayout>

@@ -18,9 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-
     TextView alert_messege;
     TextView make_account_text;
     TextView find_pwd;
@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
         final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alert_messege_animation);
 
-
         mAuth = FirebaseAuth.getInstance();
 
         EditTextId = (EditText)findViewById(R.id.student_id);
@@ -47,8 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         find_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,PswdFind.class);
-                startActivity(intent);
+                startActivity(new Intent(LoginActivity.this,PswdFind.class));
             }
         });
 
@@ -56,8 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         make_account_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,makeAccountActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(LoginActivity.this,makeAccountActivity.class));
             }
         });
 
@@ -69,8 +66,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                String pswd= EditTextPswd.getText().toString().trim();
                 String studentid= EditTextId.getText().toString().trim();
+                String pswd= EditTextPswd.getText().toString().trim();
 
                 final String TAG = "LOGIN_ACTIVITY";
                 if(studentid!=null&&!studentid.isEmpty()&&pswd!=null&&!pswd.isEmpty()){
@@ -79,14 +76,16 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(LoginActivity.this, "Authentication success.",
-                                                Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "createUserWithEmail:success");
-
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        if(user!= null) {
+                                            Toast.makeText(LoginActivity.this, "login success."+user.getUid(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "createUserWithEmail:success");
+                                        }
 
                                     } else {
                                         // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                        Log.w(TAG, "login failure", task.getException());
                                         alert_messege=(TextView)findViewById(R.id.alert_messege);
                                         alert_messege.startAnimation(alertMessegeAnim);
                                     }
