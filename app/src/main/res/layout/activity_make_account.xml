@@ -64,7 +64,8 @@
                 android:hint="학번"
                 android:inputType="number"
                 android:padding="15dp"
-                android:textSize="13sp"/>
+                android:textSize="13sp"
+                android:maxLength="8"/>
 
             <Button
                 android:id="@+id/student_id_certification"

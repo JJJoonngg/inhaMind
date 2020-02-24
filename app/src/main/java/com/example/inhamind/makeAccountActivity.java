@@ -145,17 +145,6 @@ public class makeAccountActivity extends LoginActivity {
         mAuth = FirebaseAuth.getInstance(); //Auth 생성
         mStore = FirebaseFirestore.getInstance();
 
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if (user != null) {
-//            Map<String, Object> userMap = new HashMap<>(); //firestore 사용
-//            userMap.put(FirebaseID.documentID, user.getUid()); //사용자 관리하기 위해
-//            userMap.put(FirebaseID.name,name);
-//            userMap.put(FirebaseID.email, studentid);
-//            userMap.put(FirebaseID.password, pwd);
-//            //userMap.put(FirebaseID.phone,phone);
-//            mStore.collection(FirebaseID.user).document(user.getUid()).set(userMap, SetOptions.merge());//덮어쓰기(추가)
-//            finish();
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +157,7 @@ public class makeAccountActivity extends LoginActivity {
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                         && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
                 && pswd_confirm.getText()=="일치") {//TODO: 비밀번호, 학번 확인
-                    mAuth.createUserWithEmailAndPassword(studentid+"@inha.edu", pwd) //확인하기 !
+                    mAuth.createUserWithEmailAndPassword(studentid+"@inha.edu", pwd)
                             .addOnCompleteListener(makeAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {

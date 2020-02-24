@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText EditTextPswd;
     ImageButton login_button;
     FirebaseAuth mAuth;
-
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //EditTextEmail.setText("aaaa@aaa.aaa");
-        //EditTextPswd.setText("aaaa123");
+        EditTextId.setText("12131212");//test 위함
+        EditTextPswd.setText("qwer1234");
 
         login_button = (ImageButton)findViewById(R.id.login_button);
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -71,26 +73,29 @@ public class LoginActivity extends AppCompatActivity {
 
                 final String TAG = "LOGIN_ACTIVITY";
                 if(studentid!=null&&!studentid.isEmpty()&&pswd!=null&&!pswd.isEmpty()){
-                    mAuth.signInWithEmailAndPassword(studentid+"inha.edu", pswd)
+                    mAuth.signInWithEmailAndPassword(studentid+"@inha.edu", pswd)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        if(user!= null) {
-                                            Toast.makeText(LoginActivity.this, "login success."+user.getUid(),
-                                                    Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(LoginActivity.this,makeAccountActivity.class));
-                                            Log.d(TAG, "createUserWithEmail:success");
+                                    if (!task.isSuccessful()) {
+                                        try {
+                                            throw task.getException();
+                                        } catch (FirebaseAuthInvalidUserException e) {
+                                            Toast.makeText(LoginActivity.this,"회원가입하지 않은 학번입니다." ,Toast.LENGTH_SHORT).show();
+                                        } catch (FirebaseNetworkException e) {
+                                            Toast.makeText(LoginActivity.this,"Firebase NetworkException" ,Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            Toast.makeText(LoginActivity.this,"Exception" ,Toast.LENGTH_SHORT).show();
                                         }
 
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "login failure", task.getException());
-                                        alert_messege=(TextView)findViewById(R.id.alert_messege);
-                                        alert_messege.startAnimation(alertMessegeAnim);
-                                    }
+                                    } else{
+                                        currentUser = mAuth.getCurrentUser();
 
+                                        Toast.makeText(LoginActivity.this, "로그인 성공" + "/" + currentUser.getEmail() + "/" + currentUser.getUid() ,Toast.LENGTH_SHORT).show();
+
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                    }
                                 }
                             });}
             }
@@ -103,6 +108,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null){
             Toast.makeText(this,"자동 로그인"+user.getUid(),Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
         }
     }
 
