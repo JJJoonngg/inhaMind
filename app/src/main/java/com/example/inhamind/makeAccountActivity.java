@@ -26,8 +26,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class makeAccountActivity extends LoginActivity {
     // final Random rand = new Random();
     //        final TextView textGenerateNumber = (TextView)findViewById(R.id.generatenumber);
-//        textGenerateNumber.setText(String.valueOf(rand.nextInt(9000)+1000));
+    //        textGenerateNumber.setText(String.valueOf(rand.nextInt(9000)+1000));
     EditText name_input;
     EditText student_id_input;
     EditText confirm_num_input;
@@ -164,35 +166,25 @@ public class makeAccountActivity extends LoginActivity {
                 final String confirmPswd = pwd_join_confirm.getText().toString().trim();
 
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
-                        && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())) {
-                    mAuth.createUserWithEmailAndPassword(studentid, pwd) //확인하기 !
+                        && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
+                && pswd_confirm.getText()=="일치") {//TODO: 비밀번호, 학번 확인
+                    mAuth.createUserWithEmailAndPassword(studentid+"@inha.edu", pwd) //확인하기 !
                             .addOnCompleteListener(makeAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Map<String, Object> user = new HashMap<>(); //firestore 사용
-                                        //userMap.put(FirebaseID.documentID, user.getUid()); //사용자 관리하기 위해
+                                        FirebaseUser user =mAuth.getCurrentUser();
+                                        Map<String, Object> userMap = new HashMap<>(); //firestore 사용
+                                        //userMap.put(FirebaseID.documentID, userMap.getUid()); //사용자 관리하기 위해
+                                        userMap.put(FirebaseID.documentID,user.getUid());
+                                        userMap.put(FirebaseID.name, name);
+                                        userMap.put(FirebaseID.studentID, studentid);
+                                        userMap.put(FirebaseID.password, pwd);
 
-                                        user.put(FirebaseID.name, name);
-                                        user.put(FirebaseID.email, studentid);
-                                        user.put(FirebaseID.password, pwd);
-
-                                        mStore.collection("users")
-                                                .add(user)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference) {
-                                                        Toast.makeText(makeAccountActivity.this, "success", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(makeAccountActivity.this, "fail", Toast.LENGTH_SHORT).show();
-
-                                                    }
-                                                });
-
+                                        mStore.collection(FirebaseID.user)
+                                                .document(user.getUid())
+                                                .set(userMap, SetOptions.merge());//덮어쓰기(추가)
+                                                 finish();
                                     } else {
                                         alert_messege.startAnimation(alertMessegeAnim);
                                     }

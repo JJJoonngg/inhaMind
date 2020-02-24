@@ -19,19 +19,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/image_in_ma"
-        android:layout_marginLeft="70sp"
+        android:layout_marginLeft="80sp"
         android:layout_marginTop="100sp">
 
         <TextView
-            android:layout_width="52dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="학번" />
 
         <EditText
             android:id="@+id/student_id"
-            android:layout_width="215dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:hint="12345678" />
+            android:singleLine="true"
+            android:inputType="number"
+            android:layout_marginLeft="15sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/studentid"
-        android:layout_marginLeft="70sp">
+        android:layout_marginLeft="80sp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,20 +50,22 @@
 
         <EditText
             android:id="@+id/student_pswd"
-            android:layout_width="215dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:hint="8글자 숫자+영문" />
+            android:singleLine="true"
+            android:layout_marginLeft="15sp"
+            android:inputType="textPassword"
+            />
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/login_button"
-        android:layout_width="269dp"
-        android:layout_height="74dp"
+        android:src="@drawable/login_button"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_below="@id/repswd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:src="@android:color/black"
-        android:text="로그인"
         android:textColor="#ffffff" />
 
     <LinearLayout
@@ -84,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입"
+            android:textStyle="bold"
             android:id="@+id/make_account"/>
     </LinearLayout>
 </RelativeLayout>

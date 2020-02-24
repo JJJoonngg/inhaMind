@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 final String TAG = "LOGIN_ACTIVITY";
                 if(studentid!=null&&!studentid.isEmpty()&&pswd!=null&&!pswd.isEmpty()){
-                    mAuth.signInWithEmailAndPassword(studentid, pswd)
+                    mAuth.signInWithEmailAndPassword(studentid+"inha.edu", pswd)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if(user!= null) {
                                             Toast.makeText(LoginActivity.this, "login success."+user.getUid(),
                                                     Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(LoginActivity.this,makeAccountActivity.class));
                                             Log.d(TAG, "createUserWithEmail:success");
                                         }
 
@@ -96,6 +97,16 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null){
+            Toast.makeText(this,"자동 로그인"+user.getUid(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 }
 

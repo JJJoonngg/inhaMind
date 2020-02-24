@@ -12,20 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SMSPswdFind"></activity>
+        <activity android:name=".EmailPswdFind" />
+        <activity android:name=".Main2Activity" />
         <activity android:name=".PswdRemake" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".PswdFind">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PswdFind" />
         <activity
             android:name=".makeAccountActivity"
             android:label="@string/title_activity_make_account"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
