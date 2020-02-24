@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Secession"
+    android:orientation="vertical"
+    android:layout_marginLeft="30dp">
+
+    <TextView
+        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정말 떠나시나요?.."/>
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:text="\n     떠나시는 이유를 알려주세요ㅠㅠ"
+        android:background="@drawable/border_layout"
+        android:gravity="left|top"/>
+
+    <TextView
+        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="본인 확인을 위해 비밀번호를 한번 더 입력해주세요"/>
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="290dp"
+        android:layout_height="40dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:text="탈퇴하기"
+        android:layout_marginRight="90dp"
+        android:id="@+id/secession_button"/>
+    <TextView
+        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- 삭제된 계정은 다시 복구할 수 없고, 계정의 모든 활동\n(게시글, 댓글 등)이 완전히 삭제된다는 점을 기억해주세요
+
+"/>
+
+</LinearLayout>
