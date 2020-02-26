@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "563282636553",
+    "firebase_url": "https://inhamind-f0276.firebaseio.com",
+    "project_id": "inhamind-f0276",
+    "storage_bucket": "inhamind-f0276.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563282636553:android:98ea3c9caf2dacc1dd6dd8",
+        "android_client_info": {
+          "package_name": "com.example.inhamind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563282636553-5758nmr3hktulg33uishje1uot9999li.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmk1I1PMO0wGZPUFdfBv3ANGWbLNPytlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563282636553-5758nmr3hktulg33uishje1uot9999li.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

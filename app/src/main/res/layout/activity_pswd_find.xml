@@ -13,23 +13,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-
         android:layout_marginTop="90dp"
-        android:text="아이디 확인 후"
+        android:text="본인확인 후"
         android:textStyle="bold" />
-
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-
         android:text="비밀번호를 재설정 할 수 있습니다." />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="70dp"
         android:text="본인확인" />
 
@@ -44,12 +40,44 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint=" 학번" />
+        android:hint=" 학번"
+        android:maxLength="8"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="인증방법" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:id="@+id/rg"
+        >
+
+        <RadioButton
+        android:layout_width="250dp"
+        android:layout_height="61dp"
+        android:id="@+id/rv1"
+        android:text=" 이메일로 인증하기"
+            android:textSize="17sp"
+            android:textColor="@color/colorGray"/>
+
+        <RadioButton
+            android:layout_width="250dp"
+            android:layout_height="61dp"
+            android:id="@+id/rv2"
+            android:text=" SMS로 인증하기"
+            android:textColor="@color/colorGray"
+            android:textSize="17sp"
+           />
+    </RadioGroup>
 
     <Button
         android:layout_width="324dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="130dp"
         android:text="확인" />
-
 </LinearLayout>
