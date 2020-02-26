@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class MyPageFragment extends Fragment {
+import com.example.inhamind.R;
+
+public class MyHelpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.text_fragment3, container, false);
     }

@@ -13,6 +13,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.inhamind.Fragment.BoardFragment;
+import com.example.inhamind.Fragment.ChattingFragment;
+import com.example.inhamind.Fragment.CustomerServiceFragment;
+import com.example.inhamind.Fragment.HomeFragment;
+import com.example.inhamind.Fragment.MyHelpFragment;
+import com.example.inhamind.Fragment.MyPageFragment;
+import com.example.inhamind.Fragment.NoticeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
