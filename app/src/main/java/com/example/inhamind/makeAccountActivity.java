@@ -165,7 +165,7 @@ public class makeAccountActivity extends LoginActivity {
                                         FirebaseUser user =mAuth.getCurrentUser();
                                         Map<String, Object> userMap = new HashMap<>(); //firestore 사용
                                         //userMap.put(FirebaseID.documentID, userMap.getUid()); //사용자 관리하기 위해
-                                        userMap.put(FirebaseID.documentID,user.getUid());
+                                        userMap.put(FirebaseID.uID,user.getUid());
                                         userMap.put(FirebaseID.name, name);
                                         userMap.put(FirebaseID.studentID, studentid);
                                         userMap.put(FirebaseID.password, pwd);
