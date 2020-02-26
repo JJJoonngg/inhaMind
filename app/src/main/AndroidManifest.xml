@@ -13,15 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MyPageActivty">
+        </activity>
+        <activity android:name=".Secession" />
+        <activity android:name=".SMSPswdFind" />
+        <activity android:name=".EmailPswdFind" />
+        <activity android:name=".Main2Activity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Secession" />
-        <activity android:name=".SMSPswdFind" />
-        <activity android:name=".EmailPswdFind" />
-        <activity android:name=".Main2Activity" />
         <activity android:name=".PswdRemake" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />

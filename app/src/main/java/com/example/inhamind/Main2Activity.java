@@ -42,7 +42,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //개발툴, 개발자가 실수하는 것 감지 + 해결할 수 있도록 도움
                 .permitDiskReads()
                 .permitDiskWrites()
                 .permitNetwork().build());

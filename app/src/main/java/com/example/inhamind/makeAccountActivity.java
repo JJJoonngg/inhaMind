@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,6 +38,10 @@ import java.util.Map;
 
 
 public class makeAccountActivity extends LoginActivity {
+    LayoutInflater dialog;
+    View dialogLayout; //layout을 담을 View
+    Dialog authDialog;
+
     // final Random rand = new Random();
     //        final TextView textGenerateNumber = (TextView)findViewById(R.id.generatenumber);
     //        textGenerateNumber.setText(String.valueOf(rand.nextInt(9000)+1000));
@@ -55,6 +61,8 @@ public class makeAccountActivity extends LoginActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore mStore;
 
+    private String randNum;
+
     final String FIRESTORE_TAG = "[FIRESTORE_TAG]";
     private int checkPwdLength = 0;
 
@@ -72,6 +80,7 @@ public class makeAccountActivity extends LoginActivity {
 
         count_view = (TextView) findViewById(R.id.count_view);
         pswd_confirm = (TextView) findViewById(R.id.repswd_confirm);
+        randNum = createEmailCode();
 
         pwd_join_confirm.addTextChangedListener(new TextWatcher() {
             @Override
@@ -116,17 +125,7 @@ public class makeAccountActivity extends LoginActivity {
         });
 
         certification_button = (Button) findViewById(R.id.student_id_certification);
-        certification_button.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) { //TODO : 메일보내기
-                String conversionTime = "0005";
-                countDown(conversionTime);
-
-            }
-        });
-
+       // certification_button.setOnClickListener(); //TODO : 이메일 인증하기
 
         confrim_button = (Button) findViewById(R.id.student_id_confrim);
         confrim_button.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +178,6 @@ public class makeAccountActivity extends LoginActivity {
                                     }
                                 }
                             });
-
                 }
             }
         });
@@ -257,5 +255,16 @@ public class makeAccountActivity extends LoginActivity {
                         .show();
             }
         }.start();
+    }
+
+    private String createEmailCode() { //이메일 인증코드 생성
+        String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+        String newCode = new String();
+        for (int x = 0; x < 8; x++) {
+            int random = (int) (Math.random() * str.length);
+            newCode += str[random];
+        }
+        return newCode;
     }
 }
