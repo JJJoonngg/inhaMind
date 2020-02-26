@@ -12,24 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".LoginActivity">
-=======
-        <activity android:name=".MyPageActivty">
-        </activity>
+        <activity android:name=".MyPageActivty"></activity>
         <activity android:name=".Secession" />
         <activity android:name=".SMSPswdFind" />
         <activity android:name=".EmailPswdFind" />
-        <activity android:name=".Main2Activity" >
->>>>>>> hee
+        <activity android:name=".MainActivity" />
+        <activity android:name=".PswdRemake" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PswdRemake" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".PswdFind" />
         <activity
             android:name=".makeAccountActivity"
