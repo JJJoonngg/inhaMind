@@ -11,8 +11,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.inhamind.R;
 
-public class BoardFragment extends Fragment {
+public class BoardFragment extends Fragment implements View.OnClickListener {
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.text_fragment2, container, false);
+        View view = inflater.inflate(R.layout.fragment_board, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+
     }
 }
