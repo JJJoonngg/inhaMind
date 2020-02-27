@@ -11,9 +11,9 @@
     <item
         android:id="@+id/myHelp"
         android:icon="@drawable/baseline_chat_black_24"
-        android:title="MyHelp" />
+        android:title="Chatting" />
     <item
         android:id="@+id/chatting"
         android:icon="@drawable/baseline_settings_black_24"
-        android:title="Chatting" />
+        android:title="Setting" />
 </menu>
