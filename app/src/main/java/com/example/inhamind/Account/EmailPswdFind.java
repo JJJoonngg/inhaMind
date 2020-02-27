@@ -1,8 +1,10 @@
-package com.example.inhamind;
+package com.example.inhamind.Account;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.example.inhamind.R;
 
 public class EmailPswdFind extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Account;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.inhamind.R;
 
 public class PswdRemake extends AppCompatActivity {
     EditText repswd;

@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Account;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,6 +6,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.inhamind.R;
 
 public class PswdFind extends AppCompatActivity {
 

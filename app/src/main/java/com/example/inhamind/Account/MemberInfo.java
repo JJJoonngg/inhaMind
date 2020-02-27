@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Account;
 
 public class MemberInfo {
     private String name;
