@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.EmailSend;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,9 +14,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
 public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
 

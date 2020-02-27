@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.EmailSend;
 
 import android.content.Context;
 

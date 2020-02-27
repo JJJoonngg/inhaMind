@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.EmailSend;
 
 public class Utils {
     //This is your from email
