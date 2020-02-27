@@ -140,8 +140,7 @@ public class makeAccountActivity extends LoginActivity {
                             Toast.makeText(makeAccountActivity.this, "인증코드를 재전송 해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }.start();
-                }
-                else
+                } else
                     Toast.makeText(makeAccountActivity.this, "학번 8 자리를 입력해주세요.", Toast.LENGTH_SHORT).show();
             }
         }); //TODO : 이메일 인증하기
@@ -208,8 +207,7 @@ public class makeAccountActivity extends LoginActivity {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Map<String, Object> userMap = new HashMap<>(); //firestore 사용
-                                        //userMap.put(FirebaseID.documentID, userMap.getUid()); //사용자 관리하기 위해
-                                        userMap.put(FirebaseID.uID, user.getUid());
+                                        userMap.put(FirebaseID.documnetID, user.getUid()); //사용자 관리하기 위해
                                         userMap.put(FirebaseID.name, name);
                                         userMap.put(FirebaseID.studentID, studentid);
                                         userMap.put(FirebaseID.password, pwd);
