@@ -16,9 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.inhamind.EmailSend.MailSend;
 import com.example.inhamind.FirebaseID;
 import com.example.inhamind.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,7 +59,7 @@ public class makeAccountActivity extends LoginActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore mStore;
 
-    private String randNum;
+    private String authCode;
 
     final String FIRESTORE_TAG = "[FIRESTORE_TAG]";
     private int checkPwdLength = 0;
@@ -76,7 +78,6 @@ public class makeAccountActivity extends LoginActivity {
 
         count_view = (TextView) findViewById(R.id.count_view);
         pswd_confirm = (TextView) findViewById(R.id.repswd_confirm);
-        randNum = createEmailCode();
 
         pwd_join_confirm.addTextChangedListener(new TextWatcher() {
             @Override
@@ -121,13 +122,43 @@ public class makeAccountActivity extends LoginActivity {
         });
 
         certification_button = (Button) findViewById(R.id.student_id_certification);
-       // certification_button.setOnClickListener(); //TODO : 이메일 인증하기
+        certification_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                authCode = "1";
+                MailSend mailSend = new MailSend(makeAccountActivity.this, student_id_input.getText().toString(), authCode);
+                mailSend.sendMail();
+            }
+        }); //TODO : 이메일 인증하기
 
         confrim_button = (Button) findViewById(R.id.student_id_confrim);
         confrim_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { // TODO: 인증번호 맞는지 확인하기
-                //if()
+                String inputAuthCode = confirm_num_input.getText().toString();
+                if(inputAuthCode.equals(authCode)){
+                    Toast.makeText(makeAccountActivity.this, "인증 되었습니다.", Toast.LENGTH_SHORT).show();
+                    confirm_num_input.setClickable(false);
+                    confirm_num_input.setFocusable(false);
+                    confirm_num_input.setTextColor(Color.GRAY);
+
+                    student_id_input.setClickable(false);
+                    student_id_input.setFocusable(false);
+                    student_id_input.setTextColor(Color.GRAY);
+
+                    certification_button.setText("인증");
+                    certification_button.setTextColor(Color.GRAY);
+                    certification_button.setClickable(false);
+                    certification_button.setFocusable(false);
+
+                    confrim_button.setText("완료");
+                    confrim_button.setTextColor(Color.GRAY);
+                    confrim_button.setClickable(false);
+                    confrim_button.setFocusable(false);
+                }
+                else
+                    Toast.makeText(makeAccountActivity.this, "코드를 확인해주세요!", Toast.LENGTH_SHORT).show();
+
             }
         });
 

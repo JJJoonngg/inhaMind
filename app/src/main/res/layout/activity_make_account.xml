@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Account.makeAccountActivity"
-    >
+    tools:context=".Account.makeAccountActivity">
+
     <TextView
+        android:id="@+id/alert_messege"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="정보를 다시 입력해 주세요."
         android:layout_centerHorizontal="true"
-        android:padding="12.5dp"
-        android:background="#000000"
-        android:textColor="#ffffff"
-        android:id="@+id/alert_messege"
         android:layout_marginTop="-50dp"
-        />
+        android:background="#000000"
+        android:padding="12.5dp"
+        android:text="정보를 다시 입력해 주세요."
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/make_account_text"
@@ -40,16 +39,30 @@
         android:layout_marginTop="60dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/sign_up_input_name"
-            android:layout_width="234dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:hint="이름"
-            android:inputType="text"
-            android:padding="15dp"
-            android:textSize="13sp"
-            />
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/sign_up_input_name"
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:hint="이름"
+                android:inputType="text"
+                android:padding="15dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/auth_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="10sp"
+                tools:text="인증시간부분" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -63,9 +76,9 @@
                 android:layout_marginTop="2dp"
                 android:hint="학번"
                 android:inputType="number"
+                android:maxLength="8"
                 android:padding="15dp"
-                android:textSize="13sp"
-                android:maxLength="8"/>
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/student_id_certification"
@@ -80,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:gravity="end"/>
+            android:gravity="end" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,9 +106,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:hint="인증번호"
-                android:textSize="13sp"
-                android:inputType="number"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/student_id_confrim"
@@ -115,12 +127,13 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:padding="15dp"
-            android:textSize="13sp"
-            />
+            android:textSize="13sp" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/sign_up_input_pswd_confirm"
                 android:layout_width="234dp"
@@ -131,32 +144,30 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textSize="13sp"
-                />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/repswd_confirm"
                 android:layout_width="234dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                />
+                android:layout_marginLeft="13dp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/layout_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20sp">
+        android:layout_marginTop="20sp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원가입시 "
-            android:textColor="#5B5A5A"
             android:gravity="center"
-            />
+            android:text="회원가입시 "
+            android:textColor="#5B5A5A" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -166,12 +177,12 @@
             android:textStyle="bold"
 
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="에 동의한 것으로 간주합니다."
-            android:textColor="#5B5A5A"
-            />
+            android:textColor="#5B5A5A" />
 
     </LinearLayout>
 

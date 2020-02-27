@@ -31,7 +31,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
     //Constructor
     public JavaMailAPI(Context mContext, String mEmail, String emailCode) {
         this.mContext = mContext;
-        this.mEmail = mEmail;
+        this.mEmail = mEmail + "@inha.edu";
         this.emailCode = emailCode;
     }
 
@@ -39,7 +39,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         //Show progress dialog while sending email
-        mProgressDialog = ProgressDialog.show(mContext, "Sending message", "Please wait...", false, false);
+        mProgressDialog = ProgressDialog.show(mContext, "인증 코드 전송중입니다!", "잠시만 기다려주세요...", false, false);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
         mProgressDialog.dismiss();
 
         //Show success toast
-        Toast.makeText(mContext, "Message Sent", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "전송 완료, 코드를 입력해주세요.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
