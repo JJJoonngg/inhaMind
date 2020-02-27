@@ -1,6 +1,7 @@
 package com.example.inhamind;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,12 +14,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.inhamind.Fragment.BoardFragment;
+import com.example.inhamind.Account.MyPageActivty;
+import com.example.inhamind.Board.BoardFragment;
 import com.example.inhamind.Fragment.ChattingFragment;
 import com.example.inhamind.Fragment.CustomerServiceFragment;
 import com.example.inhamind.Fragment.HomeFragment;
 import com.example.inhamind.Fragment.MyHelpFragment;
-import com.example.inhamind.Fragment.MyPageFragment;
 import com.example.inhamind.Fragment.NoticeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private BoardFragment boardFragment = new BoardFragment();
     private MyHelpFragment myHelpFragment = new MyHelpFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
-    private MyPageFragment mypageFragment = new MyPageFragment();
     private NoticeFragment noticeFragment = new NoticeFragment();
     private CustomerServiceFragment customerServiceFragment = new CustomerServiceFragment();
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.myPage:
-                        transaction.replace(R.id.frameLayout, mypageFragment).commitAllowingStateLoss();
+                        startActivity(new Intent(MainActivity.this, MyPageActivty.class));
                         break;
                     case R.id.notice:
                         transaction.replace(R.id.frameLayout, noticeFragment).commitAllowingStateLoss();

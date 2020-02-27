@@ -1,4 +1,4 @@
-package com.example.inhamind.Fragment;
+package com.example.inhamind.Board;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
