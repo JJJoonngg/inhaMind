@@ -17,13 +17,15 @@
         <activity android:name=".Account.SMSPswdFind" />
         <activity android:name=".Account.EmailPswdFind" />
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".Account.PswdRemake" />
+        <activity android:name=".Account.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Account.PswdRemake" />
-        <activity android:name=".Account.LoginActivity" />
         <activity android:name=".Account.PswdFind" />
         <activity
             android:name=".Account.makeAccountActivity"

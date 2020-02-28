@@ -58,6 +58,14 @@
             android:inputType="textPassword"
             />
     </LinearLayout>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자동로그인"
+        android:id="@+id/auto_login"
+        android:layout_below="@id/repswd"
+        android:textColor="@color/colorText"
+        android:layout_marginLeft="80sp"/>
 
     <ImageButton
         android:id="@+id/login_button"
@@ -66,7 +74,7 @@
         android:layout_height="50dp"
         android:layout_below="@id/repswd"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="34dp"
         android:textColor="#ffffff" />
 
     <LinearLayout

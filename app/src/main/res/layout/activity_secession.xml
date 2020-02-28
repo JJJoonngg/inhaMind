@@ -17,9 +17,10 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        android:hint="\n     떠나시는 이유를 알려주세요ㅠㅠ"
+        android:hint=" 떠나시는 이유를 알려주세요ㅠㅠ"
         android:background="@drawable/border_layout"
-        android:gravity="left|top"/>
+        android:gravity="left|top"
+        android:padding="20dp"/>
 
     <TextView
         android:layout_marginTop="80dp"

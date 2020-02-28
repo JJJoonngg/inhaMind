@@ -31,7 +31,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
     //Constructor
     public JavaMailAPI(Context mContext, String mEmail, String emailCode) {
         this.mContext = mContext;
-        this.mEmail = mEmail + "@inha.edu";
+        this.mEmail = mEmail +"@inha.edu";
         this.emailCode = emailCode;
     }
 

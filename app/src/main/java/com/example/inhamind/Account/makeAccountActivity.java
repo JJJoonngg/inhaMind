@@ -200,7 +200,7 @@ public class makeAccountActivity extends LoginActivity {
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                         && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
                         && pswd_confirm.getText() == "일치") {//TODO: 비밀번호, 학번 확인
-                    mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", pwd)
+                    mAuth.createUserWithEmailAndPassword(studentid, pwd)
                             .addOnCompleteListener(makeAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
