@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,6 +24,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private boolean saveLoginData;
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         load();
 
-        if(saveLoginData){
+        if (saveLoginData) {
             EditTextId.setText(id);
             EditTextPswd.setText(pwd);
             autoLogin.setChecked(saveLoginData);
@@ -98,44 +100,47 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if ( EditTextId.getText().toString().length() == 8) {
-                String studentid = EditTextId.getText().toString().trim();
-                String pswd = EditTextPswd.getText().toString().trim();
+                if (EditTextId.getText().toString().length() == 8) {
+                    String studentid = EditTextId.getText().toString().trim();
+                    String pswd = EditTextPswd.getText().toString().trim();
 
-                final String TAG = "LOGIN_ACTIVITY";
-                if (studentid != null && !studentid.isEmpty() && pswd != null && !pswd.isEmpty()) {
-                    mAuth.signInWithEmailAndPassword(studentid + "@inha.edu", pswd)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (!task.isSuccessful()) {
-                                        try {
-                                            throw task.getException();
-                                        } catch (FirebaseAuthInvalidUserException e) {
-                                            Toast.makeText(LoginActivity.this, "회원가입하지 않은 학번입니다.", Toast.LENGTH_SHORT).show();
-                                        } catch (FirebaseNetworkException e) {
-                                            Toast.makeText(LoginActivity.this, "Firebase NetworkException", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-                                            Toast.makeText(LoginActivity.this, "Exception", Toast.LENGTH_SHORT).show();
+                    final String TAG = "LOGIN_ACTIVITY";
+                    if (studentid != null && !studentid.isEmpty() && pswd != null && !pswd.isEmpty()) {
+                        mAuth.signInWithEmailAndPassword(studentid + "@inha.edu", pswd)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            try {
+                                                throw task.getException();
+                                            } catch (FirebaseAuthInvalidUserException e) {
+                                                Toast.makeText(LoginActivity.this, "회원가입하지 않은 학번입니다.", Toast.LENGTH_SHORT).show();
+                                            } catch (FirebaseNetworkException e) {
+                                                Toast.makeText(LoginActivity.this, "Firebase NetworkException", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+                                                Toast.makeText(LoginActivity.this, "Exception", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        } else { //auto
+                                            currentUser = mAuth.getCurrentUser();
+                                            Toast.makeText(LoginActivity.this, "로그인 성공" + "/" + currentUser.getEmail() + "/" + currentUser.getUid(), Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                            finish();
                                         }
-
-                                    } else { //auto
-                                        currentUser = mAuth.getCurrentUser();
-                                        Toast.makeText(LoginActivity.this, "로그인 성공" + "/" + currentUser.getEmail() + "/" + currentUser.getUid(), Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                        finish();
                                     }
-                                }
-                            });
-                }
-            }
-                else{
-                    Toast.makeText(LoginActivity.this,"8자리 학번을 입력해주세요",Toast.LENGTH_SHORT).show();
-                }
-            }
+                                });
 
+                        Pattern p = Pattern.compile("(^.*(?=.{6,100})(?=.*[0-9])(?=.*[a-zA-Z]).*$)");
+                        Matcher m = p.matcher(pwd);
+                        if (!m.find() && pwd.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"))
+                            Toast.makeText(LoginActivity.this, "비밀번호 형식을 지켜주세요.", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "8자리 학번을 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
-
     }
     // 설정값을 저장하는 함수
     private void save() {
