@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean saveLoginData;
     private String id;
     private String pwd;
@@ -55,8 +55,6 @@ public class LoginActivity extends AppCompatActivity {
 
         EditTextId = (EditText) findViewById(R.id.student_id);
         EditTextPswd = (EditText) findViewById(R.id.student_pswd);
-        find_pwd = (TextView) findViewById(R.id.pswd_find);
-        autoLogin = (CheckBox) findViewById(R.id.auto_login);
 
         // 설정값 불러오기
         appData = getSharedPreferences("appData", MODE_PRIVATE);
@@ -68,38 +66,48 @@ public class LoginActivity extends AppCompatActivity {
             autoLogin.setChecked(saveLoginData);
         }
 
-        autoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 로그인 성공시 저장 처리, 예제는 무조건 저장
+        EditTextId.setText("12131212");//test 위함
+        EditTextPswd.setText("qwer1234");
+
+    }
+    // 설정값을 저장하는 함수
+    private void save() {
+        // SharedPreferences 객체만으론 저장 불가능 Editor 사용
+        SharedPreferences.Editor editor = appData.edit();
+
+        // 에디터객체.put타입( 저장시킬 이름, 저장시킬 값 )
+        // 저장시킬 이름이 이미 존재하면 덮어씌움
+        editor.putBoolean("SAVE_LOGIN_DATA", autoLogin.isChecked());
+        editor.putString("ID", EditTextId.getText().toString().trim());
+        editor.putString("PWD", EditTextPswd.getText().toString().trim());
+
+        // apply, commit 을 안하면 변경된 내용이 저장되지 않음
+        editor.apply();
+    }
+
+
+    // 설정값을 불러오는 함수
+    private void load() {
+        // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
+        // 저장된 이름이 존재하지 않을 시 기본값
+        saveLoginData = appData.getBoolean("SAVE_LOGIN_DATA", false);
+        id = appData.getString("ID", "");
+        pwd = appData.getString("PWD", "");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.auto_login :
                 save();
-            }
-        });
-
-
-        find_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.pswd_find :
                 startActivity(new Intent(LoginActivity.this, PswdFind.class));
-            }
-        });
-
-        make_account_text = (TextView) findViewById(R.id.make_account);
-        make_account_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.make_account:
                 startActivity(new Intent(LoginActivity.this, makeAccountActivity.class));
-            }
-        });
-
-        //EditTextId.setText("12131212");//test 위함
-        //EditTextPswd.setText("qwer1234");
-
-        login_button = (ImageButton) findViewById(R.id.login_button);
-        login_button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.login_button:
                 if (EditTextId.getText().toString().length() == 8) {
                     String studentid = EditTextId.getText().toString().trim();
                     String pswd = EditTextPswd.getText().toString().trim();
@@ -139,32 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "8자리 학번을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-    // 설정값을 저장하는 함수
-    private void save() {
-        // SharedPreferences 객체만으론 저장 불가능 Editor 사용
-        SharedPreferences.Editor editor = appData.edit();
-
-        // 에디터객체.put타입( 저장시킬 이름, 저장시킬 값 )
-        // 저장시킬 이름이 이미 존재하면 덮어씌움
-        editor.putBoolean("SAVE_LOGIN_DATA", autoLogin.isChecked());
-        editor.putString("ID", EditTextId.getText().toString().trim());
-        editor.putString("PWD", EditTextPswd.getText().toString().trim());
-
-        // apply, commit 을 안하면 변경된 내용이 저장되지 않음
-        editor.apply();
-    }
-
-
-    // 설정값을 불러오는 함수
-    private void load() {
-        // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
-        // 저장된 이름이 존재하지 않을 시 기본값
-        saveLoginData = appData.getBoolean("SAVE_LOGIN_DATA", false);
-        id = appData.getString("ID", "");
-        pwd = appData.getString("PWD", "");
+        }
     }
 }
 
