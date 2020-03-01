@@ -23,6 +23,5 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-
     }
 }

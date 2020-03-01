@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Board.BoardFragment;
+import com.example.inhamind.Board.PostActivity;
 import com.example.inhamind.Fragment.ChattingFragment;
 import com.example.inhamind.Fragment.CustomerServiceFragment;
 import com.example.inhamind.Fragment.HomeFragment;
@@ -130,13 +131,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         switch (view.getId()) {
             case R.id.float_menu:
                 anim();
                 break;
             case R.id.float_write_post:
-                anim();
-                Toast.makeText(this, "111", Toast.LENGTH_SHORT).show();
+                //anim();
+                startActivity(new Intent(this, PostActivity.class));
                 break;
             case R.id.float_find_post:
                 anim();
@@ -149,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-
             switch (menuItem.getItemId()) {
                 case R.id.home:
                     transaction.replace(R.id.frameLayout, homeFragment).commitAllowingStateLoss();
