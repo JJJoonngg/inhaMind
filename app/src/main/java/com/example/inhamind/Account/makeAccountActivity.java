@@ -31,7 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class makeAccountActivity extends LoginActivity {
+public class makeAccountActivity extends LoginActivity{
     EditText name_input;
     EditText student_id_input;
     EditText confirm_num_input;
@@ -54,6 +54,7 @@ public class makeAccountActivity extends LoginActivity {
     final String FIRESTORE_TAG = "[FIRESTORE_TAG]";
     final int Thousand = 1000;
     private int checkPwdLength = 0;
+    boolean isCounterRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,21 @@ public class makeAccountActivity extends LoginActivity {
             }
         });
 
+        CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
+            @Override
+            public void onTick(long m) {
+                count_down.setText(String.format(Locale.getDefault(), "%02d : %02d", (m / 1000L) / 60, (m / 1000L) % 60));
+            }
+
+            @Override
+            public void onFinish() {
+                authCode = createEmailCode();
+                count_down.setText("");
+                Toast.makeText(makeAccountActivity.this, "인증코드를 재전송 해주세요.", Toast.LENGTH_SHORT).show();
+                isCounterRunning = false;
+            }
+        };
+
         certification_button = (Button) findViewById(R.id.student_id_certification);
         certification_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,19 +141,15 @@ public class makeAccountActivity extends LoginActivity {
                     authCode = createEmailCode();
                     MailSend mailSend = new MailSend(makeAccountActivity.this, student_id_input.getText().toString(), authCode);
                     mailSend.sendMail();
-                    CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
-                        @Override
-                        public void onTick(long m) {
-                            count_down.setText(String.format(Locale.getDefault(), "%02d : %02d", (m / 1000L) / 60, (m / 1000L) % 60));
-                        }
+                    if(!isCounterRunning){
+                        countDownTimer.cancel();
+                        count_down.setText("");
+                        countDownTimer.start();
+                    }
+                    else{
+                        countDownTimer.start();
+                    }
 
-                        @Override
-                        public void onFinish() {
-                            authCode = createEmailCode();
-                            count_down.setText("");
-                            Toast.makeText(makeAccountActivity.this, "인증코드를 재전송 해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    }.start();
                 } else
                     Toast.makeText(makeAccountActivity.this, "학번 8 자리를 입력해주세요.", Toast.LENGTH_SHORT).show();
             }
@@ -170,6 +182,7 @@ public class makeAccountActivity extends LoginActivity {
                     confrim_button.setFocusable(false);
 
                     count_down.setText("");
+                    countDownTimer.cancel();
                     count_down.setClickable(false);
                     count_down.setFocusable(false);
                 } else
