@@ -1,12 +1,10 @@
 package com.example.inhamind.Account;
 
-import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,10 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class makeAccountActivity extends LoginActivity {
-    LayoutInflater dialog;
-    View dialogLayout; //layout을 담을 View
-    Dialog authDialog;
+public class makeAccountActivity extends LoginActivity implements View.OnClickListener {
 
     EditText name_input;
     EditText student_id_input;
@@ -61,6 +56,24 @@ public class makeAccountActivity extends LoginActivity {
     final int Thousand = 1000;
     private int checkPwdLength = 0;
     boolean isCounterRunning = false;
+
+    final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alert_messege_animation);
+
+
+    CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
+        @Override
+        public void onTick(long m) {
+            count_down.setText(String.format(Locale.getDefault(), "%02d : %02d", (m / 1000L) / 60, (m / 1000L) % 60));
+        }
+
+        @Override
+        public void onFinish() {
+            authCode = createEmailCode();
+            count_down.setText("");
+            Toast.makeText(makeAccountActivity.this, "인증코드를 재전송 해주세요.", Toast.LENGTH_SHORT).show();
+            isCounterRunning = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,47 +133,49 @@ public class makeAccountActivity extends LoginActivity {
             }
         });
 
-        CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
-            @Override
-            public void onTick(long m) {
-                count_down.setText(String.format(Locale.getDefault(), "%02d : %02d", (m / 1000L) / 60, (m / 1000L) % 60));
-            }
 
-            @Override
-            public void onFinish() {
-                authCode = createEmailCode();
-                count_down.setText("");
-                Toast.makeText(makeAccountActivity.this, "인증코드를 재전송 해주세요.", Toast.LENGTH_SHORT).show();
-                isCounterRunning = false;
-            }
-        };
+        mAuth = FirebaseAuth.getInstance(); //Auth 생성
+        mStore = FirebaseFirestore.getInstance();
+    }
 
-        certification_button = (Button) findViewById(R.id.student_id_certification);
-        certification_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    private String createEmailCode() { //이메일 인증코드 생성
+        String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+        String newCode = new String();
+        for (int x = 0; x < 8; x++) {
+            int random = (int) (Math.random() * str.length);
+            newCode += str[random];
+        }
+        return newCode;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.student_id_certification:
                 if (student_id_input.getText().toString().length() == 8) {
+                    student_id_input.setClickable(false);
+                    student_id_input.setFocusable(false);
+                    student_id_input.setTextColor(Color.GRAY);
+
                     authCode = createEmailCode();
                     MailSend mailSend = new MailSend(makeAccountActivity.this, student_id_input.getText().toString(), authCode);
                     mailSend.sendMail();
-                    if(!isCounterRunning){
+
+
+                    if (!isCounterRunning) {
                         countDownTimer.cancel();
                         count_down.setText("");
                         countDownTimer.start();
-                    }
-                    else{
+                    } else {
                         countDownTimer.start();
                     }
 
                 } else
                     Toast.makeText(makeAccountActivity.this, "학번 8 자리를 입력해주세요.", Toast.LENGTH_SHORT).show();
-            }
-        }); //TODO : 이메일 인증하기
 
-        confrim_button = (Button) findViewById(R.id.student_id_confrim);
-        confrim_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { // TODO: 인증번호 맞는지 확인하기
+                break;
+            case R.id.student_id_confrim:
                 String inputAuthCode = confirm_num_input.getText().toString();
                 if (inputAuthCode.equals(authCode)) {
                     Toast.makeText(makeAccountActivity.this, "인증 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -188,22 +203,8 @@ public class makeAccountActivity extends LoginActivity {
                     count_down.setFocusable(false);
                 } else
                     Toast.makeText(makeAccountActivity.this, "코드를 확인해주세요!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
-        btn = (Button) findViewById(R.id.signUpButton);
-        alert_messege = (TextView) findViewById(R.id.alert_messege);
-
-        final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alert_messege_animation);
-
-        mAuth = FirebaseAuth.getInstance(); //Auth 생성
-        mStore = FirebaseFirestore.getInstance();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.signUpButton:
                 final String name = name_input.getText().toString().trim();
                 final String studentid = student_id_input.getText().toString().trim();
                 final String confirmnum = confirm_num_input.getText().toString().trim();
@@ -213,7 +214,7 @@ public class makeAccountActivity extends LoginActivity {
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                         && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
                         && pswd_confirm.getText() == "일치") {//TODO: 비밀번호, 학번 확인
-                    mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", pwd)
+                    mAuth.createUserWithEmailAndPassword(studentid, pwd)
                             .addOnCompleteListener(makeAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -230,23 +231,11 @@ public class makeAccountActivity extends LoginActivity {
                                                 .set(userMap, SetOptions.merge());//덮어쓰기(추가)
                                         finish();
                                     } else {
-                                        alert_messege.startAnimation(alertMessegeAnim);
+                                        alert_messege.startAnimation(alertMessegeAnim);//비밀번호 형식 안맞을 때
                                     }
                                 }
                             });
                 }
-            }
-        });
-    }
-
-    private String createEmailCode() { //이메일 인증코드 생성
-        String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
-        String newCode = new String();
-        for (int x = 0; x < 8; x++) {
-            int random = (int) (Math.random() * str.length);
-            newCode += str[random];
         }
-        return newCode;
     }
 }

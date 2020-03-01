@@ -76,8 +76,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:hint="학번"
-                android:inputType="number"
-                android:maxLength="8"
                 android:padding="15dp"
                 android:textSize="13sp" />
 
