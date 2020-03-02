@@ -2,36 +2,40 @@ package com.example.inhamind.Account;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.inhamind.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MyPageActivty extends AppCompatActivity implements View.OnClickListener {
     TextView phone_change;
     TextView pswd_change;
 
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page_activty);
 
-            TextView logout = (TextView)findViewById(R.id.logout);
-            TextView secession = (TextView)findViewById(R.id.secession_button);
-            phone_change = (TextView)findViewById(R.id.phone_change);
-            pswd_change = (TextView)findViewById(R.id.pswd_change);
+            TextView logout = findViewById(R.id.logout);
+            TextView secession = findViewById(R.id.secession_button);
+            phone_change = findViewById(R.id.phone_change);
+            pswd_change = findViewById(R.id.pswd_change);
 
             logout.setOnClickListener(this);
             secession.setOnClickListener(this);
             phone_change.setOnClickListener(this);
             pswd_change.setOnClickListener(this);
-
-
     }
 
     @Override

@@ -45,9 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름         "/>
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
@@ -61,9 +63,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전화         "/>
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/user_phone"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/phone_change"
             android:layout_width="wrap_content"
@@ -82,9 +86,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀번호 "/>
+
         <EditText
+            android:id="@+id/user_pswd"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/pswd_change"
             android:layout_width="wrap_content"
