@@ -9,11 +9,11 @@
         android:icon="@drawable/baseline_dashboard_black_24"
         android:title="Board" />
     <item
-        android:id="@+id/myHelp"
+        android:id="@+id/chatting"
         android:icon="@drawable/baseline_chat_black_24"
         android:title="Chatting" />
     <item
-        android:id="@+id/chatting"
+        android:id="@+id/setting"
         android:icon="@drawable/baseline_settings_black_24"
         android:title="Setting" />
 </menu>
