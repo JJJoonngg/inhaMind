@@ -17,7 +17,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="left"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_close_black_24dp" />
 
         <View
@@ -43,7 +43,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_done_black_24dp" />
     </LinearLayout>
 
