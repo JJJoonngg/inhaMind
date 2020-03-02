@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,13 +32,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String pwd;
 
     private SharedPreferences appData;
-    TextView make_account_text;
+    TextView make_account;
     TextView find_pwd;
-
     EditText EditTextId;
     EditText EditTextPswd;
     ImageButton login_button;
     CheckBox autoLogin;
+
     FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
@@ -49,12 +47,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alert_messege_animation);
+        autoLogin = findViewById(R.id.auto_login);
+        autoLogin.setOnClickListener(this);
+
+        find_pwd = findViewById(R.id.pswd_find);
+        find_pwd.setOnClickListener(this);
+
+        make_account = findViewById(R.id.make_account);
+        make_account.setOnClickListener(this);
+
+        login_button = findViewById(R.id.login_button);
+        login_button.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
-        EditTextId = (EditText) findViewById(R.id.student_id);
-        EditTextPswd = (EditText) findViewById(R.id.student_pswd);
+        EditTextId = findViewById(R.id.student_id);
+        EditTextPswd = findViewById(R.id.student_pswd);
 
         // 설정값 불러오기
         appData = getSharedPreferences("appData", MODE_PRIVATE);
