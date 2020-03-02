@@ -24,8 +24,8 @@ import com.example.inhamind.Board.PostActivity;
 import com.example.inhamind.Fragment.ChattingFragment;
 import com.example.inhamind.Fragment.CustomerServiceFragment;
 import com.example.inhamind.Fragment.HomeFragment;
-import com.example.inhamind.Fragment.MyHelpFragment;
 import com.example.inhamind.Fragment.NoticeFragment;
+import com.example.inhamind.Setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private HomeFragment homeFragment = new HomeFragment();
     private BoardFragment boardFragment = new BoardFragment();
-    private MyHelpFragment myHelpFragment = new MyHelpFragment();
+    private SettingFragment settingFragment = new SettingFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
     private NoticeFragment noticeFragment = new NoticeFragment();
     private CustomerServiceFragment customerServiceFragment = new CustomerServiceFragment();
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 anim();
                 break;
             case R.id.float_write_post:
-                //anim();
+                anim();
                 startActivity(new Intent(this, PostActivity.class));
                 break;
             case R.id.float_find_post:
@@ -158,11 +158,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case R.id.board:
                     transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
                     break;
-                case R.id.myHelp:
-                    transaction.replace(R.id.frameLayout, myHelpFragment).commitAllowingStateLoss();
-                    break;
                 case R.id.chatting:
                     transaction.replace(R.id.frameLayout, chattingFragment).commitAllowingStateLoss();
+                    break;
+                case R.id.setting:
+                    transaction.replace(R.id.frameLayout, settingFragment).commitAllowingStateLoss();
                     break;
             }
             return true;
