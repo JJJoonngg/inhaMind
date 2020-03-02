@@ -6,6 +6,8 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,7 +32,6 @@ import java.util.Map;
 
 
 public class makeAccountActivity extends LoginActivity implements View.OnClickListener {
-
     EditText name_input;
     EditText student_id_input;
     EditText confirm_num_input;
@@ -54,7 +55,6 @@ public class makeAccountActivity extends LoginActivity implements View.OnClickLi
     boolean isCounterRunning = false;
     boolean isClickedButton = false;
 
-    //final Animation alertMessegeAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alert_messege_animation);
 
 
     CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
@@ -77,7 +77,6 @@ public class makeAccountActivity extends LoginActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_account);
 
-
         name_input = findViewById(R.id.sign_up_input_name);
         student_id_input = findViewById(R.id.sign_up_student_id);
         confirm_num_input = findViewById(R.id.sign_up_confirm);
@@ -92,6 +91,8 @@ public class makeAccountActivity extends LoginActivity implements View.OnClickLi
         certification_button.setOnClickListener(this);
         confirm_button = findViewById(R.id.student_id_confirm);
         confirm_button.setOnClickListener(this);
+        btn = findViewById(R.id.signUpButton);
+        btn.setOnClickListener(this);
 
         pwd_join_confirm.addTextChangedListener(new TextWatcher() {
             @Override
@@ -251,8 +252,8 @@ public class makeAccountActivity extends LoginActivity implements View.OnClickLi
                                                 .set(userMap, SetOptions.merge());//덮어쓰기(추가)
                                         finish();
                                     } else {
-                                        //alert_messege.startAnimation(alertMessegeAnim);//비밀번호 형식 안맞을 때
-                                    }
+                                        Toast.makeText(makeAccountActivity.this,"이미 존재하는 학번입니다.",Toast.LENGTH_SHORT).show();
+                                         }
                                 }
                             });
                 }
