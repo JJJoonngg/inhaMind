@@ -32,7 +32,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         Post data = datas.get(position);
         holder.title.setText(data.getTitle());
         holder.contents.setText(data.getContents());
-        holder.contents.setText("학번 : "+ data.getStudentNumber());
+        holder.studentID.setText("학번 : "+ data.getStudentID());
 
     }
 
@@ -45,14 +45,14 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
 
         private TextView title;
         private TextView contents;
-        private TextView studentNumber;
+        private TextView studentID;
 
         public PostViewHolder(@NonNull View itemview) {
             super(itemview);
 
             title = itemview.findViewById(R.id.item_post_title);
             contents = itemview.findViewById(R.id.item_post_contents);
-            studentNumber = itemview.findViewById(R.id.item_post_student_number);
+            studentID = itemview.findViewById(R.id.item_post_student_number);
         }
     }
 }

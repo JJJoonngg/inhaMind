@@ -8,7 +8,7 @@ public class Post {
     private String documentID;
     private String title;
     private String contents;
-    private String studentNumber;
+    private String studentID;
     @ServerTimestamp
     private Date date;
 
@@ -16,11 +16,11 @@ public class Post {
 
     }
 
-    public Post(String documentID, String title, String contents, String studentNumber) {
+    public Post(String documentID, String title, String contents, String studentID) {
         this.documentID = documentID;
         this.title = title;
         this.contents = contents;
-        this.studentNumber = studentNumber;
+        this.studentID = studentID;
     }
 
     public String getDocumentID() {
@@ -51,12 +51,12 @@ public class Post {
         return date;
     }
 
-    public String getStudentNumber() {
-        return studentNumber;
+    public String getStudentID() {
+        return studentID;
     }
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Post {
                 "documentID='" + documentID + '\'' +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
-                ", studentNumber='" + studentNumber + '\'' +
+                ", studentID='" + studentID + '\'' +
                 ", date=" + date +
                 '}';
     }
