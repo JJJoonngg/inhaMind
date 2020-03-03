@@ -3,6 +3,7 @@ package com.example.inhamind.Board;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText mTitle, mContents;
     private String studentID;
-    private String mUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         //현재 user의 학번 불러오기
         if (mUser != null) {
-            mUid = mUser.getUid();
             mStore.collection(FirebaseID.user).document(mUser.getUid())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -58,6 +57,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -78,6 +83,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     data.put(FirebaseID.timestamp, FieldValue.serverTimestamp());
                     mStore.collection(FirebaseID.post).document(postId).set(data, SetOptions.merge());
                     finish();
+                    Toast.makeText(this, "글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
