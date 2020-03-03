@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this, PswdFind.class));
                 break;
             case R.id.make_account:
-                startActivity(new Intent(LoginActivity.this, makeAccountActivity.class));
+                startActivity(new Intent(LoginActivity.this, MakeAccountActivity.class));
                 break;
             case R.id.login_button:
                 if (EditTextId.getText().toString().length() == 8) {
