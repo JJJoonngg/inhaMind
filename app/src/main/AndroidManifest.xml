@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Board.PostActivity"></activity>
+        <activity android:name=".Board.SearchActivity"></activity>
+        <activity android:name=".Board.PostActivity" />
         <activity android:name=".Account.MyPageActivty" />
         <activity android:name=".Account.Secession" />
         <activity android:name=".Account.SMSPswdFind" />
@@ -30,6 +31,7 @@
         <activity
             android:name=".Account.MakeAccountActivity"
             android:label="@string/title_activity_make_account"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
+
 </manifest>
