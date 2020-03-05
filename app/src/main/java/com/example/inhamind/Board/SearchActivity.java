@@ -5,14 +5,17 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.inhamind.DataName;
 import com.example.inhamind.R;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentTransaction transaction = fragmentManager.beginTransaction();
     private InitialStateFragment initialStateFragment = new InitialStateFragment();
 
     EditText mContents;
@@ -22,7 +25,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
         transaction.replace(R.id.frameLayout, initialStateFragment).commitAllowingStateLoss();
 
         mContents = findViewById(R.id.search_input);
@@ -40,6 +43,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.secession_button:
+                Fragment fragment = new SearhResultFragment();
+                Bundle bundle = new Bundle(1);
+                bundle.putString(DataName.contents, mContents.getText().toString());
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.frameLayout, fragment).commitAllowingStateLoss();
                 break;
         }
     }
