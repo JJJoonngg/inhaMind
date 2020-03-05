@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.inhamind.MainActivity;
 import com.example.inhamind.R;
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+
+    private BackPressHandler backPressHandler = new BackPressHandler(LoginActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,5 +160,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
+    }
 }
+
 

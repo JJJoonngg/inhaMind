@@ -192,8 +192,8 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                 } else {
                     if (student_id_input.getText().toString().length() == 8) {
                         edittextStatusSetting(student_id_input, false, true);
-
                         authCode = createEmailCode();
+                        //uthCode = "1";
                         MailSend mailSend = new MailSend(MakeAccountActivity.this, student_id_input.getText().toString(), authCode);
                         mailSend.sendMail();
                         isClickedButton = true;
@@ -277,5 +277,9 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     public static boolean validatePassword(String pwStr) {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr);
         return matcher.matches();
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
