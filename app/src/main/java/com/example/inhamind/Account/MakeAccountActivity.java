@@ -46,7 +46,6 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
 
     TextView pswd_confirm;
     TextView count_view;
-    TextView alert_messege;
     TextView count_down;
 
     private Button btn;
