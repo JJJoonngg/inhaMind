@@ -16,8 +16,8 @@ import androidx.annotation.NonNull;
 
 import com.example.inhamind.EmailSend.MailSend;
 import com.example.inhamind.FirebaseID;
-import com.example.inhamind.MainActivity;
 import com.example.inhamind.R;
+import com.example.inhamind.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +31,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class MakeAccountActivity extends LoginActivity implements View.OnClickListener {
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
@@ -57,8 +56,6 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     final int Thousand = 1000;
     boolean isCounterRunning = false;
     boolean isClickedButton = false;
-
-
 
     CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
         @Override
@@ -139,7 +136,6 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
             }
         });
 
-
         mAuth = FirebaseAuth.getInstance(); //Auth 생성
         mStore = FirebaseFirestore.getInstance();
     }
@@ -179,7 +175,6 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                     student_id_input.setFocusableInTouchMode(true);
                     student_id_input.setText("");
 
-
                     authCode = createEmailCode();
                     isClickedButton = false;
                     buttonStatusSetting(certification_button, true, false, "인증하기");
@@ -193,7 +188,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                     if (student_id_input.getText().toString().length() == 8) {
                         edittextStatusSetting(student_id_input, false, true);
                         authCode = createEmailCode();
-                        //uthCode = "1";
+
                         MailSend mailSend = new MailSend(MakeAccountActivity.this, student_id_input.getText().toString(), authCode);
                         mailSend.sendMail();
                         isClickedButton = true;
@@ -238,16 +233,16 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                         && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
                         && pswd_confirm.getText() == "일치") {
-                    if(confirm_button.getText()=="확인"){
+                    if (confirm_button.getText() == "확인") {
                         Toast.makeText(MakeAccountActivity.this, "학번 인증을 진행해주세요", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(!validatePassword(pwd)) {
+                    if (!validatePassword(pwd)) {
                         Toast.makeText(MakeAccountActivity.this, "비밀번호 형식을 지켜주세요", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    mAuth.createUserWithEmailAndPassword(studentid+"@inha.edu", pwd)
+                    mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", pwd)
                             .addOnCompleteListener(MakeAccountActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -256,7 +251,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                                         Map<String, Object> userMap = new HashMap<>(); //firestore 사용
                                         userMap.put(FirebaseID.documnetID, user.getUid()); //사용자 관리하기 위해
                                         userMap.put(FirebaseID.name, name);
-                                        userMap.put(FirebaseID.studentID,  studentid);
+                                        userMap.put(FirebaseID.studentID, studentid);
                                         userMap.put(FirebaseID.password, pwd);
 
                                         mStore.collection(FirebaseID.user)
@@ -265,19 +260,20 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                                         finish();
                                         startActivity(new Intent(MakeAccountActivity.this, MainActivity.class));
                                     } else {
-                                        Toast.makeText(MakeAccountActivity.this,"이미 존재하는 학번입니다",Toast.LENGTH_SHORT).show();
-                                         }
+                                        Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
-                }
-                else
-                    Toast.makeText(MakeAccountActivity.this,"이미 존재하는 학번입니다",Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
         }
     }
+
     public static boolean validatePassword(String pwStr) {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr);
         return matcher.matches();
     }
+
     @Override
     public void onBackPressed() {
         finish();

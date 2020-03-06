@@ -42,7 +42,9 @@
         android:layout_marginLeft="13dp"
         />
     </LinearLayout>
+
     <Button
+        android:id="@+id/repswd_button"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="230dp"

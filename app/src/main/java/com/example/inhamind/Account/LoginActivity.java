@@ -12,10 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.example.inhamind.MainActivity;
 import com.example.inhamind.R;
+import com.example.inhamind.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -27,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private boolean saveLoginData;
     private String id;
     private String pwd;
@@ -42,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-
     private BackPressHandler backPressHandler = new BackPressHandler(LoginActivity.this);
 
     @Override
@@ -76,11 +74,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             EditTextPswd.setText(pwd);
             autoLogin.setChecked(saveLoginData);
         }
-
         EditTextId.setText("12131212");//test 위함
         EditTextPswd.setText("qwer1234");
-
     }
+
     // 설정값을 저장하는 함수
     private void save() {
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
@@ -96,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.apply();
     }
 
-
     // 설정값을 불러오는 함수
     private void load() {
         // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
@@ -108,11 +104,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.auto_login :
+        switch (v.getId()) {
+            case R.id.auto_login:
                 save();
                 break;
-            case R.id.pswd_find :
+            case R.id.pswd_find:
                 startActivity(new Intent(LoginActivity.this, PswdFind.class));
                 break;
             case R.id.make_account:
@@ -153,7 +149,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Matcher m = p.matcher(pwd);
                         if (!m.find() && pwd.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"))
                             Toast.makeText(LoginActivity.this, "비밀번호 형식을 지켜주세요.", Toast.LENGTH_SHORT).show();
-
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "8자리 학번을 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -161,11 +156,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
     @Override
     public void onBackPressed() {
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
 }
-
 
