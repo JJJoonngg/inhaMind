@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inhamind.Account.MyPageActivty;
+import com.example.inhamind.Account.ServiceCenter;
 import com.example.inhamind.Board.BoardFragment;
 import com.example.inhamind.Fragment.ChattingFragment;
 import com.example.inhamind.Fragment.CustomerServiceFragment;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         transaction.replace(R.id.frameLayout, noticeFragment).commitAllowingStateLoss();
                         break;
                     case R.id.customerService:
-                        transaction.replace(R.id.frameLayout, customerServiceFragment).commitAllowingStateLoss();
+                        startActivity(new Intent(MainActivity.this, ServiceCenter.class));
                         break;
                 }
                 return true;
