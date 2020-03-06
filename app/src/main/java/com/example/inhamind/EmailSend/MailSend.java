@@ -17,4 +17,10 @@ public class MailSend {
         JavaMailAPI javaMailAPI = new JavaMailAPI(context, email, authCode);
         javaMailAPI.execute();
     }
+
+    public void sessionsendMail() {
+        SecessionMailAPI SecessionMailAPI = new SecessionMailAPI(context, email, authCode);
+        SecessionMailAPI.execute();
+    }
+
 }

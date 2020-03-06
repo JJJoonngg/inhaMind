@@ -13,24 +13,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="정말 떠나시나요?.."/>
+
     <EditText
+        android:id="@+id/secession_message"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        android:hint=" 떠나시는 이유를 알려주세요ㅠㅠ"
         android:background="@drawable/border_layout"
         android:gravity="left|top"
-        android:padding="20dp"/>
+        android:hint=" 떠나시는 이유를 알려주세요ㅠㅠ"
+        android:padding="20dp" />
 
     <TextView
         android:layout_marginTop="80dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="본인 확인을 위해 비밀번호를 한번 더 입력해주세요"/>
+
     <EditText
-        android:layout_marginTop="20dp"
+        android:id="@+id/secession_pswd"
+        android:inputType="textPassword"
         android:layout_width="340dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
