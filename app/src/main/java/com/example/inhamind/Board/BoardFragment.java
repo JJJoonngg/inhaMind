@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inhamind.Adapters.PostAdapters;
-import com.example.inhamind.FirebaseID;
-import com.example.inhamind.Fragment.FloatingButtonFragment;
+import com.example.inhamind.Common.FirebaseID;
+import com.example.inhamind.Common.FloatingButtonFragment;
 import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
 import com.google.firebase.firestore.DocumentSnapshot;

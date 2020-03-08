@@ -1,4 +1,4 @@
-package com.example.inhamind.Fragment;
+package com.example.inhamind.Common;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.inhamind.Board.PostActivity;
+import com.example.inhamind.Board.SearchActivity;
 import com.example.inhamind.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -66,7 +66,7 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.float_find_post:
                 anim();
-                Toast.makeText(context, "222", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(context, SearchActivity.class));
                 break;
         }
     }

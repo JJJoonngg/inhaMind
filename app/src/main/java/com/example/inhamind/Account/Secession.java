@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.EmailSend.MailSend;
-import com.example.inhamind.FirebaseID;
+import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

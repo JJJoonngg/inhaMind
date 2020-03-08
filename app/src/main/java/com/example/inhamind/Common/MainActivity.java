@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Common;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Account.ServiceCenter;
 import com.example.inhamind.Board.BoardFragment;
-import com.example.inhamind.Fragment.ChattingFragment;
-import com.example.inhamind.Fragment.CustomerServiceFragment;
-import com.example.inhamind.Fragment.HomeFragment;
-import com.example.inhamind.Fragment.NoticeFragment;
+import com.example.inhamind.Chat.ChattingFragment;
+import com.example.inhamind.R;
 import com.example.inhamind.Setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;

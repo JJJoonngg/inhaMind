@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Common;
 
 public class FirebaseID {
     public static String user = "user";
