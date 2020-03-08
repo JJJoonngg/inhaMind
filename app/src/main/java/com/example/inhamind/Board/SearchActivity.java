@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.inhamind.DataName;
+import com.example.inhamind.Models.DataName;
 import com.example.inhamind.R;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {

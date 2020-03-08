@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.inhamind.Fragment.FloatingButtonFragment;
+import com.example.inhamind.Common.FloatingButtonFragment;
 import com.example.inhamind.R;
 
 public class SettingFragment extends Fragment {

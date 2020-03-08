@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.inhamind.DataName;
+import com.example.inhamind.Models.DataName;
 import com.example.inhamind.R;
 
 public class SearhResultFragment extends Fragment {

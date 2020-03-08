@@ -1,4 +1,4 @@
-package com.example.inhamind.Fragment;
+package com.example.inhamind.Common;
 
 import android.content.Context;
 import android.content.Intent;
