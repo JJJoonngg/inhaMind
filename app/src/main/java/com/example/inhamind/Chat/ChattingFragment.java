@@ -1,4 +1,4 @@
-package com.example.inhamind.Fragment;
+package com.example.inhamind.Chat;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.inhamind.Common.FloatingButtonFragment;
 import com.example.inhamind.R;
 
 public class ChattingFragment extends Fragment {
