@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inhamind.Board.PostReadActivity;
+import com.example.inhamind.Models.DataName;
 import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
 
@@ -70,6 +71,9 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, PostReadActivity.class);
+            intent.putExtra(DataName.titile, title.getText().toString());
+            intent.putExtra(DataName.contents, contents.getText().toString());
+            intent.putExtra(DataName.studentID, studentID.getText().toString());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
