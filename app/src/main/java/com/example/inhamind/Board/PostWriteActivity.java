@@ -22,7 +22,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostActivity extends AppCompatActivity implements View.OnClickListener {
+public class PostWriteActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
