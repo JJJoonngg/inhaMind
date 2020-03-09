@@ -1,6 +1,7 @@
 package com.example.inhamind.Board;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -11,24 +12,35 @@ import com.example.inhamind.R;
 
 public class PostReadActivity extends AppCompatActivity {
 
-    private TextView postTitle, postContents, postStudentID;
-    private String title, contents, studentID;
+    private TextView postTitle, postContents, postStudentID, postStatus;
+    private String title, contents, studentID, status;
     private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_read);
+
         intent = getIntent();
         title = intent.getStringExtra(DataName.titile);
         contents = intent.getStringExtra(DataName.contents);
         studentID = intent.getStringExtra(DataName.studentID);
+        status = intent.getStringExtra(DataName.status);
 
         postTitle = findViewById(R.id.post_title);
         postContents = findViewById(R.id.post_contents);
+        postStatus = findViewById(R.id.post_status);
 
         postTitle.setText(title);
         postContents.setText(contents);
 
+        if (status == "true"){
+            postStatus.setText("완료");
+            postStatus.setTextColor(Color.BLUE);
+        }
+        else {
+            postStatus.setText("미완료");
+            postStatus.setTextColor(Color.RED);
+        }
     }
 }

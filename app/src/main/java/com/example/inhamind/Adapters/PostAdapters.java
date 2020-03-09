@@ -47,7 +47,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         holder.title.setText(title);
         holder.contents.setText(contents);
         holder.studentID.setText("학번 : " + studentID);
-        holder.status.setText(data.isStatus() ? "완료" : "미완료");
+        holder.status.setText(data.getStatus() == "true" ? "완료" : "미완료");
         holder.cardView.setTag(holder.getAdapterPosition());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
                 intent.putExtra(DataName.titile, cur.getTitle());
                 intent.putExtra(DataName.contents, cur.getContents());
                 intent.putExtra(DataName.studentID, cur.getStudentID());
-                intent.putExtra(DataName.status, cur.isStatus());
+                intent.putExtra(DataName.status, cur.getStatus());
                 context.startActivity(intent);
             }
         });
