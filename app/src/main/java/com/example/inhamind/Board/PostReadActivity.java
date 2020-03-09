@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,11 +36,10 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         postTitle.setText(title);
         postContents.setText(contents);
 
-        if (status == "true"){
+        if (status == "true") {
             postStatus.setText("완료");
             postStatus.setTextColor(Color.BLUE);
-        }
-        else {
+        } else {
             postStatus.setText("미완료");
             postStatus.setTextColor(Color.RED);
         }
@@ -50,7 +50,22 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.read_close_button:
+                this.finish();
+                break;
+
+            case R.id.read_chat_button:
+                Toast.makeText(this,"채팅 구현 예정", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
     }
 }
