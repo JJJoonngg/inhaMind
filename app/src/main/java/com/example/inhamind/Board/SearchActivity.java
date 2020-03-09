@@ -30,7 +30,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         mContents = findViewById(R.id.search_input);
 
-        findViewById(R.id.close_button).setOnClickListener(this);
+        findViewById(R.id.write_close_button).setOnClickListener(this);
         findViewById(R.id.search_button).setOnClickListener(this);
 
     }
@@ -38,7 +38,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.close_button:
+            case R.id.write_close_button:
                 this.finish();
                 break;
 

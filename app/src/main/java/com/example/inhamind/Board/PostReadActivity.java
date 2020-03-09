@@ -3,6 +3,7 @@ package com.example.inhamind.Board;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.inhamind.Models.DataName;
 import com.example.inhamind.R;
 
-public class PostReadActivity extends AppCompatActivity {
+public class PostReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView postTitle, postContents, postStudentID, postStatus;
     private String title, contents, studentID, status;
@@ -42,5 +43,14 @@ public class PostReadActivity extends AppCompatActivity {
             postStatus.setText("미완료");
             postStatus.setTextColor(Color.RED);
         }
+
+
+        findViewById(R.id.read_close_button).setOnClickListener(this);
+        findViewById(R.id.read_chat_button).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

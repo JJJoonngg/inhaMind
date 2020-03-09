@@ -33,10 +33,10 @@ public class PostWriteActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.activity_post_write);
 
-        findViewById(R.id.done_button).setOnClickListener(this);
-        findViewById(R.id.close_button).setOnClickListener(this);
+        findViewById(R.id.write_done_button).setOnClickListener(this);
+        findViewById(R.id.write_close_button).setOnClickListener(this);
 
         mTitle = findViewById(R.id.post_title);
         mContents = findViewById(R.id.post_contents);
@@ -68,11 +68,11 @@ public class PostWriteActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.close_button:
+            case R.id.write_close_button:
                 this.finish();
                 break;
 
-            case R.id.done_button:
+            case R.id.write_done_button:
                 if (mUser != null) {
                     String postId = mStore.collection(FirebaseID.post).document().getId();
                     Map<String, Object> data = new HashMap<>();
