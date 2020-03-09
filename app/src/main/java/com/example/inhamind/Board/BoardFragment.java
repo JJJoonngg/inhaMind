@@ -67,7 +67,7 @@ public class BoardFragment extends Fragment {
                                 Post data = new Post(documentID, title, contents, studentID);
                                 mDatas.add(data);
                             }
-                            mAdapters = new PostAdapters(mDatas);
+                            mAdapters = new PostAdapters(getContext(), mDatas);
                             mPostRecylerView.setAdapter(mAdapters);
                         }
                     }
