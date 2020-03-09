@@ -74,8 +74,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             EditTextPswd.setText(pwd);
             autoLogin.setChecked(saveLoginData);
         }
-        EditTextId.setText("12131212");//test 위함
-        EditTextPswd.setText("qwer1234");
     }
 
     // 설정값을 저장하는 함수
@@ -119,7 +117,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String studentid = EditTextId.getText().toString().trim();
                     String pswd = EditTextPswd.getText().toString().trim();
 
-                    final String TAG = "LOGIN_ACTIVITY";
                     if (studentid != null && !studentid.isEmpty() && pswd != null && !pswd.isEmpty()) {
                         mAuth.signInWithEmailAndPassword(studentid + "@inha.edu", pswd)
                                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -138,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                         } else { //auto
                                             currentUser = mAuth.getCurrentUser();
-                                            Toast.makeText(LoginActivity.this, "로그인 성공" + "/" + currentUser.getEmail() + "/" + currentUser.getUid(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "로그인에 성공하였습니다", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                             finish();
                                         }
@@ -161,4 +158,3 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
 }
-

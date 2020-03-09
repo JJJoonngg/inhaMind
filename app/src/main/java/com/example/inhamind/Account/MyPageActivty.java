@@ -2,6 +2,7 @@ package com.example.inhamind.Account;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,9 +25,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class MyPageActivty extends AppCompatActivity implements View.OnClickListener {
-    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private FirebaseUser mUser;
+    private FirebaseFirestore mStore;
 
+    boolean isClickedButton = false;
     TextView phone_change;
     TextView pswd_change;
 
@@ -56,40 +59,19 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
         user_phone = findViewById(R.id.user_phone);
         user_pswd = findViewById(R.id.user_pswd);
 
-        //현재 user의 정보 불러오기
-        if (mUser != null) {
-            mStore.collection(FirebaseID.user).document(mUser.getUid())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult() != null) {
-                                    name = (String) task.getResult().get(FirebaseID.name);
-                                    pswd = (String) task.getResult().get(FirebaseID.password);
-                                    phoneNumber = (String) task.getResult().get(FirebaseID.phonenumber);
-                                }
-                            }
-                            user_name.setText(name);
-                            user_phone.setText(phoneNumber);
-                        }
-                    });
-        }
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStore = FirebaseFirestore.getInstance();
+
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.phone_change:
-                //  startActivity(new Intent(MyPageActivty.this,));//TODO :수정하기 !
                 break;
             case R.id.pswd_change:
-                if (!user_pswd.getText().toString().equals(pswd)) {
-                    Toast.makeText(MyPageActivty.this, "비밀번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent intent = new Intent(MyPageActivty.this, PswdRemake.class);
-                    startActivity(intent);
-                }
+                changePassword();
                 break;
             case R.id.logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyPageActivty.this);
@@ -110,6 +92,87 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(MyPageActivty.this, Secession.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public void clickSetting() {
+        if (isClickedButton) {
+            edittextStatusSetting(user_pswd, true, false);
+            user_pswd.setFocusableInTouchMode(true);
+            user_pswd.setHint("현재 비밀번호를 입력해주세요");
+
+            isClickedButton = false;
+            pswd_change.setText("변경하기");
+        } else {
+            user_pswd.setHint("");
+            edittextStatusSetting(user_pswd, false, true);
+            isClickedButton = true;
+            pswd_change.setText("재변경하기");
+        }
+    }
+
+    public void changePassword() {
+        if (pswd_change.getText() == "재변경하기") {
+            clickSetting();
+        } else if (!user_pswd.getText().toString().equals(pswd)) {
+            Toast.makeText(MyPageActivty.this, "비밀번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), PswdRemake.class);
+            startActivityForResult(intent, 101);
+        }
+    }
+
+
+    public void edittextStatusSetting(EditText e, boolean status, boolean c) {
+        e.setClickable(status);
+        e.setFocusable(status);
+        if (c) e.setTextColor(Color.GRAY);
+        else e.setTextColor(Color.BLACK);
+    }
+
+    //??
+    public void TextStatusSetting(TextView b, boolean status, boolean c, String s) {
+        b.setClickable(status);
+        b.setFocusable(status);
+        b.setText(s);
+        if (c) b.setTextColor(Color.GRAY);
+        else b.setTextColor(Color.BLACK);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 101) {
+            String change = data.getStringExtra("change");
+            if (change.equals("confirm")) {
+                clickSetting();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //현재 user의 정보 불러오기
+        if (mUser != null) {
+            mStore.collection(FirebaseID.user).document(mUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult() != null) {
+                                    name = (String) task.getResult().get(FirebaseID.name);
+                                    pswd = (String) task.getResult().get(FirebaseID.password);
+                                    phoneNumber = (String) task.getResult().get(FirebaseID.phonenumber);
+                                }
+                            }
+                            user_name.setText(name);
+                            user_phone.setText(phoneNumber);
+                        }
+                    });
         }
     }
 }

@@ -152,7 +152,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     }
 
     public void edittextStatusSetting(EditText e, boolean status, boolean c) {
-        e.setFocusable(status);
+        e.setClickable(status);
         e.setFocusable(status);
         if (c) e.setTextColor(Color.GRAY);
         else e.setTextColor(Color.BLACK);
