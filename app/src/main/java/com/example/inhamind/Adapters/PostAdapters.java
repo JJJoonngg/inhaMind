@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inhamind.Board.PostReadActivity;
@@ -22,6 +23,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
     private List<Post> datas;
     private Context context;
     private String title, contents, studentID;
+    private Post data;
 
     public PostAdapters(Context context, List<Post> datas) {
         this.context = context;
@@ -36,7 +38,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        Post data = datas.get(position);
+        data = datas.get(position);
         title = data.getTitle();
         if (title.length() > 10) title = title.substring(0, 10) + "...";
         contents = data.getContents();
@@ -45,7 +47,18 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         holder.title.setText(title);
         holder.contents.setText(contents);
         holder.studentID.setText("학번 : " + studentID);
-
+        holder.cardView.setTag(holder.getAdapterPosition());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PostReadActivity.class);
+                Post cur = datas.get((int) view.getTag());
+                intent.putExtra(DataName.titile, cur.getTitle());
+                intent.putExtra(DataName.contents, cur.getContents());
+                intent.putExtra(DataName.studentID, cur.getStudentID());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,11 +66,12 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         return datas.size();
     }
 
-    class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class PostViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView contents;
         private TextView studentID;
+        private CardView cardView;
 
         public PostViewHolder(@NonNull View itemview) {
             super(itemview);
@@ -65,17 +79,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
             title = itemview.findViewById(R.id.item_post_title);
             contents = itemview.findViewById(R.id.item_post_contents);
             studentID = itemview.findViewById(R.id.item_post_student_number);
-            itemview.findViewById(R.id.cardview).setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(context, PostReadActivity.class);
-            intent.putExtra(DataName.titile, title.getText().toString());
-            intent.putExtra(DataName.contents, contents.getText().toString());
-            intent.putExtra(DataName.studentID, studentID.getText().toString());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            cardView = itemview.findViewById(R.id.cardview);
         }
     }
 }

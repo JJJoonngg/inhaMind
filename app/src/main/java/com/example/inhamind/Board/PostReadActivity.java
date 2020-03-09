@@ -2,6 +2,7 @@ package com.example.inhamind.Board;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,8 @@ import com.example.inhamind.Models.DataName;
 import com.example.inhamind.R;
 
 public class PostReadActivity extends AppCompatActivity {
+
+    private TextView postTitle, postContents, postStudentID;
     private String title, contents, studentID;
     private Intent intent;
 
@@ -21,6 +24,11 @@ public class PostReadActivity extends AppCompatActivity {
         contents = intent.getStringExtra(DataName.contents);
         studentID = intent.getStringExtra(DataName.studentID);
 
+        postTitle = findViewById(R.id.post_title);
+        postContents = findViewById(R.id.post_contents);
+
+        postTitle.setText(title);
+        postContents.setText(contents);
 
     }
 }
