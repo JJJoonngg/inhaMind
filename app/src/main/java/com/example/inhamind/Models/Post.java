@@ -9,6 +9,7 @@ public class Post {
     private String title;
     private String contents;
     private String studentID;
+    private boolean status;
     @ServerTimestamp
     private Date date;
 
@@ -57,6 +58,14 @@ public class Post {
 
     public void setStudentID(String studentID) {
         this.studentID = studentID;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override

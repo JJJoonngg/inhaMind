@@ -64,6 +64,7 @@ public class BoardFragment extends Fragment {
                                 String title = String.valueOf(shot.get(FirebaseID.title));
                                 String contents = String.valueOf(shot.get(FirebaseID.contents));
                                 String studentID = String.valueOf(shot.get(FirebaseID.studentID));
+                                String status = String.valueOf(shot.get(FirebaseID.status));
                                 Post data = new Post(documentID, title, contents, studentID);
                                 mDatas.add(data);
                             }

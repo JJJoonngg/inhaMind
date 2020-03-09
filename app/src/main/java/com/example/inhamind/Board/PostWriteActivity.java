@@ -80,6 +80,7 @@ public class PostWriteActivity extends AppCompatActivity implements View.OnClick
                     data.put(FirebaseID.studentID, studentID);
                     data.put(FirebaseID.title, mTitle.getText().toString());
                     data.put(FirebaseID.contents, mContents.getText().toString());
+                    data.put(FirebaseID.status, "false");
                     data.put(FirebaseID.timestamp, FieldValue.serverTimestamp());
                     mStore.collection(FirebaseID.post).document(postId).set(data, SetOptions.merge());
                     finish();

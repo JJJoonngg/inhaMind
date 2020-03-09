@@ -47,6 +47,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         holder.title.setText(title);
         holder.contents.setText(contents);
         holder.studentID.setText("학번 : " + studentID);
+        holder.status.setText(data.isStatus() ? "완료" : "미완료");
         holder.cardView.setTag(holder.getAdapterPosition());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +57,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
                 intent.putExtra(DataName.titile, cur.getTitle());
                 intent.putExtra(DataName.contents, cur.getContents());
                 intent.putExtra(DataName.studentID, cur.getStudentID());
+                intent.putExtra(DataName.status, cur.isStatus());
                 context.startActivity(intent);
             }
         });
@@ -68,9 +70,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
 
     class PostViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title;
-        private TextView contents;
-        private TextView studentID;
+        private TextView title, contents, studentID, status;
         private CardView cardView;
 
         public PostViewHolder(@NonNull View itemview) {
@@ -79,6 +79,7 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
             title = itemview.findViewById(R.id.item_post_title);
             contents = itemview.findViewById(R.id.item_post_contents);
             studentID = itemview.findViewById(R.id.item_post_student_number);
+            status = itemview.findViewById(R.id.item_post_status);
             cardView = itemview.findViewById(R.id.cardview);
         }
     }
