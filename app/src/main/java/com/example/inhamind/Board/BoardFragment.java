@@ -58,8 +58,8 @@ public class BoardFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (queryDocumentSnapshots != null) {
                             mDatas.clear();
-                            for (DocumentSnapshot sanp : queryDocumentSnapshots.getDocuments()) {
-                                Map<String, Object> shot = sanp.getData();
+                            for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
+                                Map<String, Object> shot = snap.getData();
                                 String documentID = String.valueOf(shot.get(FirebaseID.documnetID));
                                 String title = String.valueOf(shot.get(FirebaseID.title));
                                 String contents = String.valueOf(shot.get(FirebaseID.contents));
