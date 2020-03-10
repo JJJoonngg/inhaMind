@@ -44,12 +44,6 @@ public class BoardFragment extends Fragment {
 
         mPostRecylerView = view.findViewById(R.id.board_recyclerview);
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         mDatas = new ArrayList<>();
         mStore.collection(FirebaseID.post)
                 .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
@@ -73,5 +67,6 @@ public class BoardFragment extends Fragment {
                         }
                     }
                 });
+        return view;
     }
 }
