@@ -64,10 +64,11 @@ public class BoardFragment extends Fragment {
                                 String title = String.valueOf(shot.get(FirebaseID.title));
                                 String contents = String.valueOf(shot.get(FirebaseID.contents));
                                 String studentID = String.valueOf(shot.get(FirebaseID.studentID));
-                                Post data = new Post(documentID, title, contents, studentID);
+                                String status = String.valueOf(shot.get(FirebaseID.status));
+                                Post data = new Post(documentID, title, contents, studentID, status);
                                 mDatas.add(data);
                             }
-                            mAdapters = new PostAdapters(mDatas);
+                            mAdapters = new PostAdapters(getContext(), mDatas);
                             mPostRecylerView.setAdapter(mAdapters);
                         }
                     }

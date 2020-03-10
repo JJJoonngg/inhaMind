@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Board.PostActivity">
+    tools:context=".Board.PostReadActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/close_button"
+            android:id="@+id/read_close_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="left"
@@ -26,10 +27,10 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/post_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="글쓰기"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -37,48 +38,38 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-
         <ImageButton
-            android:id="@+id/done_button"
+            android:id="@+id/read_chat_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_done_black_24dp" />
+            android:src="@drawable/baseline_chat_black_24" />
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
+
+        <TextView
             android:id="@+id/post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:hint="제목을 입력해주세요."
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:privateImeOptions="defaultInputmode=korean"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
+            android:clickable="false"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
+
+        <TextView
             android:id="@+id/post_contents"
             android:layout_width="match_parent"
             android:layout_height="600dp"
-            android:background="@null"
-            android:cursorVisible="true"
-            android:gravity="top"
-            android:hint=" 내용을 입력해주세요.\n (최대 500자까지 입력 가능합니다.)
-            \n 타인에게 위협, 희롱등 해를 끼치거나 \n 커뮤니티 분위기를 해치는 내용은 삭제 될 수 있습니다."
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:maxLength="500"
-            android:privateImeOptions="defaultInputmode=korean"
-            android:textSize="16sp" />
+            android:layout_marginBottom="30dp"
+            android:clickable="false"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
-
 </LinearLayout>

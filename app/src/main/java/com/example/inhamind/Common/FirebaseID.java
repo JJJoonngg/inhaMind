@@ -12,5 +12,6 @@ public class FirebaseID {
     public static String post = "post";
     public static String title = "title";
     public static String contents = "contents";
+    public static String status = "status";
     public static String timestamp = "timestamp";
 }
