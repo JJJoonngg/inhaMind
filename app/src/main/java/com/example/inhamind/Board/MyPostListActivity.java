@@ -13,6 +13,7 @@ import com.example.inhamind.Adapters.MyPostAdapters;
 import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -64,7 +65,8 @@ public class MyPostListActivity extends AppCompatActivity implements View.OnClic
                                     String contents = String.valueOf(shot.get(FirebaseID.contents));
                                     String studentID = String.valueOf(shot.get(FirebaseID.studentID));
                                     String status = String.valueOf(shot.get(FirebaseID.status));
-                                    Post data = new Post(documentID, title, contents, studentID, status);
+                                    Timestamp timestamp = (Timestamp) shot.get(FirebaseID.timestamp);
+                                    Post data = new Post(documentID, title, contents, studentID, status, timestamp);
                                     mDatas.add(data);
                                 }
                                 myPostAdapters = new MyPostAdapters(mDatas, context);

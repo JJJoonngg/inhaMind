@@ -16,6 +16,7 @@ import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.Common.FloatingButtonFragment;
 import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,7 +60,8 @@ public class BoardFragment extends Fragment {
                                 String contents = String.valueOf(shot.get(FirebaseID.contents));
                                 String studentID = String.valueOf(shot.get(FirebaseID.studentID));
                                 String status = String.valueOf(shot.get(FirebaseID.status));
-                                Post data = new Post(documentID, title, contents, studentID, status);
+                                Timestamp timestamp = (Timestamp) shot.get(FirebaseID.timestamp);
+                                Post data = new Post(documentID, title, contents, studentID, status, timestamp);
                                 mDatas.add(data);
                             }
                             mAdapters = new PostAdapters(getContext(), mDatas);

@@ -1,8 +1,7 @@
 package com.example.inhamind.Models;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
-
-import java.util.Date;
 
 public class Post {
     private String documentID;
@@ -11,18 +10,19 @@ public class Post {
     private String studentID;
     private String status;
     @ServerTimestamp
-    private Date date;
+    private Timestamp timestamp;
 
     public Post() {
 
     }
 
-    public Post(String documentID, String title, String contents, String studentID, String status) {
+    public Post(String documentID, String title, String contents, String studentID, String status, Timestamp timestamp) {
         this.documentID = documentID;
         this.title = title;
         this.contents = contents;
         this.studentID = studentID;
         this.status = status;
+        this.timestamp = timestamp;
     }
 
     public String getDocumentID() {
@@ -49,10 +49,6 @@ public class Post {
         this.contents = contents;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public String getStudentID() {
         return studentID;
     }
@@ -69,6 +65,14 @@ public class Post {
         this.status = status;
     }
 
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -77,7 +81,7 @@ public class Post {
                 ", contents='" + contents + '\'' +
                 ", studentID='" + studentID + '\'' +
                 ", status=" + status +
-                ", date=" + date +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }

@@ -54,10 +54,11 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(context, PostReadActivity.class);
                 Post cur = datas.get((int) view.getTag());
-                intent.putExtra(DataName.titile, cur.getTitle());
+                intent.putExtra(DataName.title, cur.getTitle());
                 intent.putExtra(DataName.contents, cur.getContents());
                 intent.putExtra(DataName.studentID, cur.getStudentID());
                 intent.putExtra(DataName.status, cur.getStatus());
+                intent.putExtra(DataName.timestamp, cur.getTimestamp());
                 context.startActivity(intent);
             }
         });
