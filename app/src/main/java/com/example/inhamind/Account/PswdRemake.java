@@ -33,9 +33,9 @@ public class PswdRemake extends MyPageActivty {
     String pswd;
 
     EditText repswd;
-    EditText repswd_confirm;
+    EditText repswdConfirm;
     TextView confirm;
-    Button repswd_button;
+    Button repswdButton;
 
 
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
@@ -47,9 +47,9 @@ public class PswdRemake extends MyPageActivty {
 
 
         repswd = findViewById(R.id.repswd);
-        repswd_confirm = findViewById(R.id.repswd_confirm_input);
+        repswdConfirm = findViewById(R.id.repswd_confirm_input);
         confirm = findViewById(R.id.repswd_confirm_output);
-        repswd_button = findViewById(R.id.repswd_button);
+        repswdButton = findViewById(R.id.repswd_button);
 
 
         //현재 user의 정보 불러오기
@@ -75,7 +75,7 @@ public class PswdRemake extends MyPageActivty {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (repswd.getText().toString().equals(repswd_confirm.getText().toString())) {
+                if (repswd.getText().toString().equals(repswdConfirm.getText().toString())) {
                     confirm.setText("일치");
                     confirm.setTextColor(Color.LTGRAY);
                 } else {
@@ -89,7 +89,7 @@ public class PswdRemake extends MyPageActivty {
             }
         });
 
-        repswd_confirm.addTextChangedListener(new TextWatcher() {
+        repswdConfirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -97,7 +97,7 @@ public class PswdRemake extends MyPageActivty {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (repswd.getText().toString().equals(repswd_confirm.getText().toString())) {
+                if (repswd.getText().toString().equals(repswdConfirm.getText().toString())) {
                     confirm.setText("일치");
                     confirm.setTextColor(Color.LTGRAY);
                 } else {
@@ -112,7 +112,7 @@ public class PswdRemake extends MyPageActivty {
             }
         });
 
-        repswd_button.setOnClickListener(new View.OnClickListener() {
+        repswdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validatePassword(repswd.getText().toString()) == true) {

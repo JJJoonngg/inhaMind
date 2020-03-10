@@ -32,11 +32,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String pwd;
 
     private SharedPreferences appData;
-    TextView make_account;
-    TextView find_pwd;
+    TextView makeAccount;
+    TextView findPwd;
     EditText EditTextId;
     EditText EditTextPswd;
-    ImageButton login_button;
+    ImageButton loginButton;
     CheckBox autoLogin;
 
     FirebaseAuth mAuth;
@@ -51,14 +51,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         autoLogin = findViewById(R.id.auto_login);
         autoLogin.setOnClickListener(this);
 
-        find_pwd = findViewById(R.id.pswd_find);
-        find_pwd.setOnClickListener(this);
+        findPwd = findViewById(R.id.pswd_find);
+        findPwd.setOnClickListener(this);
 
-        make_account = findViewById(R.id.make_account);
-        make_account.setOnClickListener(this);
+        makeAccount = findViewById(R.id.make_account);
+        makeAccount.setOnClickListener(this);
 
-        login_button = findViewById(R.id.login_button);
-        login_button.setOnClickListener(this);
+
+        loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
