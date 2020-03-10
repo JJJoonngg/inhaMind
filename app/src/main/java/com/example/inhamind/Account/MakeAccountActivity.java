@@ -35,6 +35,12 @@ import java.util.Map;
 public class MakeAccountActivity extends LoginActivity implements View.OnClickListener {
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
 
+    String name;
+    String studentid;
+    String confirmnum;
+    String pwd;
+    String confirmPswd;
+
     EditText nameInput;
     EditText studentIdInput;
     EditText confirmNumInput;
@@ -50,6 +56,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     private Button btn;
     FirebaseAuth mAuth;
     FirebaseFirestore mStore;
+    private FirebaseUser mUser;
 
     private String authCode;
 
@@ -168,6 +175,12 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        name = nameInput.getText().toString();
+        studentid = studentIdInput.getText().toString();
+        confirmnum = confirmNumInput.getText().toString();
+        pwd = pwdJoinInput.getText().toString();
+        confirmPswd = pwdJoinConfirm.getText().toString();
+
         switch (v.getId()) {
             case R.id.student_id_certification:
                 if (isClickedButton) {
@@ -183,26 +196,45 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                         countDownTimer.cancel();
                         countDown.setText("");
                     }
-
                 } else {
                     if (studentIdInput.getText().toString().length() == 8) {
-                        edittextStatusSetting(studentIdInput, false, true);
-                        authCode = createEmailCode();
+                        mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", "inha1234")
+                                .addOnCompleteListener(MakeAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            mUser = FirebaseAuth.getInstance().getCurrentUser();
+                                            mUser.delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                edittextStatusSetting(studentIdInput, false, true);
+                                                                authCode = createEmailCode();
 
-                        MailSend mailSend = new MailSend(MakeAccountActivity.this, studentIdInput.getText().toString(), authCode);
-                        mailSend.sendMail();
-                        isClickedButton = true;
-                        certificationButton.setText("재입력");
+                                                                MailSend mailSend = new MailSend(MakeAccountActivity.this, studentIdInput.getText().toString(), authCode);
+                                                                mailSend.sendMail();
+                                                                isClickedButton = true;
+                                                                certificationButton.setText("재입력");
 
-                        if (!isCounterRunning) {
-                            countDownTimer.cancel();
-                            countDown.setText("");
-                            countDownTimer.start();
-                        } else {
-                            countDownTimer.start();
-                        }
-                    } else
+                                                                if (!isCounterRunning) {
+                                                                    countDownTimer.cancel();
+                                                                    countDown.setText("");
+                                                                    countDownTimer.start();
+                                                                } else {
+                                                                    countDownTimer.start();
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
+                    } else {
                         Toast.makeText(MakeAccountActivity.this, "학번 8 자리를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case R.id.student_id_confirm:
@@ -224,12 +256,6 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                     Toast.makeText(MakeAccountActivity.this, "코드를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signUpButton:
-                final String name = nameInput.getText().toString().trim();
-                final String studentid = studentIdInput.getText().toString().trim();
-                final String confirmnum = confirmNumInput.getText().toString().trim();
-                final String pwd = pwdJoinInput.getText().toString().trim();
-                final String confirmPswd = pwdJoinConfirm.getText().toString().trim();
-
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                         && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
                         && pswdConfirm.getText() == "일치") {
@@ -259,13 +285,11 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                                                 .set(userMap, SetOptions.merge());//덮어쓰기(추가)
                                         finish();
                                         startActivity(new Intent(MakeAccountActivity.this, MainActivity.class));
-                                    } else {
-                                        Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 } else
-                    Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MakeAccountActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 
 public class MyPageActivty extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser mUser;
@@ -64,8 +62,6 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mStore = FirebaseFirestore.getInstance();
-
-
     }
 
     @Override
@@ -138,14 +134,15 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101) {
-            String change = data.getStringExtra("change");
-            if (change.equals("confirm")) {
+            if (resultCode == RESULT_OK) {
                 clickSetting();
             }
+        } else {
+            Toast.makeText(MyPageActivty.this, "Fail", Toast.LENGTH_SHORT).show();
         }
     }
 

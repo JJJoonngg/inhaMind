@@ -27,14 +27,16 @@ public class Secession extends AppCompatActivity implements View.OnClickListener
     String pswd;
     EditText secessionPswd;
 
-    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-
+    private FirebaseUser mUser;
+    private FirebaseFirestore mStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_secession);
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStore = FirebaseFirestore.getInstance();
 
         secessionButton = findViewById(R.id.secession_button);
         secessionButton.setOnClickListener(this);
