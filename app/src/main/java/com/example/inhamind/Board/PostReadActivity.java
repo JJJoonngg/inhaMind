@@ -24,7 +24,7 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_post_read);
 
         intent = getIntent();
-        title = intent.getStringExtra(DataName.titile);
+        title = intent.getStringExtra(DataName.title);
         contents = intent.getStringExtra(DataName.contents);
         studentID = intent.getStringExtra(DataName.studentID);
         status = intent.getStringExtra(DataName.status);
