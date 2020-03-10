@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.inhamind.Board.MyPostListActivity;
 import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +50,8 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
         TextView secession = findViewById(R.id.secession_button);
         phone_change = findViewById(R.id.phone_change);
         pswd_change = findViewById(R.id.pswd_change);
+
+        findViewById(R.id.my_post).setOnClickListener(this);
 
         logout.setOnClickListener(this);
         secession.setOnClickListener(this);
@@ -91,6 +94,10 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
                 build.setTitle("회원탈퇴 하시겠습니까?");
                 Intent intent = new Intent(MyPageActivty.this, Secession.class);
                 startActivity(intent);
+                break;
+
+            case R.id.my_post:
+                startActivity(new Intent(this, MyPostListActivity.class));
                 break;
         }
     }
