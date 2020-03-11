@@ -47,18 +47,14 @@ public class PostAdapters extends RecyclerView.Adapter<PostAdapters.PostViewHold
         holder.title.setText(title);
         holder.contents.setText(contents);
         holder.studentID.setText("학번 : " + studentID);
-        holder.status.setText(data.getStatus() == "true" ? "완료" : "미완료");
+        holder.status.setText(data.getStatus().equals("true") ? "완료" : "미완료");
         holder.cardView.setTag(holder.getAdapterPosition());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PostReadActivity.class);
                 Post cur = datas.get((int) view.getTag());
-                intent.putExtra(DataName.title, cur.getTitle());
-                intent.putExtra(DataName.contents, cur.getContents());
-                intent.putExtra(DataName.studentID, cur.getStudentID());
-                intent.putExtra(DataName.status, cur.getStatus());
-                intent.putExtra(DataName.timestamp, cur.getTimestamp());
+                intent.putExtra(DataName.data, cur);
                 context.startActivity(intent);
             }
         });

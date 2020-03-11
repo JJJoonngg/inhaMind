@@ -1,9 +1,12 @@
 package com.example.inhamind.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
 
-public class Post {
+public class Post implements Parcelable {
     private String documentID;
     private String title;
     private String contents;
@@ -24,6 +27,27 @@ public class Post {
         this.status = status;
         this.timestamp = timestamp;
     }
+
+    protected Post(Parcel in) {
+        documentID = in.readString();
+        title = in.readString();
+        contents = in.readString();
+        studentID = in.readString();
+        status = in.readString();
+        timestamp = in.readParcelable(Timestamp.class.getClassLoader());
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 
     public String getDocumentID() {
         return documentID;
@@ -83,5 +107,20 @@ public class Post {
                 ", status=" + status +
                 ", timestamp=" + timestamp +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(documentID);
+        parcel.writeString(title);
+        parcel.writeString(contents);
+        parcel.writeString(studentID);
+        parcel.writeString(status);
+        parcel.writeParcelable(timestamp, i);
     }
 }

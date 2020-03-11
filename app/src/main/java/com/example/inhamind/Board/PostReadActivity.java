@@ -10,13 +10,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.Models.DataName;
+import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.ServerTimestamp;
 
 public class PostReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView postTitle, postContents, postStudentID, postStatus;
     private String title, contents, studentID, status;
     private Intent intent;
+    private Post post;
+    @ServerTimestamp
+    private Timestamp timestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +30,13 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_post_read);
 
         intent = getIntent();
-        title = intent.getStringExtra(DataName.title);
-        contents = intent.getStringExtra(DataName.contents);
-        studentID = intent.getStringExtra(DataName.studentID);
-        status = intent.getStringExtra(DataName.status);
+        post = intent.getParcelableExtra(DataName.data);
+
+        title = post.getTitle();
+        contents = post.getContents();
+        studentID = post.getStudentID();
+        status = post.getStatus();
+        timestamp = post.getTimestamp();
 
         postTitle = findViewById(R.id.post_title);
         postContents = findViewById(R.id.post_contents);
@@ -36,7 +45,7 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         postTitle.setText(title);
         postContents.setText(contents);
 
-        if (status == "true") {
+        if (status.equals("true")) {
             postStatus.setText("완료");
             postStatus.setTextColor(Color.BLUE);
         } else {

@@ -18,6 +18,8 @@ import com.example.inhamind.R;
 
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class MyPostAdapters extends RecyclerView.Adapter<MyPostAdapters.MyPostViewHolder> {
 
     private List<Post> datas;
@@ -45,17 +47,15 @@ public class MyPostAdapters extends RecyclerView.Adapter<MyPostAdapters.MyPostVi
         if (contents.length() > 20) contents = contents.substring(0, 20) + "...";
         holder.title.setText(title);
         holder.contents.setText(contents);
-        holder.status.setText(data.getStatus() == "true" ? "완료" : "미완료");
+        holder.status.setText(data.getStatus().equals("true") ? "완료" : "미완료");
         holder.cardView.setTag(holder.getAdapterPosition());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MyPostReadActivity.class);
                 Post cur = datas.get((int) view.getTag());
-                intent.putExtra(DataName.title, cur.getTitle());
-                intent.putExtra(DataName.contents, cur.getContents());
-                intent.putExtra(DataName.status, cur.getStatus());
-                intent.putExtra(DataName.timestamp, cur.getTimestamp());
+                intent.putExtra(DataName.data, cur);
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
