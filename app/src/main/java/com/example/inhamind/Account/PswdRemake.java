@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.R;
@@ -26,17 +27,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PswdRemake extends MyPageActivty {
-    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+public class PswdRemake extends AppCompatActivity implements View.OnClickListener {
+    private FirebaseUser mUser;
+    private FirebaseFirestore mStore;
 
     String pswd;
 
     EditText repswd;
-    EditText repswd_confirm;
+    EditText repswdConfirm;
     TextView confirm;
-    Button repswd_button;
-
+    Button repswdButton;
 
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
 
@@ -45,14 +45,14 @@ public class PswdRemake extends MyPageActivty {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pswd_remake);
 
-
         repswd = findViewById(R.id.repswd);
-        repswd_confirm = findViewById(R.id.repswd_confirm_input);
+        repswdConfirm = findViewById(R.id.repswd_confirm_input);
         confirm = findViewById(R.id.repswd_confirm_output);
-        repswd_button = findViewById(R.id.repswd_button);
+        repswdButton = findViewById(R.id.repswd_button);
 
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStore = FirebaseFirestore.getInstance();
 
-        //현재 user의 정보 불러오기
         if (mUser != null) {
             mStore.collection(FirebaseID.user).document(mUser.getUid())
                     .get()
@@ -75,7 +75,7 @@ public class PswdRemake extends MyPageActivty {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (repswd.getText().toString().equals(repswd_confirm.getText().toString())) {
+                if (repswd.getText().toString().equals(repswdConfirm.getText().toString())) {
                     confirm.setText("일치");
                     confirm.setTextColor(Color.LTGRAY);
                 } else {
@@ -89,7 +89,7 @@ public class PswdRemake extends MyPageActivty {
             }
         });
 
-        repswd_confirm.addTextChangedListener(new TextWatcher() {
+        repswdConfirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -97,7 +97,7 @@ public class PswdRemake extends MyPageActivty {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (repswd.getText().toString().equals(repswd_confirm.getText().toString())) {
+                if (repswd.getText().toString().equals(repswdConfirm.getText().toString())) {
                     confirm.setText("일치");
                     confirm.setTextColor(Color.LTGRAY);
                 } else {
@@ -111,13 +111,27 @@ public class PswdRemake extends MyPageActivty {
 
             }
         });
+        repswdButton.setOnClickListener(this);
+    }
 
-        repswd_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public static boolean validatePassword(String pwStr) {
+        Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr);
+        return matcher.matches();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.repswd_button:
                 if (validatePassword(repswd.getText().toString()) == true) {
                     if (confirm.getText() == "일치") {
-                        if (!pswd.equals(repswd)) {
+                        if (!repswd.getText().toString().equals(pswd)) {
                             if (mUser != null) {
                                 mStore.collection(FirebaseID.user).document(mUser.getUid())
                                         .update("password", repswd.getText().toString());
@@ -143,12 +157,6 @@ public class PswdRemake extends MyPageActivty {
                 } else {
                     Toast.makeText(PswdRemake.this, "비밀번호 형식을 지켜주세요", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    public static boolean validatePassword(String pwStr) {
-        Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr);
-        return matcher.matches();
+        }
     }
 }

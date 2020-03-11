@@ -35,21 +35,28 @@ import java.util.Map;
 public class MakeAccountActivity extends LoginActivity implements View.OnClickListener {
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
 
-    EditText name_input;
-    EditText student_id_input;
-    EditText confirm_num_input;
-    EditText pwd_join_input;
-    EditText pwd_join_confirm;
-    Button certification_button;
-    Button confirm_button;
+    String name;
+    String studentid;
+    String confirmnum;
+    String pwd;
+    String confirmPswd;
 
-    TextView pswd_confirm;
-    TextView count_view;
-    TextView count_down;
+    EditText nameInput;
+    EditText studentIdInput;
+    EditText confirmNumInput;
+    EditText pwdJoinInput;
+    EditText pwdJoinConfirm;
+    Button certificationButton;
+    Button confirmButton;
+
+    TextView pswdConfirm;
+    TextView countView;
+    TextView countDown;
 
     private Button btn;
     FirebaseAuth mAuth;
     FirebaseFirestore mStore;
+    private FirebaseUser mUser;
 
     private String authCode;
 
@@ -60,13 +67,13 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
         @Override
         public void onTick(long m) {
-            count_down.setText(String.format(Locale.getDefault(), "%02d : %02d", (m / 1000L) / 60, (m / 1000L) % 60));
+            countDown.setText(String.format(Locale.getDefault(), "%02d : %02d", (m / 1000L) / 60, (m / 1000L) % 60));
         }
 
         @Override
         public void onFinish() {
             authCode = createEmailCode();
-            count_down.setText("");
+            countDown.setText("");
             Toast.makeText(MakeAccountActivity.this, "인증코드를 재전송 해주세요.", Toast.LENGTH_SHORT).show();
             isCounterRunning = false;
         }
@@ -77,36 +84,36 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_account);
 
-        name_input = findViewById(R.id.sign_up_input_name);
-        student_id_input = findViewById(R.id.sign_up_student_id);
-        confirm_num_input = findViewById(R.id.sign_up_confirm);
-        pwd_join_input = findViewById(R.id.sign_up_input_pswd);
-        pwd_join_confirm = findViewById(R.id.sign_up_input_pswd_confirm);
+        nameInput = findViewById(R.id.sign_up_input_name);
+        studentIdInput = findViewById(R.id.sign_up_student_id);
+        confirmNumInput = findViewById(R.id.sign_up_confirm);
+        pwdJoinInput = findViewById(R.id.sign_up_input_pswd);
+        pwdJoinConfirm = findViewById(R.id.sign_up_input_pswd_confirm);
 
-        count_view = findViewById(R.id.count_view);
-        pswd_confirm = findViewById(R.id.repswd_confirm);
-        count_down = findViewById(R.id.count_down_time);
+        countView = findViewById(R.id.count_view);
+        pswdConfirm = findViewById(R.id.repswd_confirm);
+        countDown = findViewById(R.id.count_down_time);
 
-        certification_button = findViewById(R.id.student_id_certification);
-        certification_button.setOnClickListener(this);
-        confirm_button = findViewById(R.id.student_id_confirm);
-        confirm_button.setOnClickListener(this);
+        certificationButton = findViewById(R.id.student_id_certification);
+        certificationButton.setOnClickListener(this);
+        confirmButton = findViewById(R.id.student_id_confirm);
+        confirmButton.setOnClickListener(this);
         btn = findViewById(R.id.signUpButton);
         btn.setOnClickListener(this);
 
-        pwd_join_confirm.addTextChangedListener(new TextWatcher() {
+        pwdJoinConfirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (pwd_join_input.getText().toString().equals(pwd_join_confirm.getText().toString())) {
-                    pswd_confirm.setText("일치");
-                    pswd_confirm.setTextColor(Color.LTGRAY);
+                if (pwdJoinInput.getText().toString().equals(pwdJoinConfirm.getText().toString())) {
+                    pswdConfirm.setText("일치");
+                    pswdConfirm.setTextColor(Color.LTGRAY);
                 } else {
-                    pswd_confirm.setText("불일치");
-                    pswd_confirm.setTextColor(Color.RED);
+                    pswdConfirm.setText("불일치");
+                    pswdConfirm.setTextColor(Color.RED);
                 }
             }
 
@@ -115,19 +122,19 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
             }
         });
 
-        pwd_join_input.addTextChangedListener(new TextWatcher() {
+        pwdJoinInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (pwd_join_input.getText().toString().equals(pwd_join_confirm.getText().toString())) {
-                    pswd_confirm.setText("일치");
-                    pswd_confirm.setTextColor(Color.LTGRAY);
+                if (pwdJoinInput.getText().toString().equals(pwdJoinConfirm.getText().toString())) {
+                    pswdConfirm.setText("일치");
+                    pswdConfirm.setTextColor(Color.LTGRAY);
                 } else {
-                    pswd_confirm.setText("불일치");
-                    pswd_confirm.setTextColor(Color.RED);
+                    pswdConfirm.setText("불일치");
+                    pswdConfirm.setTextColor(Color.RED);
                 }
             }
 
@@ -168,72 +175,91 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        name = nameInput.getText().toString();
+        studentid = studentIdInput.getText().toString();
+        confirmnum = confirmNumInput.getText().toString();
+        pwd = pwdJoinInput.getText().toString();
+        confirmPswd = pwdJoinConfirm.getText().toString();
+
         switch (v.getId()) {
             case R.id.student_id_certification:
                 if (isClickedButton) {
-                    edittextStatusSetting(student_id_input, true, false);
-                    student_id_input.setFocusableInTouchMode(true);
-                    student_id_input.setText("");
+                    edittextStatusSetting(studentIdInput, true, false);
+                    studentIdInput.setFocusableInTouchMode(true);
+                    studentIdInput.setText("");
 
                     authCode = createEmailCode();
                     isClickedButton = false;
-                    buttonStatusSetting(certification_button, true, false, "인증하기");
+                    buttonStatusSetting(certificationButton, true, false, "인증하기");
 
                     if (!isCounterRunning) {
                         countDownTimer.cancel();
-                        count_down.setText("");
+                        countDown.setText("");
                     }
-
                 } else {
-                    if (student_id_input.getText().toString().length() == 8) {
-                        edittextStatusSetting(student_id_input, false, true);
-                        authCode = createEmailCode();
+                    if (studentIdInput.getText().toString().length() == 8) {
+                        mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", "inha1234")
+                                .addOnCompleteListener(MakeAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            mUser = FirebaseAuth.getInstance().getCurrentUser();
+                                            mUser.delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                edittextStatusSetting(studentIdInput, false, true);
+                                                                authCode = createEmailCode();
 
-                        MailSend mailSend = new MailSend(MakeAccountActivity.this, student_id_input.getText().toString(), authCode);
-                        mailSend.sendMail();
-                        isClickedButton = true;
-                        certification_button.setText("재입력");
+                                                                MailSend mailSend = new MailSend(MakeAccountActivity.this, studentIdInput.getText().toString(), authCode);
+                                                                mailSend.sendMail();
+                                                                isClickedButton = true;
+                                                                certificationButton.setText("재입력");
 
-                        if (!isCounterRunning) {
-                            countDownTimer.cancel();
-                            count_down.setText("");
-                            countDownTimer.start();
-                        } else {
-                            countDownTimer.start();
-                        }
-                    } else
+                                                                if (!isCounterRunning) {
+                                                                    countDownTimer.cancel();
+                                                                    countDown.setText("");
+                                                                    countDownTimer.start();
+                                                                } else {
+                                                                    countDownTimer.start();
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
+                    } else {
                         Toast.makeText(MakeAccountActivity.this, "학번 8 자리를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case R.id.student_id_confirm:
-                String inputAuthCode = confirm_num_input.getText().toString();
+                String inputAuthCode = confirmNumInput.getText().toString();
                 if (inputAuthCode.equals(authCode)) {
                     Toast.makeText(MakeAccountActivity.this, "인증 되었습니다.", Toast.LENGTH_SHORT).show();
 
-                    edittextStatusSetting(confirm_num_input, false, true);
-                    edittextStatusSetting(student_id_input, false, true);
+                    edittextStatusSetting(confirmNumInput, false, true);
+                    edittextStatusSetting(studentIdInput, false, true);
 
-                    buttonStatusSetting(certification_button, false, true, "인증");
-                    buttonStatusSetting(confirm_button, false, true, "완료");
+                    buttonStatusSetting(certificationButton, false, true, "인증");
+                    buttonStatusSetting(confirmButton, false, true, "완료");
 
-                    count_down.setText("");
+                    countDown.setText("");
                     countDownTimer.cancel();
-                    count_down.setClickable(false);
-                    count_down.setFocusable(false);
+                    countDown.setClickable(false);
+                    countDown.setFocusable(false);
                 } else
                     Toast.makeText(MakeAccountActivity.this, "코드를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signUpButton:
-                final String name = name_input.getText().toString().trim();
-                final String studentid = student_id_input.getText().toString().trim();
-                final String confirmnum = confirm_num_input.getText().toString().trim();
-                final String pwd = pwd_join_input.getText().toString().trim();
-                final String confirmPswd = pwd_join_confirm.getText().toString().trim();
-
                 if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                         && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
-                        && pswd_confirm.getText() == "일치") {
-                    if (confirm_button.getText() == "확인") {
+                        && pswdConfirm.getText() == "일치") {
+                    if (confirmButton.getText() == "확인") {
                         Toast.makeText(MakeAccountActivity.this, "학번 인증을 진행해주세요", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -259,13 +285,11 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                                                 .set(userMap, SetOptions.merge());//덮어쓰기(추가)
                                         finish();
                                         startActivity(new Intent(MakeAccountActivity.this, MainActivity.class));
-                                    } else {
-                                        Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 } else
-                    Toast.makeText(MakeAccountActivity.this, "이미 존재하는 학번입니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MakeAccountActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
         }
     }
 

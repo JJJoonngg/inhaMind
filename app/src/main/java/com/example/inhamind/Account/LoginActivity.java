@@ -32,11 +32,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String pwd;
 
     private SharedPreferences appData;
-    TextView make_account;
-    TextView find_pwd;
+    TextView makeAccount;
+    TextView findPwd;
     EditText EditTextId;
     EditText EditTextPswd;
-    ImageButton login_button;
+    ImageButton loginButton;
     CheckBox autoLogin;
 
     FirebaseAuth mAuth;
@@ -51,14 +51,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         autoLogin = findViewById(R.id.auto_login);
         autoLogin.setOnClickListener(this);
 
-        find_pwd = findViewById(R.id.pswd_find);
-        find_pwd.setOnClickListener(this);
+        findPwd = findViewById(R.id.pswd_find);
+        findPwd.setOnClickListener(this);
 
-        make_account = findViewById(R.id.make_account);
-        make_account.setOnClickListener(this);
+        makeAccount = findViewById(R.id.make_account);
+        makeAccount.setOnClickListener(this);
 
-        login_button = findViewById(R.id.login_button);
-        login_button.setOnClickListener(this);
+
+        loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -128,9 +129,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             } catch (FirebaseAuthInvalidUserException e) {
                                                 Toast.makeText(LoginActivity.this, "회원가입하지 않은 학번입니다.", Toast.LENGTH_SHORT).show();
                                             } catch (FirebaseNetworkException e) {
-                                                Toast.makeText(LoginActivity.this, "Firebase NetworkException", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show();
                                             } catch (Exception e) {
-                                                Toast.makeText(LoginActivity.this, "Exception", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                                             }
 
                                         } else { //auto
@@ -145,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Pattern p = Pattern.compile("(^.*(?=.{6,100})(?=.*[0-9])(?=.*[a-zA-Z]).*$)");
                         Matcher m = p.matcher(pwd);
                         if (!m.find() && pwd.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"))
-                            Toast.makeText(LoginActivity.this, "비밀번호 형식을 지켜주세요.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "8자리 학번을 입력해주세요", Toast.LENGTH_SHORT).show();

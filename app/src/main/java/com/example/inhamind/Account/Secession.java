@@ -21,26 +21,28 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Secession extends AppCompatActivity implements View.OnClickListener {
-    private Button secession_button;
+    private Button secessionButton;
     EditText message;
     String studentId;
     String pswd;
-    EditText secession_pswd;
+    EditText secessionPswd;
 
-    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-
+    private FirebaseUser mUser;
+    private FirebaseFirestore mStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_secession);
 
-        secession_button = (Button) findViewById(R.id.secession_button);
-        secession_button.setOnClickListener(this);
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStore = FirebaseFirestore.getInstance();
+
+        secessionButton = findViewById(R.id.secession_button);
+        secessionButton.setOnClickListener(this);
 
         message = findViewById(R.id.secession_message);
-        secession_pswd = findViewById(R.id.secession_pswd);
+        secessionPswd = findViewById(R.id.secession_pswd);
 
         //현재 user의 정보 불러오기
         if (mUser != null) {
@@ -65,7 +67,7 @@ public class Secession extends AppCompatActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.secession_button:
                 if (mUser != null) {
-                    if (secession_pswd.getText().toString().equals(pswd)) {
+                    if (secessionPswd.getText().toString().equals(pswd)) {
                         mUser.delete()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,22 +23,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
 public class MyPageActivty extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser mUser;
     private FirebaseFirestore mStore;
 
     boolean isClickedButton = false;
-    TextView phone_change;
-    TextView pswd_change;
+    TextView phoneChange;
+    TextView pswdChange;
 
     String name;
     String phoneNumber;
     String pswd;
 
-    EditText user_name;
-    EditText user_phone;
-    EditText user_pswd;
+    EditText userName;
+    EditText userPhone;
+    EditText userPswd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +46,22 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
 
         TextView logout = findViewById(R.id.logout);
         TextView secession = findViewById(R.id.secession_button);
-        phone_change = findViewById(R.id.phone_change);
-        pswd_change = findViewById(R.id.pswd_change);
+        phoneChange = findViewById(R.id.phone_change);
+        pswdChange = findViewById(R.id.pswd_change);
 
         findViewById(R.id.my_post).setOnClickListener(this);
 
         logout.setOnClickListener(this);
         secession.setOnClickListener(this);
-        phone_change.setOnClickListener(this);
-        pswd_change.setOnClickListener(this);
+        phoneChange.setOnClickListener(this);
+        pswdChange.setOnClickListener(this);
 
-        user_name = findViewById(R.id.user_name);
-        user_phone = findViewById(R.id.user_phone);
-        user_pswd = findViewById(R.id.user_pswd);
+        userName = findViewById(R.id.user_name);
+        userPhone = findViewById(R.id.user_phone);
+        userPswd = findViewById(R.id.user_pswd);
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mStore = FirebaseFirestore.getInstance();
-
-
     }
 
     @Override
@@ -104,24 +100,24 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
 
     public void clickSetting() {
         if (isClickedButton) {
-            edittextStatusSetting(user_pswd, true, false);
-            user_pswd.setFocusableInTouchMode(true);
-            user_pswd.setHint("현재 비밀번호를 입력해주세요");
+            edittextStatusSetting(userPswd, true, false);
+            userPswd.setFocusableInTouchMode(true);
+            userPswd.setHint("현재 비밀번호를 입력해주세요");
 
             isClickedButton = false;
-            pswd_change.setText("변경하기");
+            pswdChange.setText("변경하기");
         } else {
-            user_pswd.setHint("");
-            edittextStatusSetting(user_pswd, false, true);
+            userPswd.setHint("");
+            edittextStatusSetting(userPswd, false, true);
             isClickedButton = true;
-            pswd_change.setText("재변경하기");
+            pswdChange.setText("재변경하기");
         }
     }
 
     public void changePassword() {
-        if (pswd_change.getText() == "재변경하기") {
+        if (pswdChange.getText() == "재변경하기") {
             clickSetting();
-        } else if (!user_pswd.getText().toString().equals(pswd)) {
+        } else if (!userPswd.getText().toString().equals(pswd)) {
             Toast.makeText(MyPageActivty.this, "비밀번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), PswdRemake.class);
@@ -137,24 +133,16 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
         else e.setTextColor(Color.BLACK);
     }
 
-    //??
-    public void TextStatusSetting(TextView b, boolean status, boolean c, String s) {
-        b.setClickable(status);
-        b.setFocusable(status);
-        b.setText(s);
-        if (c) b.setTextColor(Color.GRAY);
-        else b.setTextColor(Color.BLACK);
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101) {
-            String change = data.getStringExtra("change");
-            if (change.equals("confirm")) {
+            if (resultCode == RESULT_OK) {
                 clickSetting();
             }
+        } else {
+            Toast.makeText(MyPageActivty.this, "Fail", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -176,8 +164,8 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
                                     phoneNumber = (String) task.getResult().get(FirebaseID.phonenumber);
                                 }
                             }
-                            user_name.setText(name);
-                            user_phone.setText(phoneNumber);
+                            userName.setText(name);
+                            userPhone.setText(phoneNumber);
                         }
                     });
         }
