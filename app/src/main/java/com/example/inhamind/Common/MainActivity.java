@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Board.BoardFragment;
 import com.example.inhamind.Chat.ChattingFragment;
+import com.example.inhamind.Chat.PeopleFragment;
 import com.example.inhamind.R;
 import com.example.inhamind.Setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private BoardFragment boardFragment = new BoardFragment();
     private SettingFragment settingFragment = new SettingFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
+    //임시
+    private PeopleFragment peopleFragment = new PeopleFragment();
     private NoticeFragment noticeFragment = new NoticeFragment();
     private CustomerServiceFragment customerServiceFragment = new CustomerServiceFragment();
 
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
                     break;
                 case R.id.chatting:
-                    transaction.replace(R.id.frameLayout, chattingFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, peopleFragment).commitAllowingStateLoss();
                     break;
                 case R.id.setting:
                     transaction.replace(R.id.frameLayout, settingFragment).commitAllowingStateLoss();
