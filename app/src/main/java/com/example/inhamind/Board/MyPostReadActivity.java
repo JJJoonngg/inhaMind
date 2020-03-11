@@ -3,6 +3,7 @@ package com.example.inhamind.Board;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import com.example.inhamind.R;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
 
-public class MyPostReadActivity extends AppCompatActivity {
+public class MyPostReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView postTitle, postContents, postStatus;
     private String title, contents, studentID, status;
@@ -40,7 +41,7 @@ public class MyPostReadActivity extends AppCompatActivity {
         postContents = findViewById(R.id.post_contents);
         postStatus = findViewById(R.id.post_status);
 
-        postTitle.setText(title);
+        postTitle.setText("제목 : " + title);
         postContents.setText(contents);
 
         if (status.equals("true")) {
@@ -53,5 +54,20 @@ public class MyPostReadActivity extends AppCompatActivity {
             postStatus.setText("진행중");
             postStatus.setTextColor(Color.BLUE);
         }
+
+        findViewById(R.id.close_button).setOnClickListener(this);
+        findViewById(R.id.option_button).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.close_button:
+                this.finish();
+                break;
+            case R.id.option_button:
+                break;
+        }
+
     }
 }

@@ -39,7 +39,7 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:id="@+id/setting_button"
+            android:id="@+id/option_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
@@ -63,13 +63,13 @@
             android:id="@+id/post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
+            android:layout_margin="3dp"
             android:clickable="false"
             android:textSize="20sp"
             android:textStyle="bold" />
         <View
             android:layout_width="wrap_content"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
         <TextView
