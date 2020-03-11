@@ -52,7 +52,9 @@
                 android:hint="이름"
                 android:inputType="text"
                 android:padding="15dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:privateImeOptions="defaultInputmode=korean"/>
 
             <TextView
                 android:id="@+id/count_down_time"
@@ -78,7 +80,8 @@
                 android:hint="학번"
                 android:maxLength="8"
                 android:padding="15dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:inputType="number"/>
 
             <Button
                 android:id="@+id/student_id_certification"
@@ -107,7 +110,8 @@
                 android:layout_marginTop="2dp"
                 android:hint="인증번호"
                 android:padding="15dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:maxLength="8"/>
 
             <Button
                 android:id="@+id/student_id_confirm"
@@ -128,7 +132,8 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:padding="15dp"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:maxLength="20"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -145,7 +150,8 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:maxLength="20"/>
 
             <TextView
                 android:id="@+id/repswd_confirm"

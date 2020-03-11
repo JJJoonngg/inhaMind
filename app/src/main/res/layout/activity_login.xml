@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:inputType="number"
-            android:layout_marginLeft="15sp"/>
+            android:layout_marginLeft="15sp"
+            android:maxLength="8"/>
     </LinearLayout>
 
     <LinearLayout
@@ -56,6 +57,7 @@
             android:singleLine="true"
             android:layout_marginLeft="15sp"
             android:inputType="textPassword"
+            android:maxLength="20"
             />
     </LinearLayout>
     <CheckBox
