@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private User user;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.myPage:
-                        startActivity(new Intent(MainActivity.this, MyPageActivty.class));
+                        intent = new Intent(MainActivity.this, MyPageActivty.class);
+                        intent.putExtra(DataName.user, user);
+                        startActivity(intent);
                         break;
                     case R.id.notice:
-                        Intent intent = new Intent(MainActivity.this, NoticeListActivity.class);
+                        intent = new Intent(MainActivity.this, NoticeListActivity.class);
                         intent.putExtra(DataName.user, user);
                         startActivity(intent);
                         break;

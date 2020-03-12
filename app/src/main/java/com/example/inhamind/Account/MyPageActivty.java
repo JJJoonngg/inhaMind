@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.Board.MyPostListActivity;
 import com.example.inhamind.Common.FirebaseID;
+import com.example.inhamind.Models.DataName;
+import com.example.inhamind.Models.User;
 import com.example.inhamind.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,22 +29,20 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
     private FirebaseUser mUser;
     private FirebaseFirestore mStore;
 
-    boolean isClickedButton = false;
-    TextView phoneChange;
-    TextView pswdChange;
-
-    String name;
-    String phoneNumber;
-    String pswd;
-
-    EditText userName;
-    EditText userPhone;
-    EditText userPswd;
+    private boolean isClickedButton = false;
+    private TextView phoneChange, pswdChange;
+    private String name, phoneNumber, pswd;
+    private EditText userName, userPhone, userPswd;
+    private User user;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page_activty);
+
+        intent = getIntent();
+        user = intent.getParcelableExtra(DataName.user);
 
         TextView logout = findViewById(R.id.logout);
         TextView secession = findViewById(R.id.secession_button);
@@ -59,6 +59,8 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
         userName = findViewById(R.id.user_name);
         userPhone = findViewById(R.id.user_phone);
         userPswd = findViewById(R.id.user_pswd);
+
+        userName.setText(user.getName());
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mStore = FirebaseFirestore.getInstance();
@@ -164,7 +166,6 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
                                     phoneNumber = (String) task.getResult().get(FirebaseID.phonenumber);
                                 }
                             }
-                            userName.setText(name);
                             userPhone.setText(phoneNumber);
                         }
                     });
