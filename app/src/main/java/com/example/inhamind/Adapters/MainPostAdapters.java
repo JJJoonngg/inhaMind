@@ -2,6 +2,8 @@ package com.example.inhamind.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,21 +41,30 @@ public class MainPostAdapters extends RecyclerView.Adapter<MainPostAdapters.Main
     @Override
     public void onBindViewHolder(@NonNull MainPostViewHolder holder, int position) {
         data = datas.get(position);
-        title = data.getTitle();
-        if (title.length() > 10) title = title.substring(0, 10) + "...";
-        studentID = data.getStudentID();
-        holder.title.setText(title);
-        holder.studentID.setText("학번 : " + studentID);
-        holder.layout.setTag(holder.getAdapterPosition());
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, PostReadActivity.class);
-                Post cur = datas.get((int) view.getTag());
-                intent.putExtra(DataName.data, cur);
-                context.startActivity(intent);
-            }
-        });
+        if (data.getTitle() == null) {
+            holder.title.setText("글이 없습니다.");
+            holder.title.setTextColor(Color.GRAY);
+            holder.title.setTextSize(12);
+            holder.title.setTypeface(holder.title.getTypeface(), Typeface.NORMAL);
+            holder.studentID.setText(" ");
+
+        } else {
+            title = data.getTitle();
+            if (title.length() > 10) title = title.substring(0, 10) + "...";
+            studentID = data.getStudentID();
+            holder.title.setText(title);
+            holder.studentID.setText("학번 : " + studentID);
+            holder.layout.setTag(holder.getAdapterPosition());
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PostReadActivity.class);
+                    Post cur = datas.get((int) view.getTag());
+                    intent.putExtra(DataName.data, cur);
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

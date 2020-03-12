@@ -78,6 +78,14 @@ public class HomeFragment extends Fragment {
                                 mDatas.add(data);
                                 cnt++;
                             }
+                            if(cnt <3){
+                                while(true){
+                                    if(cnt == 3) break;
+                                    Post data = new Post(null, null, null, null, null, null, null);
+                                    mDatas.add(data);
+                                    cnt++;
+                                }
+                            }
                             allAdapters = new MainPostAdapters(mDatas, getContext());
                             allPostRecylerView.setAdapter(allAdapters);
                         }
@@ -108,6 +116,14 @@ public class HomeFragment extends Fragment {
                                     Post data = new Post(documentID, postID, title, contents, studentID, status, timestamp);
                                     mDatas.add(data);
                                     cnt++;
+                                }
+                                if(cnt <3){
+                                    while(true){
+                                        if(cnt == 3) break;
+                                        Post data = new Post(null, null, null, null, null, null, null);
+                                        mDatas.add(data);
+                                        cnt++;
+                                    }
                                 }
                                 myAllAdapters = new MainMyPostAdapters(mDatas, getContext());
                                 myPostRecylerView.setAdapter(myAllAdapters);
