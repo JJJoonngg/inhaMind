@@ -1,5 +1,6 @@
 package com.example.inhamind.Board;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.Common.FirebaseID;
@@ -161,7 +163,34 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
                     postContents.requestFocus();
                     break;
                 case R.id.delete:
-                    Toast.makeText(MyPostReadActivity.this, "삭제", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MyPostReadActivity.this);
+                    builder.setTitle("삭제 하시겠습니까?");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (mUser != null) {
+                                mStore.collection(FirebaseID.post)
+                                        .document(post.getPostID())
+                                        .delete()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task != null) {
+                                                    finish();
+                                                    Toast.makeText(MyPostReadActivity.this, "삭제가 완료 됐습니다.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                     break;
             }
             return false;
