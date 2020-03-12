@@ -26,8 +26,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/border"
             android:orientation="vertical"
-            android:padding="5dp"
-            tools:context="Board.BoardFragment">
+            android:padding="5dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_post_list"
@@ -44,8 +43,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/border"
             android:orientation="vertical"
-            android:padding="5dp"
-            tools:context="Board.BoardFragment">
+            android:padding="5dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/my_post_list"
