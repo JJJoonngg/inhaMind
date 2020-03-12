@@ -15,7 +15,7 @@
         android:layout_margin="8dp"
         android:layout_weight="1"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         tools:text="TITLE" />
 
@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="10dp"
         android:textColor="@android:color/darker_gray"
-        android:textSize="15sp"
+        android:textSize="10sp"
         tools:text="학번" />
 
 </LinearLayout>
