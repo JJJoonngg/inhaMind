@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Board.MyPostReadActivity"></activity>
+        <activity android:name=".Notice.NoticeReadActivity"></activity>
+        <activity android:name=".Notice.NoticeListActivity" />
+        <activity android:name=".Notice.NoticeWirteActivity" />
+        <activity android:name=".Board.MyPostReadActivity" />
         <activity android:name=".Board.MyPostListActivity" />
         <activity android:name=".Board.PostReadActivity" />
         <activity android:name=".Account.ServiceCenter" />
