@@ -8,6 +8,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 
 public class Post implements Parcelable {
     private String documentID;
+    private String postID;
     private String title;
     private String contents;
     private String studentID;
@@ -19,8 +20,9 @@ public class Post implements Parcelable {
 
     }
 
-    public Post(String documentID, String title, String contents, String studentID, String status, Timestamp timestamp) {
+    public Post(String documentID, String postID, String title, String contents, String studentID, String status, Timestamp timestamp) {
         this.documentID = documentID;
+        this.postID = postID;
         this.title = title;
         this.contents = contents;
         this.studentID = studentID;
@@ -30,6 +32,7 @@ public class Post implements Parcelable {
 
     protected Post(Parcel in) {
         documentID = in.readString();
+        postID = in.readString();
         title = in.readString();
         contents = in.readString();
         studentID = in.readString();
@@ -55,6 +58,14 @@ public class Post implements Parcelable {
 
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
+    }
+
+    public String getPostID() {
+        return postID;
+    }
+
+    public void setPostID(String postID) {
+        this.postID = postID;
     }
 
     public String getTitle() {
@@ -101,6 +112,7 @@ public class Post implements Parcelable {
     public String toString() {
         return "Post{" +
                 "documentID='" + documentID + '\'' +
+                "postID='" + postID + '\'' +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
                 ", studentID='" + studentID + '\'' +
@@ -117,6 +129,7 @@ public class Post implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(documentID);
+        parcel.writeString(postID);
         parcel.writeString(title);
         parcel.writeString(contents);
         parcel.writeString(studentID);

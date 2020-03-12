@@ -10,15 +10,26 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.Models.DataName;
 import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ServerTimestamp;
 
 public class MyPostReadActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     private EditText postTitle, postContents, postStatus;
     private String title, contents, studentID, status;
@@ -50,7 +61,7 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
         cancelBtn = findViewById(R.id.cancel);
         cancelBtn.setOnClickListener(this);
 
-        postTitle.setText("제목 : " + title);
+        postTitle.setText(title);
         postContents.setText(contents);
 
         if (status.equals("true")) {
@@ -69,6 +80,17 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    public void edittextStatusSetting(EditText e, boolean status) {
+        e.setClickable(status);
+        e.setFocusable(status);
+    }
+
+    public void buttonStatusSetting(Button b, boolean status) {
+        b.setClickable(status);
+        b.setFocusable(status);
+        b.setVisibility(status ? View.VISIBLE : View.INVISIBLE);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -83,20 +105,41 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.cancel:
-                postTitle.setText("제목 : " + title);
+                postTitle.setText(title);
                 postContents.setText(contents);
-                doneBtn.setVisibility(View.INVISIBLE);
-                doneBtn.setFocusable(false);
-                doneBtn.setClickable(false);
-                cancelBtn.setVisibility(View.INVISIBLE);
-                cancelBtn.setFocusable(false);
-                cancelBtn.setClickable(false);
-                postTitle.setFocusable(false);
-                postTitle.setClickable(false);
-                postContents.setFocusable(false);
-                postContents.setFocusable(false);
+                buttonStatusSetting(doneBtn, false);
+                buttonStatusSetting(cancelBtn, false);
+                edittextStatusSetting(postTitle, false);
+                edittextStatusSetting(postContents, false);
                 break;
             case R.id.done:
+                String newTitle = postTitle.getText().toString();
+                String newContents = postContents.getText().toString();
+                if (newTitle.length() == 0)
+                    Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                else if (newContents.length() == 0)
+                    Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                else {
+                    if (mUser != null) {
+                        mStore.collection(FirebaseID.post)
+                                .document(post.getPostID())
+                                .update(FirebaseID.title, newTitle, FirebaseID.contents, newContents)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task != null) {
+                                            Toast.makeText(MyPostReadActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                    postTitle.setText(newTitle);
+                    postContents.setText(newContents);
+                    buttonStatusSetting(doneBtn, false);
+                    buttonStatusSetting(cancelBtn, false);
+                    edittextStatusSetting(postTitle, false);
+                    edittextStatusSetting(postContents, false);
+                }
                 break;
         }
     }

@@ -56,12 +56,13 @@ public class BoardFragment extends Fragment {
                             for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
                                 Map<String, Object> shot = snap.getData();
                                 String documentID = String.valueOf(shot.get(FirebaseID.documnetID));
+                                String postID = String.valueOf(shot.get(FirebaseID.postID));
                                 String title = String.valueOf(shot.get(FirebaseID.title));
                                 String contents = String.valueOf(shot.get(FirebaseID.contents));
                                 String studentID = String.valueOf(shot.get(FirebaseID.studentID));
                                 String status = String.valueOf(shot.get(FirebaseID.status));
                                 Timestamp timestamp = (Timestamp) shot.get(FirebaseID.timestamp);
-                                Post data = new Post(documentID, title, contents, studentID, status, timestamp);
+                                Post data = new Post(documentID, postID, title, contents, studentID, status, timestamp);
                                 mDatas.add(data);
                             }
                             mAdapters = new PostAdapters(getContext(), mDatas);
