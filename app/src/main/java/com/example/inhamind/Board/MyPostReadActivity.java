@@ -151,11 +151,8 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.modify:
-                    doneBtn.setVisibility(View.VISIBLE);
-                    doneBtn.setClickable(true);
-                    doneBtn.setFocusable(true);
-                    cancelBtn.setVisibility(View.VISIBLE);
-                    cancelBtn.setFocusable(true);
+                    buttonStatusSetting(doneBtn, true);
+                    buttonStatusSetting(cancelBtn, true);
                     cancelBtn.setClickable(true);
                     postTitle.setFocusableInTouchMode(true);
                     postTitle.requestFocus();
