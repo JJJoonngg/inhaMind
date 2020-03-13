@@ -64,6 +64,26 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mStore = FirebaseFirestore.getInstance();
+
+        //현재 user의 정보 불러오기
+        if (mUser != null) {
+            mStore.collection(FirebaseID.user).document(mUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult() != null) {
+                                    name = (String) task.getResult().get(FirebaseID.name);
+                                    pswd = (String) task.getResult().get(FirebaseID.password);
+                                    phoneNumber = (String) task.getResult().get(FirebaseID.phonenumber);
+                                }
+                            }
+                            userName.setText(name);
+                            userPhone.setText(phoneNumber);
+                        }
+                    });
+        }
     }
 
     @Override
