@@ -117,6 +117,7 @@ public class HomeFragment extends Fragment {
                                     cnt++;
                                 }
                             }
+
                             allAdapters = new MainPostAdapters(postDatas, getContext());
                             allPostRecylerView.setAdapter(allAdapters);
                         }
@@ -125,6 +126,12 @@ public class HomeFragment extends Fragment {
 
         if (mUser != null) {
             postDatas = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                Post data = new Post(null, null, null, null, null, null, null);
+                postDatas.add(data);
+                myAllAdapters = new MainMyPostAdapters(postDatas, getContext());
+                myPostRecylerView.setAdapter(myAllAdapters);
+            }
             mStore.collection(FirebaseID.post)
                     .whereEqualTo(FirebaseID.documnetID, mUser.getUid())
                     .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
