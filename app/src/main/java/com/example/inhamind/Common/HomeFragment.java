@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment {
 
         noticeDatas = new ArrayList<>();
         mStore.collection(FirebaseID.notice)
+                .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

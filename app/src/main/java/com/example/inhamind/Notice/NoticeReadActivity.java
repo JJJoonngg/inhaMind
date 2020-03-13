@@ -160,7 +160,7 @@ public class NoticeReadActivity extends AppCompatActivity implements View.OnClic
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if (mUser != null) {
-                                mStore.collection(FirebaseID.post)
+                                mStore.collection(FirebaseID.notice)
                                         .document(notice.getNoticeID())
                                         .delete()
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
