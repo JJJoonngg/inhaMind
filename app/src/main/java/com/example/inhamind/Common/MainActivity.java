@@ -17,10 +17,19 @@ import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Account.ServiceCenter;
 import com.example.inhamind.Board.BoardFragment;
 import com.example.inhamind.Chat.ChattingFragment;
+import com.example.inhamind.Models.DataName;
+import com.example.inhamind.Models.User;
+import com.example.inhamind.Notice.NoticeListActivity;
 import com.example.inhamind.R;
 import com.example.inhamind.Setting.SettingFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
     private BoardFragment boardFragment = new BoardFragment();
     private SettingFragment settingFragment = new SettingFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
-    private NoticeFragment noticeFragment = new NoticeFragment();
     private CustomerServiceFragment customerServiceFragment = new CustomerServiceFragment();
+
+    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private User user;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +65,26 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 만들기
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24); //뒤로가기 버튼 이미지 지정
 
+        //현재 user의 학번 불러오기
+        if (mUser != null) {
+            mStore.collection(FirebaseID.user).document(mUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult() != null) {
+                                    String documentID = (String) task.getResult().get(FirebaseID.documnetID);
+                                    String studentID = (String) task.getResult().get(FirebaseID.studentID);
+                                    String name = (String) task.getResult().get(FirebaseID.name);
+                                    user = new User(documentID, name, studentID);
+                                }
+                            }
+
+                        }
+                    });
+        }
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -63,10 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.myPage:
-                        startActivity(new Intent(MainActivity.this, MyPageActivty.class));
+                        intent = new Intent(MainActivity.this, MyPageActivty.class);
+                        intent.putExtra(DataName.user, user);
+                        startActivity(intent);
                         break;
                     case R.id.notice:
-                        transaction.replace(R.id.frameLayout, noticeFragment).commitAllowingStateLoss();
+                        intent = new Intent(MainActivity.this, NoticeListActivity.class);
+                        intent.putExtra(DataName.user, user);
+                        startActivity(intent);
                         break;
                     case R.id.customerService:
                         startActivity(new Intent(MainActivity.this, ServiceCenter.class));

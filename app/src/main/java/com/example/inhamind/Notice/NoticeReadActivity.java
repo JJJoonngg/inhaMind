@@ -1,13 +1,13 @@
-package com.example.inhamind.Board;
+package com.example.inhamind.Notice;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.Models.DataName;
-import com.example.inhamind.Models.Post;
+import com.example.inhamind.Models.Notice;
 import com.example.inhamind.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,59 +27,54 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ServerTimestamp;
 
-public class MyPostReadActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class NoticeReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    private EditText postTitle, postContents, postStatus;
-    private String title, contents, studentID, status;
+    private EditText noticeTitle, noticeContents;
+    private String title, contents, name;
     @ServerTimestamp
     private Timestamp timestamp;
     private Intent intent;
-    private Post post;
+    private Notice notice;
     private Button doneBtn, cancelBtn;
+    private ImageButton optionBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_post_read);
+        setContentView(R.layout.activity_notice_read);
 
         intent = getIntent();
-        post = intent.getParcelableExtra(DataName.data);
+        notice = intent.getParcelableExtra(DataName.data);
 
-        title = post.getTitle();
-        contents = post.getContents();
-        studentID = post.getStudentID();
-        status = post.getStatus();
-        timestamp = post.getTimestamp();
+        title = notice.getTitle();
+        contents = notice.getContents();
+        timestamp = notice.getTimestamp();
 
-        postTitle = findViewById(R.id.post_title);
-        postContents = findViewById(R.id.post_contents);
-        postStatus = findViewById(R.id.post_status);
         doneBtn = findViewById(R.id.done);
         doneBtn.setOnClickListener(this);
         cancelBtn = findViewById(R.id.cancel);
         cancelBtn.setOnClickListener(this);
 
-        postTitle.setText(title);
-        postContents.setText(contents);
+        noticeTitle = findViewById(R.id.notice_title);
+        noticeContents = findViewById(R.id.notice_contents);
 
-        if (status.equals("true")) {
-            postStatus.setText("완료");
-            postStatus.setTextColor(Color.GREEN);
-        } else if (status.equals("false")) {
-            postStatus.setText("미완료");
-            postStatus.setTextColor(Color.RED);
-        } else {
-            postStatus.setText("진행중");
-            postStatus.setTextColor(Color.BLUE);
-        }
+        noticeTitle.setText(title);
+        noticeContents.setText(contents);
 
         findViewById(R.id.close_button).setOnClickListener(this);
-        findViewById(R.id.option_button).setOnClickListener(this);
 
+        optionBtn = findViewById(R.id.option_button);
+
+        if (notice.getName().equals(DataName.mangerName)) {
+            optionBtn.setFocusable(true);
+            optionBtn.setClickable(true);
+            optionBtn.setVisibility(View.VISIBLE);
+        }
+        optionBtn.setOnClickListener(this);
     }
 
     public void edittextStatusSetting(EditText e, boolean status) {
@@ -100,52 +95,51 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
                 this.finish();
                 break;
             case R.id.option_button:
-                PopupMenu popupMenu = new PopupMenu(MyPostReadActivity.this, view);
+                PopupMenu popupMenu = new PopupMenu(NoticeReadActivity.this, view);
                 getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(listener);
                 popupMenu.show();
                 break;
 
             case R.id.cancel:
-                postTitle.setText(title);
-                postContents.setText(contents);
+                noticeTitle.setText(title);
+                noticeContents.setText(contents);
                 buttonStatusSetting(doneBtn, false);
                 buttonStatusSetting(cancelBtn, false);
-                edittextStatusSetting(postTitle, false);
-                edittextStatusSetting(postContents, false);
+                edittextStatusSetting(noticeTitle, false);
+                edittextStatusSetting(noticeContents, false);
                 break;
             case R.id.done:
-                String newTitle = postTitle.getText().toString();
-                String newContents = postContents.getText().toString();
+                String newTitle = noticeTitle.getText().toString();
+                String newContents = noticeContents.getText().toString();
                 if (newTitle.length() == 0)
                     Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 else if (newContents.length() == 0)
                     Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 else {
                     if (mUser != null) {
-                        mStore.collection(FirebaseID.post)
-                                .document(post.getPostID())
+                        mStore.collection(FirebaseID.notice)
+                                .document(notice.getNoticeID())
                                 .update(FirebaseID.title, newTitle, FirebaseID.contents, newContents)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task != null) {
-                                            Toast.makeText(MyPostReadActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(NoticeReadActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     }
-                    postTitle.setText(newTitle);
-                    postContents.setText(newContents);
+                    noticeTitle.setText(newTitle);
+                    noticeContents.setText(newContents);
                     buttonStatusSetting(doneBtn, false);
                     buttonStatusSetting(cancelBtn, false);
-                    edittextStatusSetting(postTitle, false);
-                    edittextStatusSetting(postContents, false);
+                    edittextStatusSetting(noticeTitle, false);
+                    edittextStatusSetting(noticeContents, false);
                 }
                 break;
         }
     }
-
     PopupMenu.OnMenuItemClickListener listener = new PopupMenu.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -154,27 +148,27 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
                     buttonStatusSetting(doneBtn, true);
                     buttonStatusSetting(cancelBtn, true);
                     cancelBtn.setClickable(true);
-                    postTitle.setFocusableInTouchMode(true);
-                    postTitle.requestFocus();
-                    postContents.setFocusableInTouchMode(true);
-                    postContents.requestFocus();
+                    noticeTitle.setFocusableInTouchMode(true);
+                    noticeTitle.requestFocus();
+                    noticeContents.setFocusableInTouchMode(true);
+                    noticeContents.requestFocus();
                     break;
                 case R.id.delete:
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MyPostReadActivity.this);
-                    builder.setTitle("삭제 하시겠습니까?");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NoticeReadActivity.this);
+                    builder.setTitle("공지 삭제 할껀가 자네");
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if (mUser != null) {
                                 mStore.collection(FirebaseID.post)
-                                        .document(post.getPostID())
+                                        .document(notice.getNoticeID())
                                         .delete()
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task != null) {
                                                     finish();
-                                                    Toast.makeText(MyPostReadActivity.this, "삭제가 완료 됐습니다.", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(NoticeReadActivity.this, "공지 삭제 완료!", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });

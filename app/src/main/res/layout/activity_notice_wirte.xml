@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="글쓰기"
+            android:text="공지사항 입력"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:hint="제목을 입력해주세요.(최대 15자)"
+            android:hint="공지 사항 제목"
             android:inputType="textMultiLine|textNoSuggestions"
             android:maxLength="15"
             android:maxLines="1"
@@ -74,8 +74,7 @@
             android:background="@null"
             android:cursorVisible="true"
             android:gravity="top"
-            android:hint=" 내용을 입력해주세요.\n (최대 500자까지 입력 가능합니다.)
-            \n 타인에게 위협, 희롱등 해를 끼치거나 \n 커뮤니티 분위기를 해치는 내용은 삭제 될 수 있습니다."
+            android:hint=" 공지사항 내용이니 신중하게 입력해라 이것들아"
             android:inputType="textMultiLine|textNoSuggestions"
             android:maxLength="500"
             android:privateImeOptions="defaultInputmode=korean"

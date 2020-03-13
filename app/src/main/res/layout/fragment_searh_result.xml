@@ -17,14 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        <FrameLayout
-            android:id="@+id/fab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"></FrameLayout>
-
     </RelativeLayout>
 
 </FrameLayout>
+

@@ -6,49 +6,45 @@ import android.os.Parcelable;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
 
-public class Post implements Parcelable {
+public class Notice implements Parcelable {
     private String documentID;
-    private String postID;
+    private String noticeID;
+    private String name;
     private String title;
     private String contents;
-    private String studentID;
-    private String status;
     @ServerTimestamp
     private Timestamp timestamp;
 
-    public Post() {
-
+    public Notice() {
     }
 
-    public Post(String documentID, String postID, String title, String contents, String studentID, String status, Timestamp timestamp) {
+    public Notice(String documentID, String noticeID, String name, String title, String contents, Timestamp timestamp) {
         this.documentID = documentID;
-        this.postID = postID;
+        this.noticeID = noticeID;
+        this.name = name;
         this.title = title;
         this.contents = contents;
-        this.studentID = studentID;
-        this.status = status;
         this.timestamp = timestamp;
     }
 
-    protected Post(Parcel in) {
+    protected Notice(Parcel in) {
         documentID = in.readString();
-        postID = in.readString();
+        noticeID = in.readString();
+        name = in.readString();
         title = in.readString();
         contents = in.readString();
-        studentID = in.readString();
-        status = in.readString();
         timestamp = in.readParcelable(Timestamp.class.getClassLoader());
     }
 
-    public static final Creator<Post> CREATOR = new Creator<Post>() {
+    public static final Creator<Notice> CREATOR = new Creator<Notice>() {
         @Override
-        public Post createFromParcel(Parcel in) {
-            return new Post(in);
+        public Notice createFromParcel(Parcel in) {
+            return new Notice(in);
         }
 
         @Override
-        public Post[] newArray(int size) {
-            return new Post[size];
+        public Notice[] newArray(int size) {
+            return new Notice[size];
         }
     };
 
@@ -60,12 +56,20 @@ public class Post implements Parcelable {
         this.documentID = documentID;
     }
 
-    public String getPostID() {
-        return postID;
+    public String getNoticeID() {
+        return noticeID;
     }
 
-    public void setPostID(String postID) {
-        this.postID = postID;
+    public void setNoticeID(String noticeID) {
+        this.noticeID = noticeID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTitle() {
@@ -84,22 +88,6 @@ public class Post implements Parcelable {
         this.contents = contents;
     }
 
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -110,13 +98,11 @@ public class Post implements Parcelable {
 
     @Override
     public String toString() {
-        return "Post{" +
+        return "Notice{" +
                 "documentID='" + documentID + '\'' +
-                "postID='" + postID + '\'' +
+                ", noticeID='" + noticeID + '\'' +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
-                ", studentID='" + studentID + '\'' +
-                ", status=" + status +
                 ", timestamp=" + timestamp +
                 '}';
     }
@@ -129,11 +115,10 @@ public class Post implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(documentID);
-        parcel.writeString(postID);
+        parcel.writeString(noticeID);
+        parcel.writeString(name);
         parcel.writeString(title);
         parcel.writeString(contents);
-        parcel.writeString(studentID);
-        parcel.writeString(status);
         parcel.writeParcelable(timestamp, i);
     }
 }

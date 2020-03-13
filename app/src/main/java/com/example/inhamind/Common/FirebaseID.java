@@ -10,8 +10,13 @@ public class FirebaseID {
     public static String phonenumber = "phonenumber";
 
     public static String post = "post";
+    public static String postID = "postID";
+
     public static String title = "title";
     public static String contents = "contents";
     public static String status = "status";
     public static String timestamp = "timestamp";
+
+    public static String notice = "notice";
+    public static String noticeID = "noticeID";
 }
