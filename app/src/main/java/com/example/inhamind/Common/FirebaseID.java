@@ -6,6 +6,7 @@ public class FirebaseID {
 
     public static String studentID = "studentID";
     public static String password = "password";
+    public static String profileImageUrl = "profileImageUrl";
     public static String name = "name";
     public static String phonenumber = "phonenumber";
 

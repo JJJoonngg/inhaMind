@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
                                     String documentID = (String) task.getResult().get(FirebaseID.documnetID);
                                     String studentID = (String) task.getResult().get(FirebaseID.studentID);
                                     String name = (String) task.getResult().get(FirebaseID.name);
-                                    user = new User(documentID, name, studentID);
+                                    String profileImageUrl = (String) task.getResult().get(FirebaseID.profileImageUrl);
+                                    user = new User(documentID, name, studentID, profileImageUrl);
                                 }
                             }
 

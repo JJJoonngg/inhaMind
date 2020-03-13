@@ -7,20 +7,23 @@ public class User implements Parcelable {
     private String documentID;
     private String name;
     private String studentID;
+    private String profileUrl;
 
     public User() {
     }
 
-    public User(String documentID, String name, String studentID) {
+    public User(String documentID, String name, String studentID, String profileUrl) {
         this.documentID = documentID;
         this.name = name;
         this.studentID = studentID;
+        this.profileUrl = profileUrl;
     }
 
     protected User(Parcel in) {
         documentID = in.readString();
         name = in.readString();
         studentID = in.readString();
+        profileUrl = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -59,12 +62,21 @@ public class User implements Parcelable {
         this.studentID = studentID;
     }
 
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "documentID='" + documentID + '\'' +
                 ", name='" + name + '\'' +
                 ", studentID='" + studentID + '\'' +
+                ", profileUrl='" + profileUrl + '\'' +
                 '}';
     }
 
@@ -78,5 +90,6 @@ public class User implements Parcelable {
         parcel.writeString(documentID);
         parcel.writeString(name);
         parcel.writeString(studentID);
+        parcel.writeString(profileUrl);
     }
 }
