@@ -10,6 +10,7 @@ public class DataName {
     public static String timestamp = "timestamp";
 
     public static String user = "user";
-    public static String mangerName = "관리자";
+    public static String managerName = "관리자";
+    public static String managerDocumentID = "ZV2TekBRbVSSLasTcMi1Um3O3t22";
     public static String managerID = "00000000";
 }

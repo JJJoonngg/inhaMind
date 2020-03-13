@@ -69,10 +69,12 @@ public class NoticeReadActivity extends AppCompatActivity implements View.OnClic
 
         optionBtn = findViewById(R.id.option_button);
 
-        if (notice.getName().equals(DataName.mangerName)) {
-            optionBtn.setFocusable(true);
-            optionBtn.setClickable(true);
-            optionBtn.setVisibility(View.VISIBLE);
+        if (mUser != null) {
+            if (mUser.getUid().equals(DataName.managerDocumentID)){
+                optionBtn.setFocusable(true);
+                optionBtn.setClickable(true);
+                optionBtn.setVisibility(View.VISIBLE);
+            }
         }
         optionBtn.setOnClickListener(this);
     }
@@ -140,6 +142,7 @@ public class NoticeReadActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
+
     PopupMenu.OnMenuItemClickListener listener = new PopupMenu.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
