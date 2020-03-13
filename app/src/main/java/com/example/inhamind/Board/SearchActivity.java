@@ -47,14 +47,18 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.search_button:
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Fragment fragment = new SearhResultFragment();
-                if (contents.length() < 2) {
+                contents = mContents.getText().toString();
+                if (contents != null) {
+                    if (contents.length() < 2)
+                        Toast.makeText(getApplicationContext(), "내용을 두 글자 이상 입력해주세요!", Toast.LENGTH_SHORT).show();
+                    else {
+                        Bundle bundle = new Bundle(1);
+                        bundle.putString(DataName.data, contents);
+                        fragment.setArguments(bundle);
+                        transaction.replace(R.id.frameLayout, fragment).commitAllowingStateLoss();
+                    }
+                } else
                     Toast.makeText(getApplicationContext(), "내용을 두 글자 이상 입력해주세요!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Bundle bundle = new Bundle(1);
-                    bundle.putString(DataName.data, contents);
-                    fragment.setArguments(bundle);
-                    transaction.replace(R.id.frameLayout, fragment).commitAllowingStateLoss();
-                }
                 break;
         }
     }
