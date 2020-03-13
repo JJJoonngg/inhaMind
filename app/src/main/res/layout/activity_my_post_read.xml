@@ -83,6 +83,8 @@
             android:hint="제목을 입력해주세요.(최대 15자)"
             android:maxLength="15"
             android:maxLines="1"
+            android:nextFocusDown="@id/post_contents"
+            android:singleLine="true"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>

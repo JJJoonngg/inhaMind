@@ -59,10 +59,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:hint="공지 사항 제목"
-            android:inputType="textMultiLine|textNoSuggestions"
             android:maxLength="15"
             android:maxLines="1"
+            android:nextFocusDown="@id/post_contents"
             android:privateImeOptions="defaultInputmode=korean"
+            android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -75,7 +76,6 @@
             android:cursorVisible="true"
             android:gravity="top"
             android:hint=" 공지사항 내용이니 신중하게 입력해라 이것들아"
-            android:inputType="textMultiLine|textNoSuggestions"
             android:maxLength="500"
             android:privateImeOptions="defaultInputmode=korean"
             android:textSize="16sp" />

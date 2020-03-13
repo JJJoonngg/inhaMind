@@ -32,6 +32,8 @@
                 <TextView
                     android:id="@+id/item_notice_title"
                     android:layout_width="0dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
