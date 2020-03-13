@@ -18,7 +18,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private FragmentTransaction transaction = fragmentManager.beginTransaction();
     private InitialStateFragment initialStateFragment = new InitialStateFragment();
 
-    EditText mContents;
+    private EditText mContents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +42,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 this.finish();
                 break;
 
-            case R.id.secession_button:
+            case R.id.search_button:
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Fragment fragment = new SearhResultFragment();
                 Bundle bundle = new Bundle(1);
-                bundle.putString(DataName.contents, mContents.getText().toString());
+                bundle.putString(DataName.data, mContents.getText().toString());
                 fragment.setArguments(bundle);
                 transaction.replace(R.id.frameLayout, fragment).commitAllowingStateLoss();
                 break;

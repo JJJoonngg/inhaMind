@@ -19,7 +19,8 @@ public class SearhResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searh_result, container, false);
-        contents = getArguments().getString(DataName.contents);
+        contents = getArguments().getString(DataName.data);
+
 
         return view;
     }
