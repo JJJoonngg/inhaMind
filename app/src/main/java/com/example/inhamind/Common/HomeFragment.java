@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     private MainPostAdapters allAdapters;
     private MainMyPostAdapters myAllAdapters;
     private MainNoticeAdapters noticeAdapters;
-    private List<Post> postDatas;
+    private List<Post> allPostDatas, postDatas;
     private List<Notice> noticeDatas;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,14 +87,14 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
-        postDatas = new ArrayList<>();
+        allPostDatas = new ArrayList<>();
         mStore.collection(FirebaseID.post)
                 .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (queryDocumentSnapshots != null) {
-                            postDatas.clear();
+                            allPostDatas.clear();
                             int cnt = 0;
                             for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
                                 if (cnt == 3) break;
@@ -107,19 +107,19 @@ public class HomeFragment extends Fragment {
                                 String status = String.valueOf(shot.get(FirebaseID.status));
                                 Timestamp timestamp = (Timestamp) shot.get(FirebaseID.timestamp);
                                 Post data = new Post(documentID, postID, title, contents, studentID, status, timestamp);
-                                postDatas.add(data);
+                                allPostDatas.add(data);
                                 cnt++;
                             }
                             if (cnt < 3) {
                                 while (true) {
                                     if (cnt == 3) break;
                                     Post data = new Post(null, null, null, null, null, null, null);
-                                    postDatas.add(data);
+                                    allPostDatas.add(data);
                                     cnt++;
                                 }
                             }
 
-                            allAdapters = new MainPostAdapters(postDatas, getContext());
+                            allAdapters = new MainPostAdapters(allPostDatas, getContext());
                             allPostRecylerView.setAdapter(allAdapters);
                         }
                     }
