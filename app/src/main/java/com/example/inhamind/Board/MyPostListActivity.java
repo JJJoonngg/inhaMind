@@ -48,6 +48,23 @@ public class MyPostListActivity extends AppCompatActivity implements View.OnClic
 
         mRecyclerView = findViewById(R.id.my_post_recyclerview);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.my_post_close_button:
+                this.finish();
+                break;
+            case R.id.my_post_setting_button:
+                Toast.makeText(this, "설정 기능 구현 예정", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         if (mUser != null) {
             mDatas = new ArrayList<>();
             mStore.collection(FirebaseID.post)
@@ -75,18 +92,6 @@ public class MyPostListActivity extends AppCompatActivity implements View.OnClic
                             }
                         }
                     });
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.my_post_close_button:
-                this.finish();
-                break;
-            case R.id.my_post_setting_button:
-                Toast.makeText(this, "설정 기능 구현 예정", Toast.LENGTH_SHORT).show();
-                break;
         }
     }
 }
