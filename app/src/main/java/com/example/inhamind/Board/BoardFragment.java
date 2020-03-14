@@ -48,6 +48,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
         mPostRecylerView = view.findViewById(R.id.board_recyclerview);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+
         view.findViewById(R.id.top_button).setOnClickListener(this);
 
         mDatas = new ArrayList<>();
@@ -119,7 +120,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.top_button:
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mPostRecylerView.getLayoutManager();
                 mPostRecylerView.smoothScrollToPosition(0);
