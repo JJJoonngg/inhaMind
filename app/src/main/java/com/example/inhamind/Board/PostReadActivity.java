@@ -40,10 +40,12 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
 
         postTitle = findViewById(R.id.post_title);
         postContents = findViewById(R.id.post_contents);
+        postStudentID = findViewById(R.id.post_student_id);
         postStatus = findViewById(R.id.post_status);
 
         postTitle.setText(title);
         postContents.setText(contents);
+        postStudentID.setText(studentID);
 
         if (status.equals("true")) {
             postStatus.setText("완료");
