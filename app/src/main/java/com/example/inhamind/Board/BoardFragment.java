@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BoardFragment extends Fragment {
+public class BoardFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -47,6 +48,7 @@ public class BoardFragment extends Fragment {
 
         mPostRecylerView = view.findViewById(R.id.board_recyclerview);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        view.findViewById(R.id.top_button).setOnClickListener(this);
 
         mDatas = new ArrayList<>();
         mStore.collection(FirebaseID.post)
@@ -115,4 +117,13 @@ public class BoardFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.top_button:
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mPostRecylerView.getLayoutManager();
+                mPostRecylerView.smoothScrollToPosition(0);
+                break;
+        }
+    }
 }
