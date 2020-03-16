@@ -1,21 +1,31 @@
 package com.example.inhamind.Common;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Adapters.MainMyPostAdapters;
 import com.example.inhamind.Adapters.MainNoticeAdapters;
 import com.example.inhamind.Adapters.MainPostAdapters;
+import com.example.inhamind.Board.PostWriteActivity;
+import com.example.inhamind.Board.SearchActivity;
+import com.example.inhamind.Models.DataName;
 import com.example.inhamind.Models.Notice;
 import com.example.inhamind.Models.Post;
+import com.example.inhamind.Models.User;
 import com.example.inhamind.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -41,12 +51,44 @@ public class HomeFragment extends Fragment {
     private List<Post> allPostDatas, postDatas;
     private List<Notice> noticeDatas;
 
+    private User user;
+    private Intent intent;
+    private Context context;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        context = getContext();
 
         noticeRecylerView = view.findViewById(R.id.notice_list);
         allPostRecylerView = view.findViewById(R.id.all_post_list);
         myPostRecylerView = view.findViewById(R.id.my_post_list);
+
+        view.findViewById(R.id.main_button).setOnClickListener(this);
+        view.findViewById(R.id.write_button).setOnClickListener(this);
+        view.findViewById(R.id.search_button).setOnClickListener(this);
+        view.findViewById(R.id.my_page_button).setOnClickListener(this);
+
+        if (mUser != null) {
+            mStore.collection(FirebaseID.user).document(mUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult() != null) {
+                                    String documentID = (String) task.getResult().get(FirebaseID.documnetID);
+                                    String studentID = (String) task.getResult().get(FirebaseID.studentID);
+                                    String name = (String) task.getResult().get(FirebaseID.name);
+                                    String profileImageUrl = (String) task.getResult().get(FirebaseID.profileImageUrl);
+                                    user = new User(documentID, name, studentID, profileImageUrl);
+                                }
+                            }
+
+                        }
+                    });
+        }
 
         return view;
     }
@@ -172,4 +214,25 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.main_button:
+                Toast.makeText(context,"환영합니다.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.write_button:
+                startActivity(new Intent(context, PostWriteActivity.class));
+                break;
+            case R.id.search_button:
+                startActivity(new Intent(context, SearchActivity.class));
+                break;
+            case R.id.my_page_button:
+                intent = new Intent(context, MyPageActivty.class);
+                intent.putExtra(DataName.user, user);
+                startActivity(intent);
+                break;
+
+        }
+
+    }
 }
