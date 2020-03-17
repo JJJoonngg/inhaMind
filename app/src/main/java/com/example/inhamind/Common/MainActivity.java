@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    private HomeFragment homeFragment = new HomeFragment();
+    private HomeFragment homeFragment;
     private BoardFragment boardFragment = new BoardFragment();
     private SettingFragment settingFragment = new SettingFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        homeFragment = new HomeFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frameLayout, homeFragment).commitAllowingStateLoss();
+        transaction.replace(R.id.frameLayout, homeFragment).commit();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
@@ -40,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             switch (menuItem.getItemId()) {
                 case R.id.home:
-                    transaction.replace(R.id.frameLayout, homeFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, homeFragment).commit();
                     break;
                 case R.id.board:
-                    transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, boardFragment).commit();
                     break;
                 case R.id.chatting:
-                    transaction.replace(R.id.frameLayout, chattingFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, chattingFragment).commit();
                     break;
                 case R.id.setting:
-                    transaction.replace(R.id.frameLayout, settingFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, settingFragment).commit();
                     break;
             }
             return true;
