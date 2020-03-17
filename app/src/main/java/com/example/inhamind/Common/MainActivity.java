@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
                     break;
                 case R.id.chatting:
-                    transaction.replace(R.id.frameLayout, peopleFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, chattingFragment).commitAllowingStateLoss();
                     break;
                 case R.id.setting:
                     transaction.replace(R.id.frameLayout, settingFragment).commitAllowingStateLoss();

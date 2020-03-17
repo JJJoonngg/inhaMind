@@ -68,7 +68,7 @@ public class PeopleFragment extends Fragment {
                                     Map<String, Object> shot = snapshot.getData();
                                     String documentId = String.valueOf(shot.get(FirebaseID.documnetID));
                                     String name = String.valueOf(shot.get(FirebaseID.name));
-                                    String profile = String.valueOf(shot.get(FirebaseID.profile));
+                                    String profile = String.valueOf(shot.get(FirebaseID.profileImageUrl));
                                     if (documentId.equals(myUid)) {
                                         continue;
                                     }
@@ -79,26 +79,6 @@ public class PeopleFragment extends Fragment {
                             }
                         }
                     });
-            //RealTime Database이용
-//            FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    userModels.clear();
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        UserModel userModel = snapshot.getValue(UserModel.class);
-//                        if(userModel.uid.equals(myUid)){
-//                            continue;
-//                        }
-//                        userModels.add(userModel);
-//                    }
-//                    notifyDataSetChanged();
-//
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
         }
 
         @NonNull
@@ -121,7 +101,7 @@ public class PeopleFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), MessageActivity.class);
-                    intent.putExtra("destinationUid", userModels.get(position).uid);
+                    intent.putExtra("destinationUid", userModels.get(position).documnetID);
                     ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright, R.anim.toleft);
                     startActivity(intent, activityOptions.toBundle());
                 }

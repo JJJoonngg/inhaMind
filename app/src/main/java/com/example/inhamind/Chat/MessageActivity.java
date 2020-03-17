@@ -120,7 +120,6 @@ public class MessageActivity extends AppCompatActivity {
 
         public RecyclerViewAdapter() {
             comments = new ArrayList<>();
-
             FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -137,7 +136,6 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         void getMessageList() {
-
             FirebaseDatabase.getInstance().getReference()
                     .child("chatrooms").child(chatRoomUid).child("comments")
                     .addValueEventListener(new ValueEventListener() {

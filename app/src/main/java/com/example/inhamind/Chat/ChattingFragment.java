@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.R;
 import com.example.inhamind.Chat.MessageActivity;
 import com.example.inhamind.Models.ChatModel;
@@ -26,6 +27,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +45,7 @@ import java.util.TreeMap;
 public class ChattingFragment extends Fragment {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
 
     @Nullable
@@ -98,23 +105,24 @@ public class ChattingFragment extends Fragment {
                     destinationUsers.add(destinationUid);
                 }
             }
-            FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            List<UserModel> userModels;
+            userModels = new ArrayList<>();
+            mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID, destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                    Glide.with(customViewHolder.itemView.getContext())
-                            .load(userModel.profileImageUrl)
-                            .apply(new RequestOptions().circleCrop())
-                            .into(customViewHolder.immageView);
-
-                    customViewHolder.textView_title.setText(userModel.userName);
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (queryDocumentSnapshots != null) {
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                            Glide.with(customViewHolder.itemView.getContext())
+                                    .load(String.valueOf(snapshot.get(FirebaseID.profileImageUrl)))
+                                    .apply(new RequestOptions().circleCrop())
+                                    .into(customViewHolder.immageView);
+                            customViewHolder.textView_title.setText(String.valueOf(snapshot.get(FirebaseID.studentID)));
+                        }
+                    }
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
             });
+
 
             Map<String, ChatModel.Comment> commentMap = new TreeMap<>(Collections.<String>reverseOrder());
             commentMap.putAll(chatModels.get(position).comments);

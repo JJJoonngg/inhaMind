@@ -5,10 +5,12 @@ public class UserModel {
     public String userName;
     public String profileImageUrl;
     public String uid;
-    public  String documnetID = "documentID";
-    public UserModel(){
+    public String documnetID = "documentID";
+
+    public UserModel() {
 
     }
+
     public UserModel(String userName, String profileImageUrl, String documnetID) {
         this.userName = userName;
         this.profileImageUrl = profileImageUrl;
@@ -37,6 +39,15 @@ public class UserModel {
 
     public void setDocumnetID(String documnetID) {
         this.documnetID = documnetID;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "documentId='" + documnetID + '\'' +
+                ", name='" + userName + '\'' +
+                ", profileUrl='" + profileImageUrl + '\'' +
+                '}';
     }
 }
 
