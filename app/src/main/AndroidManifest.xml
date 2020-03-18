@@ -12,12 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Board.SearchActivity"></activity>
-        <activity android:name=".Board.PostActivity" />
+        <activity android:name=".Notice.NoticeReadActivity"></activity>
+        <activity android:name=".Notice.NoticeListActivity" />
+        <activity android:name=".Notice.NoticeWirteActivity" />
+        <activity android:name=".Board.MyPostReadActivity" />
+        <activity android:name=".Board.MyPostListActivity" />
+        <activity android:name=".Board.PostReadActivity" />
+        <activity android:name=".Account.ServiceCenter" />
+        <activity android:name=".Board.SearchActivity" />
+        <activity android:name=".Board.PostWriteActivity" />
         <activity android:name=".Account.MyPageActivty" />
         <activity android:name=".Account.Secession" />
         <activity android:name=".Account.SMSPswdFind" />
         <activity android:name=".Account.EmailPswdFind" />
+        <activity android:name=".Account.PswdRemake" />
         <activity android:name=".Common.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Account.PswdRemake" />
         <activity android:name=".Account.LoginActivity" />
         <activity android:name=".Account.PswdFind" />
         <activity

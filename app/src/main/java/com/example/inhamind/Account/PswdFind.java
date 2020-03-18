@@ -18,7 +18,7 @@ public class PswdFind extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pswd_find);
 
-        rg = (RadioGroup) findViewById(R.id.rg);
+        rg = findViewById(R.id.rg);
         rg.setOnCheckedChangeListener(m);
     }
 
@@ -33,8 +33,8 @@ public class PswdFind extends AppCompatActivity {
             Log.v("출력", checkedId + " ");
 
             if (group.getId() == R.id.rg) {
-                RadioButton rv1 = (RadioButton)findViewById(R.id.rv1);
-                RadioButton rv2 = (RadioButton)findViewById(R.id.rv2);
+                RadioButton rv1 = findViewById(R.id.rv1);
+                RadioButton rv2 = findViewById(R.id.rv2);
                 switch (checkedId) {
                     case R.id.rv1:
                         rv1.setBackgroundResource(R.drawable.border_layout);
@@ -45,7 +45,7 @@ public class PswdFind extends AppCompatActivity {
                         rv1.setBackgroundResource(R.color.colorBackground);
                         rv2.setBackgroundResource(R.drawable.border_layout);
                         break;
-                };
+                }
             }
         }
     };

@@ -26,21 +26,22 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private boolean saveLoginData;
     private String id;
     private String pwd;
 
     private SharedPreferences appData;
-    TextView make_account;
-    TextView find_pwd;
+    TextView makeAccount;
+    TextView findPwd;
     EditText EditTextId;
     EditText EditTextPswd;
-    ImageButton login_button;
+    ImageButton loginButton;
     CheckBox autoLogin;
 
     FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private BackPressHandler backPressHandler = new BackPressHandler(LoginActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +51,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         autoLogin = findViewById(R.id.auto_login);
         autoLogin.setOnClickListener(this);
 
-        find_pwd = findViewById(R.id.pswd_find);
-        find_pwd.setOnClickListener(this);
+        findPwd = findViewById(R.id.pswd_find);
+        findPwd.setOnClickListener(this);
 
-        make_account = findViewById(R.id.make_account);
-        make_account.setOnClickListener(this);
+        makeAccount = findViewById(R.id.make_account);
+        makeAccount.setOnClickListener(this);
 
-        login_button = findViewById(R.id.login_button);
-        login_button.setOnClickListener(this);
+
+        loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -73,11 +75,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             EditTextPswd.setText(pwd);
             autoLogin.setChecked(saveLoginData);
         }
-
-        EditTextId.setText("12131212");//test 위함
-        EditTextPswd.setText("qwer1234");
-
     }
+
     // 설정값을 저장하는 함수
     private void save() {
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
@@ -93,7 +92,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.apply();
     }
 
-
     // 설정값을 불러오는 함수
     private void load() {
         // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
@@ -105,11 +103,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.auto_login :
+        switch (v.getId()) {
+            case R.id.auto_login:
                 save();
                 break;
-            case R.id.pswd_find :
+            case R.id.pswd_find:
                 startActivity(new Intent(LoginActivity.this, PswdFind.class));
                 break;
             case R.id.make_account:
@@ -120,7 +118,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String studentid = EditTextId.getText().toString().trim();
                     String pswd = EditTextPswd.getText().toString().trim();
 
-                    final String TAG = "LOGIN_ACTIVITY";
                     if (studentid != null && !studentid.isEmpty() && pswd != null && !pswd.isEmpty()) {
                         mAuth.signInWithEmailAndPassword(studentid + "@inha.edu", pswd)
                                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -132,14 +129,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             } catch (FirebaseAuthInvalidUserException e) {
                                                 Toast.makeText(LoginActivity.this, "회원가입하지 않은 학번입니다.", Toast.LENGTH_SHORT).show();
                                             } catch (FirebaseNetworkException e) {
-                                                Toast.makeText(LoginActivity.this, "Firebase NetworkException", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show();
                                             } catch (Exception e) {
-                                                Toast.makeText(LoginActivity.this, "Exception", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                                             }
 
                                         } else { //auto
                                             currentUser = mAuth.getCurrentUser();
-                                            Toast.makeText(LoginActivity.this, "로그인 성공" + "/" + currentUser.getEmail() + "/" + currentUser.getUid(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "로그인에 성공하였습니다", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                             finish();
                                         }
@@ -149,13 +146,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Pattern p = Pattern.compile("(^.*(?=.{6,100})(?=.*[0-9])(?=.*[a-zA-Z]).*$)");
                         Matcher m = p.matcher(pwd);
                         if (!m.find() && pwd.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"))
-                            Toast.makeText(LoginActivity.this, "비밀번호 형식을 지켜주세요.", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "8자리 학번을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
         }
     }
-}
 
+    @Override
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
+    }
+}

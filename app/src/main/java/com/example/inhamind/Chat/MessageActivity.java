@@ -1,6 +1,7 @@
 package com.example.inhamind.Chat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.R;
 import com.example.inhamind.Models.ChatModel;
 import com.example.inhamind.Models.UserModel;
@@ -30,6 +32,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,9 +51,11 @@ public class MessageActivity extends AppCompatActivity {
 
     private String uid;
     private String chatRoomUid;
-
+    private String destinationImage;
+    private String destinationId;
     private RecyclerView recyclerView;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,19 +129,18 @@ public class MessageActivity extends AppCompatActivity {
 
         public RecyclerViewAdapter() {
             comments = new ArrayList<>();
-            FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID,destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    userModel = dataSnapshot.getValue(UserModel.class);
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (queryDocumentSnapshots != null) {
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                            destinationImage = String.valueOf(snapshot.get(FirebaseID.profileImageUrl));
+                            destinationId = String.valueOf(snapshot.get(FirebaseID.studentID));
+                        }
+                    }
                     getMessageList();
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
             });
-
         }
 
         void getMessageList() {
@@ -181,10 +189,10 @@ public class MessageActivity extends AppCompatActivity {
             //상대가 보낸 메시지
             else {
                 Glide.with(holder.itemView.getContext())
-                        .load(userModel.profileImageUrl)
+                        .load(destinationImage)
                         .apply(new RequestOptions().circleCrop())
                         .into(messageViewHolder.imageView_profile);
-                messageViewHolder.textView_name.setText(userModel.userName);
+                messageViewHolder.textView_name.setText(destinationId);
                 messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
                 messageViewHolder.textView_message.setText(comments.get(position).message);

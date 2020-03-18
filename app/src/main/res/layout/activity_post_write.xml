@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Board.PostActivity">
+    tools:context=".Board.PostWriteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/close_button"
+            android:id="@+id/write_close_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="left"
@@ -39,7 +39,7 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:id="@+id/done_button"
+            android:id="@+id/write_done_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
@@ -58,8 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:hint="제목을 입력해주세요."
-            android:inputType="textMultiLine|textNoSuggestions"
+            android:hint="제목을 입력해주세요.(최대 15자)"
+            android:maxLength="15"
+            android:singleLine="true"
+            android:nextFocusDown="@id/post_contents"
             android:privateImeOptions="defaultInputmode=korean"
             android:textColor="@android:color/black"
             android:textSize="20dp"
@@ -74,7 +76,6 @@
             android:gravity="top"
             android:hint=" 내용을 입력해주세요.\n (최대 500자까지 입력 가능합니다.)
             \n 타인에게 위협, 희롱등 해를 끼치거나 \n 커뮤니티 분위기를 해치는 내용은 삭제 될 수 있습니다."
-            android:inputType="textMultiLine|textNoSuggestions"
             android:maxLength="500"
             android:privateImeOptions="defaultInputmode=korean"
             android:textSize="16sp" />

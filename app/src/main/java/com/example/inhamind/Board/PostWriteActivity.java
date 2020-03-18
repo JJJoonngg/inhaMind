@@ -22,7 +22,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostActivity extends AppCompatActivity implements View.OnClickListener {
+public class PostWriteActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
@@ -33,10 +33,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.activity_post_write);
 
-        findViewById(R.id.done_button).setOnClickListener(this);
-        findViewById(R.id.close_button).setOnClickListener(this);
+        findViewById(R.id.write_done_button).setOnClickListener(this);
+        findViewById(R.id.write_close_button).setOnClickListener(this);
 
         mTitle = findViewById(R.id.post_title);
         mContents = findViewById(R.id.post_contents);
@@ -68,22 +68,30 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.close_button:
+            case R.id.write_close_button:
                 this.finish();
                 break;
 
-            case R.id.done_button:
+            case R.id.write_done_button:
                 if (mUser != null) {
-                    String postId = mStore.collection(FirebaseID.post).document().getId();
-                    Map<String, Object> data = new HashMap<>();
-                    data.put(FirebaseID.documnetID, mUser.getUid());
-                    data.put(FirebaseID.studentID, studentID);
-                    data.put(FirebaseID.title, mTitle.getText().toString());
-                    data.put(FirebaseID.contents, mContents.getText().toString());
-                    data.put(FirebaseID.timestamp, FieldValue.serverTimestamp());
-                    mStore.collection(FirebaseID.post).document(postId).set(data, SetOptions.merge());
-                    finish();
-                    Toast.makeText(this, "글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
+                    if (mTitle.length() == 0)
+                        Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    else if (mContents.length() == 0)
+                        Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    else {
+                        String postId = mStore.collection(FirebaseID.post).document().getId();
+                        Map<String, Object> data = new HashMap<>();
+                        data.put(FirebaseID.documnetID, mUser.getUid());
+                        data.put(FirebaseID.studentID, studentID);
+                        data.put(FirebaseID.postID, postId);
+                        data.put(FirebaseID.title, mTitle.getText().toString());
+                        data.put(FirebaseID.contents, mContents.getText().toString());
+                        data.put(FirebaseID.status, "false");
+                        data.put(FirebaseID.timestamp, FieldValue.serverTimestamp());
+                        mStore.collection(FirebaseID.post).document(postId).set(data, SetOptions.merge());
+                        finish();
+                        Toast.makeText(this, "글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
         }

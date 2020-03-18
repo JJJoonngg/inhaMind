@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.inhamind.Board.PostActivity;
+import com.example.inhamind.Board.PostWriteActivity;
 import com.example.inhamind.Board.SearchActivity;
 import com.example.inhamind.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -62,7 +62,7 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.float_write_post:
                 anim();
-                startActivity(new Intent(context, PostActivity.class));
+                startActivity(new Intent(context, PostWriteActivity.class));
                 break;
             case R.id.float_find_post:
                 anim();
