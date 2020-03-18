@@ -129,7 +129,7 @@ public class MessageActivity extends AppCompatActivity {
 
         public RecyclerViewAdapter() {
             comments = new ArrayList<>();
-            mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID,destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID, destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     if (queryDocumentSnapshots != null) {
