@@ -111,7 +111,8 @@
                 android:hint="인증번호"
                 android:padding="15dp"
                 android:textSize="13sp"
-                android:maxLength="8"/>
+                android:maxLength="8"
+                android:singleLine="true"/>
 
             <Button
                 android:id="@+id/student_id_confirm"

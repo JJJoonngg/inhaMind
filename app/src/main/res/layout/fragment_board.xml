@@ -12,19 +12,39 @@
         android:orientation="vertical"
         tools:context="Board.BoardFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/board_recyclerview"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/board_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_post" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <FrameLayout
             android:id="@+id/fab_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true">
-        </FrameLayout>
+            android:layout_alignParentBottom="true"></FrameLayout>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/top_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+            app:fabSize="mini" />
 
     </RelativeLayout>
 </FrameLayout>
