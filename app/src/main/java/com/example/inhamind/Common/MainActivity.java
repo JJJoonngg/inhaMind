@@ -89,18 +89,15 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.frameLayout, homeFragment).commit();
                     break;
                 case R.id.board:
-                    Bundle bundle1 = new Bundle();
-                    if (user != null) bundle1.putParcelable(DataName.user, user);
-                    boardFragment.setArguments(bundle1);
-                    transaction.replace(R.id.frameLayout, boardFragment).commit();
+                     transaction.replace(R.id.frameLayout, boardFragment).commit();
                     break;
                 case R.id.chatting:
                     transaction.replace(R.id.frameLayout, chattingFragment).commit();
                     break;
                 case R.id.setting:
-                    Bundle bundle2 = new Bundle();
-                    if (user != null) bundle2.putParcelable(DataName.user, user);
-                    settingFragment.setArguments(bundle2);
+                    Bundle bundle1 = new Bundle();
+                    if (user != null) bundle1.putParcelable(DataName.user, user);
+                    settingFragment.setArguments(bundle1);
                     transaction.replace(R.id.frameLayout, settingFragment).commit();
                     break;
             }
