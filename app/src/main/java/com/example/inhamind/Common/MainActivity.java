@@ -24,11 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentManager fragmentManager;
     private HomeFragment homeFragment;
-    private BoardFragment boardFragment = new BoardFragment();
-    private SettingFragment settingFragment = new SettingFragment();
-    private ChattingFragment chattingFragment = new ChattingFragment();
+    private BoardFragment boardFragment;
+    private SettingFragment settingFragment;
+    private ChattingFragment chattingFragment;
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+
+        fragmentManager = getSupportFragmentManager();
 
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -76,25 +78,52 @@ public class MainActivity extends AppCompatActivity {
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
             switch (menuItem.getItemId()) {
                 case R.id.home:
-                    Bundle bundle = new Bundle();
-                    if (user != null) bundle.putParcelable(DataName.user, user);
-                    homeFragment.setArguments(bundle);
-                    transaction.replace(R.id.frameLayout, homeFragment).commit();
+                    if (homeFragment == null) {
+                        homeFragment =  new HomeFragment();
+                        Bundle bundle = new Bundle();
+                        if (user != null) bundle.putParcelable(DataName.user, user);
+                        homeFragment.setArguments(bundle);
+                        fragmentManager.beginTransaction().add(R.id.frameLayout, homeFragment).commit();
+                    }
+                    if (homeFragment != null) fragmentManager.beginTransaction().show(homeFragment).commit();
+                    if (boardFragment != null) fragmentManager.beginTransaction().hide(boardFragment).commit();
+                    if (chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment).commit();
+                    if (settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment).commit();
                     break;
                 case R.id.board:
-                     transaction.replace(R.id.frameLayout, boardFragment).commit();
+                    if (boardFragment == null) {
+                        boardFragment =  new BoardFragment();
+                        fragmentManager.beginTransaction().add(R.id.frameLayout, boardFragment).commit();
+                    }
+                    if (homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
+                    if (boardFragment != null) fragmentManager.beginTransaction().show(boardFragment).commit();
+                    if (chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment).commit();
+                    if (settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment).commit();
                     break;
                 case R.id.chatting:
-                    transaction.replace(R.id.frameLayout, chattingFragment).commit();
+                    if (chattingFragment == null) {
+                        chattingFragment =  new ChattingFragment();
+                        fragmentManager.beginTransaction().add(R.id.frameLayout, chattingFragment).commit();
+                    }
+                    if (homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
+                    if (boardFragment != null) fragmentManager.beginTransaction().hide(boardFragment).commit();
+                    if (chattingFragment != null) fragmentManager.beginTransaction().show(chattingFragment).commit();
+                    if (settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment).commit();
                     break;
                 case R.id.setting:
-                    Bundle bundle1 = new Bundle();
-                    if (user != null) bundle1.putParcelable(DataName.user, user);
-                    settingFragment.setArguments(bundle1);
-                    transaction.replace(R.id.frameLayout, settingFragment).commit();
+                    if(settingFragment == null) {
+                        settingFragment = new SettingFragment();
+                        Bundle bundle1 = new Bundle();
+                        if (user != null) bundle1.putParcelable(DataName.user, user);
+                        settingFragment.setArguments(bundle1);
+                        fragmentManager.beginTransaction().add(R.id.frameLayout, settingFragment).commit();
+                    }
+                    if (homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
+                    if (boardFragment != null) fragmentManager.beginTransaction().hide(boardFragment).commit();
+                    if (chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment).commit();
+                    if (settingFragment != null) fragmentManager.beginTransaction().show(settingFragment).commit();
                     break;
             }
             return true;
