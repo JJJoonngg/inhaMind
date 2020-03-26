@@ -52,6 +52,20 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.top_button).setOnClickListener(this);
 
         mDatas = new ArrayList<>();
+        loadInformation();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadInformation();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        return view;
+    }
+
+    public void loadInformation() {
         mStore.collection(FirebaseID.post)
                 .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
                 .get()
@@ -80,42 +94,6 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                     }
                 });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mStore.collection(FirebaseID.post)
-                        .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    if (task.getResult() != null) {
-                                        mDatas.clear();
-                                        for (DocumentSnapshot snap : task.getResult()) {
-                                            Map<String, Object> shot = snap.getData();
-                                            String documentID = String.valueOf(shot.get(FirebaseID.documnetID));
-                                            String postID = String.valueOf(shot.get(FirebaseID.postID));
-                                            String title = String.valueOf(shot.get(FirebaseID.title));
-                                            String contents = String.valueOf(shot.get(FirebaseID.contents));
-                                            String studentID = String.valueOf(shot.get(FirebaseID.studentID));
-                                            String status = String.valueOf(shot.get(FirebaseID.status));
-                                            Timestamp timestamp = (Timestamp) shot.get(FirebaseID.timestamp);
-                                            Post data = new Post(documentID, postID, title, contents, studentID, status, timestamp);
-                                            mDatas.add(data);
-                                        }
-                                        mAdapters = new PostAdapters(getContext(), mDatas);
-                                        mPostRecylerView.setAdapter(mAdapters);
-                                    }
-                                }
-                            }
-                        });
-
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-        return view;
     }
 
     @Override

@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.navigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+
+        homeFragment = new HomeFragment();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Bundle bundle = new Bundle();
+        if (user != null) bundle.putParcelable(DataName.user, user);
+        homeFragment.setArguments(bundle);
+        transaction.replace(R.id.frameLayout, homeFragment).commit();
 
         if (mUser != null) {
             mStore.collection(FirebaseID.user).document(mUser.getUid())
@@ -63,18 +71,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        homeFragment = new HomeFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Bundle bundle = new Bundle();
-        if (user != null) bundle.putParcelable(DataName.user, user);
-        homeFragment.setArguments(bundle);
-        transaction.replace(R.id.frameLayout, homeFragment).commit();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
     }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {

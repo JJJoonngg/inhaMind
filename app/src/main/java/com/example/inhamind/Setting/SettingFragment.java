@@ -1,8 +1,10 @@
 package com.example.inhamind.Setting;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +12,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.inhamind.Account.LoginActivity;
 import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Account.ServiceCenter;
-import com.example.inhamind.Common.FirebaseID;
+import com.example.inhamind.Board.MyPostListActivity;
 import com.example.inhamind.Models.DataName;
 import com.example.inhamind.Models.User;
 import com.example.inhamind.Notice.NoticeListActivity;
 import com.example.inhamind.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
@@ -41,10 +42,18 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         context = getContext();
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) user = bundle.getParcelable(DataName.user);
+        if (user != null) Log.d("TAG", user.toString());
+
         studentName = view.findViewById(R.id.student_name);
         studentID = view.findViewById(R.id.student_id);
         version = view.findViewById(R.id.version);
 
+        if (user != null) {
+            studentName.setText(user.getName());
+            studentID.setText(user.getStudentID());
+        }
         view.findViewById(R.id.my_page).setOnClickListener(this);
         view.findViewById(R.id.my_post).setOnClickListener(this);
         view.findViewById(R.id.my_reservation).setOnClickListener(this);
@@ -55,25 +64,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.terms_of_service).setOnClickListener(this);
         view.findViewById(R.id.app_setting).setOnClickListener(this);
 
-        if (mUser != null) {
-            mStore.collection(FirebaseID.user).document(mUser.getUid())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult() != null) {
-                                    String documentID = (String) task.getResult().get(FirebaseID.documnetID);
-                                    String studentID = (String) task.getResult().get(FirebaseID.studentID);
-                                    String name = (String) task.getResult().get(FirebaseID.name);
-                                    String profileImageUrl = (String) task.getResult().get(FirebaseID.profileImageUrl);
-                                    user = new User(documentID, name, studentID, profileImageUrl);
-                                }
-                            }
-
-                        }
-                    });
-        }
 
         return view;
     }
@@ -88,12 +78,24 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.my_post:
+                startActivity(new Intent(context, MyPostListActivity.class));
                 break;
 
             case R.id.my_reservation:
                 break;
 
             case R.id.log_out:
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("로그아웃 하시겠습니까?");
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(context, LoginActivity.class));
+                    }
+                });
+                builder.setNegativeButton("아니오", null);
+                builder.create().show();
                 break;
 
             case R.id.notice:
