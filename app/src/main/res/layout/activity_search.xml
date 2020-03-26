@@ -45,17 +45,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/search_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:spinnerMode="dropdown" />
 
         <EditText
             android:id="@+id/search_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_marginStart="0dp"
             android:layout_weight="1"
-            android:hint="제목, 내용, 학번"
-            android:padding="10dp"
-            android:textSize="20sp" />
+            android:hint="내용을 입력해주세요.(최대 10자)"
+            android:maxLength="10"
+            android:privateImeOptions="defaultInputmode=korean"
+            android:singleLine="true"
+            android:textSize="15sp" />
 
         <ImageButton
             android:id="@+id/search_button"
