@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.inhamind.Account.BackPressHandler;
 import com.example.inhamind.Board.BoardFragment;
 import com.example.inhamind.Chat.ChattingFragment;
 import com.example.inhamind.Models.DataName;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     BottomNavigationView bottomNavigationView;
+
+    private BackPressHandler backPressHandler = new BackPressHandler(MainActivity.this);
 
     private User user;
 
@@ -132,5 +135,10 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
 }
