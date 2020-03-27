@@ -22,9 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Secession extends AppCompatActivity implements View.OnClickListener {
     private Button secessionButton;
+    private String studentId;
+    private String pswd;
+
     EditText message;
-    String studentId;
-    String pswd;
     EditText secessionPswd;
 
     private FirebaseUser mUser;

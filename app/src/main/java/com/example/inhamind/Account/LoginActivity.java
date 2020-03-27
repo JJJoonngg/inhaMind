@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ImageButton loginButton;
     CheckBox autoLogin;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private BackPressHandler backPressHandler = new BackPressHandler(LoginActivity.this);
 

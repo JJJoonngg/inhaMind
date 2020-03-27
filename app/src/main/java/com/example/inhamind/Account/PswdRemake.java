@@ -31,7 +31,7 @@ public class PswdRemake extends AppCompatActivity implements View.OnClickListene
     private FirebaseUser mUser;
     private FirebaseFirestore mStore;
 
-    String pswd;
+    private String pswd;
 
     EditText repswd;
     EditText repswdConfirm;

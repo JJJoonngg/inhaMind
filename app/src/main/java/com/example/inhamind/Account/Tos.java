@@ -16,8 +16,8 @@ import java.util.List;
 
 public class Tos extends AppCompatActivity {
 
-    RecyclerAdapter recyclerAdapter;
-    ArrayList<Data> dataArrayList;
+    private RecyclerAdapter recyclerAdapter;
+    private ArrayList<Data> dataArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

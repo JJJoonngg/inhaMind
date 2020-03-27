@@ -39,11 +39,11 @@ import java.util.Map;
 public class MakeAccountActivity extends LoginActivity implements View.OnClickListener {
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
 
-    String name;
-    String studentid;
-    String confirmnum;
-    String pwd;
-    String confirmPswd;
+    private String name;
+    private String studentid;
+    private String confirmnum;
+    private String pwd;
+    private String confirmPswd;
 
     EditText nameInput;
     EditText studentIdInput;
@@ -58,15 +58,15 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     TextView countDown;
 
     private Button btn;
-    FirebaseAuth mAuth;
-    FirebaseFirestore mStore;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
     private FirebaseUser mUser;
 
     private String authCode;
 
-    final int Thousand = 1000;
-    boolean isCounterRunning = false;
-    boolean isClickedButton = false;
+    private final int Thousand = 1000;
+    private boolean isCounterRunning = false;
+    private boolean isClickedButton = false;
 
     CountDownTimer countDownTimer = new CountDownTimer(Thousand * 300, Thousand) {
         @Override
