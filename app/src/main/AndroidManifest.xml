@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/ic_whatshot_dark_gray_24dp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Common.LoadingActivity"></activity>
+        <activity android:name=".Common.LoadingActivity" />
         <activity android:name=".Notice.NoticeReadActivity" />
         <activity android:name=".Notice.NoticeListActivity" />
         <activity android:name=".Notice.NoticeWirteActivity" />
@@ -34,8 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Account.LoginActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <activity android:name=".Account.LoginActivity" />
         <activity android:name=".Account.PswdFind" />
         <activity
             android:name=".Account.MakeAccountActivity"
