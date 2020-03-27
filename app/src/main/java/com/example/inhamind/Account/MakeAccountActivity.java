@@ -301,6 +301,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                                                             .set(userMap, SetOptions.merge());//덮어쓰기(추가)
                                                     finish();
                                                     startActivity(new Intent(MakeAccountActivity.this, MainActivity.class));
+                                                    return;
                                                 }
                                             }
                                         });
@@ -308,6 +309,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                                 Toast.makeText(MakeAccountActivity.this, "이미 존재하는 이름입니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
+                            return;
                         }
                     });
         } else {

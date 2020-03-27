@@ -44,14 +44,12 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
         intent = getIntent();
         user = intent.getParcelableExtra(DataName.user);
 
-        TextView logout = findViewById(R.id.logout);
         TextView secession = findViewById(R.id.secession_button);
         phoneChange = findViewById(R.id.phone_change);
         pswdChange = findViewById(R.id.pswd_change);
 
         findViewById(R.id.my_post).setOnClickListener(this);
 
-        logout.setOnClickListener(this);
         secession.setOnClickListener(this);
         phoneChange.setOnClickListener(this);
         pswdChange.setOnClickListener(this);
@@ -73,19 +71,6 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.pswd_change:
                 changePassword();
-                break;
-            case R.id.logout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MyPageActivty.this);
-                builder.setTitle("로그아웃 하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(MyPageActivty.this, LoginActivity.class));
-                    }
-                });
-                builder.setNegativeButton("아니오", null);
-                builder.create().show();
                 break;
             case R.id.secession_button:
                 AlertDialog.Builder build = new AlertDialog.Builder(MyPageActivty.this);

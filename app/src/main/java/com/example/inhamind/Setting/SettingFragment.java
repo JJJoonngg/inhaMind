@@ -1,6 +1,7 @@
 package com.example.inhamind.Setting;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.inhamind.Account.LoginActivity;
 import com.example.inhamind.Account.MyPageActivty;
 import com.example.inhamind.Account.ServiceCenter;
 import com.example.inhamind.Common.FirebaseID;
@@ -94,8 +97,18 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.log_out:
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("로그아웃 하시겠습니까?");
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(context, LoginActivity.class));
+                    }
+                });
+                builder.setNegativeButton("아니오", null);
+                builder.create().show();
                 break;
-
             case R.id.notice:
                 intent = new Intent(context, NoticeListActivity.class);
                 intent.putExtra(DataName.user, user);
