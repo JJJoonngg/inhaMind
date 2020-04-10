@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -72,11 +73,9 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
         } else if (status.equals("false")) {
             postStatus.setText("미완료");
             postStatus.setTextColor(Color.RED);
-        } else {
-            postStatus.setText("진행중");
-            postStatus.setTextColor(Color.BLUE);
         }
 
+        findViewById(R.id.status_button).setOnClickListener(this);
         findViewById(R.id.close_button).setOnClickListener(this);
         findViewById(R.id.option_button).setOnClickListener(this);
 
@@ -99,6 +98,14 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
             case R.id.close_button:
                 this.finish();
                 break;
+
+            case R.id.status_button:
+                PopupMenu statusPopupMenu = new PopupMenu(MyPostReadActivity.this, view, Gravity.RIGHT);
+                getMenuInflater().inflate(R.menu.status_popup, statusPopupMenu.getMenu());
+                statusPopupMenu.setOnMenuItemClickListener(listener);
+                statusPopupMenu.show();
+                break;
+
             case R.id.option_button:
                 PopupMenu popupMenu = new PopupMenu(MyPostReadActivity.this, view);
                 getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
@@ -188,6 +195,40 @@ public class MyPostReadActivity extends AppCompatActivity implements View.OnClic
                     });
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
+                    break;
+                case R.id.ready:
+                    postStatus.setText("미완료");
+                    postStatus.setTextColor(Color.RED);
+                    if(mUser !=null){
+                        mStore.collection(FirebaseID.post)
+                                .document(post.getPostID())
+                                .update(FirebaseID.status, "false")
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task != null) {
+                                            Toast.makeText(MyPostReadActivity.this, "상태 변경 완료", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                    break;
+                case R.id.done:
+                    postStatus.setText("완료");
+                    postStatus.setTextColor(Color.GREEN);
+                    if(mUser !=null){
+                        mStore.collection(FirebaseID.post)
+                                .document(post.getPostID())
+                                .update(FirebaseID.status, "true")
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task != null) {
+                                            Toast.makeText(MyPostReadActivity.this, "상태 변경 완료", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
                     break;
             }
             return false;
