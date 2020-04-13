@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.inhamind.EmailSend.MailSend;
 import com.example.inhamind.Common.FirebaseID;
@@ -24,12 +23,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -38,6 +37,7 @@ import java.util.Map;
 
 public class MakeAccountActivity extends LoginActivity implements View.OnClickListener {
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,20}$"); // 8자리 ~ 20자리까지 가능
+    ArrayList<String> nameList;
 
     private String name;
     private String studentid;
@@ -264,60 +264,53 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                     Toast.makeText(MakeAccountActivity.this, "비밀번호 형식을 지켜주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(confirmButton.getText().toString().equals("확인")) {
+                if (confirmButton.getText().toString().equals("확인")) {
                     Toast.makeText(MakeAccountActivity.this, "학번을 인증해주세요", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else {
+                } else {
                     signUp();
                 }
         }
     }
 
     public void signUp() {
+        boolean tmp = true; //존재하는 이름인지 판별
+
         if ((name != null && !name.isEmpty()) && (studentid != null && !studentid.isEmpty())
                 && (confirmnum != null && !confirmnum.isEmpty()) && (pwd != null && !pwd.isEmpty()) && (confirmPswd != null && !confirmPswd.isEmpty())
                 && pswdConfirm.getText().toString().equals("일치")) {
-            mStore.collection(FirebaseID.user)
-                    .whereEqualTo(FirebaseID.name, nameInput.getText().toString())
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            if (queryDocumentSnapshots == null) {
-                                mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", pwd)
-                                        .addOnCompleteListener(MakeAccountActivity.this, new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                                if (task.isSuccessful()) {
-                                                    FirebaseUser user = mAuth.getCurrentUser();
-                                                    Map<String, Object> userMap = new HashMap<>(); //firestore 사용
-                                                    userMap.put(FirebaseID.documnetID, user.getUid()); //사용자 관리하기 위해
-                                                    userMap.put(FirebaseID.name, name);
-                                                    userMap.put(FirebaseID.studentID, studentid);
-                                                    userMap.put(FirebaseID.password, pwd);
+            for (int i = 0; i < nameList.size(); i++) {
+                if (nameList.get(i).equals(name)) {
+                    tmp = false;
+                    Toast.makeText(MakeAccountActivity.this, "이미 존재하는 이름입니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                                                    mStore.collection(FirebaseID.user)
-                                                            .document(user.getUid())
-                                                            .set(userMap, SetOptions.merge());//덮어쓰기(추가)
-                                                    finish();
-                                                    startActivity(new Intent(MakeAccountActivity.this, MainActivity.class));
-                                                    return;
-                                                }
-                                            }
-                                        });
-                            } else {
-                                Toast.makeText(MakeAccountActivity.this, "이미 존재하는 이름입니다.", Toast.LENGTH_SHORT).show();
-                                return;
+            if (tmp) {
+                mAuth.createUserWithEmailAndPassword(studentid + "@inha.edu", pwdJoinInput.getText().toString())
+                        .addOnCompleteListener(MakeAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Map<String, Object> userMap = new HashMap<>(); //firestore 사용
+                                    userMap.put(FirebaseID.documnetID, user.getUid()); //사용자 관리하기 위해
+                                    userMap.put(FirebaseID.name, name);
+                                    userMap.put(FirebaseID.studentID, studentid);
+                                    userMap.put(FirebaseID.password, pwd);
+
+                                    mStore.collection(FirebaseID.user)
+                                            .document(user.getUid())
+                                            .set(userMap, SetOptions.merge());//덮어쓰기(추가)
+                                    finish();
+                                    startActivity(new Intent(MakeAccountActivity.this, MainActivity.class));
+                                    return;
+                                }
                             }
-                            return;
-                        }
-                    });
-        } else {
-            Toast.makeText(MakeAccountActivity.this, "회원가입 형식이 잘못되었습니다. ", Toast.LENGTH_SHORT).show();
-            return;
+                        });
+            }
         }
     }
-
     public static boolean validatePassword(String pwStr) {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr);
         return matcher.matches();
@@ -326,5 +319,27 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        nameList = new ArrayList<>();
+        mStore.collection(FirebaseID.user)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            nameList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = String.valueOf(document.getData().get(FirebaseID.name));
+
+                                nameList.add(name);
+                            }
+                        }
+                    }
+                });
     }
 }
