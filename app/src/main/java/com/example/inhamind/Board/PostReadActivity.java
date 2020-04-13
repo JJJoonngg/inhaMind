@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 public class PostReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView postTitle, postContents, postStudentID, postStatus;
+    private ImageButton chatting;
     private String title, contents, studentID, status;
     private Intent intent;
     private Post post;
@@ -42,22 +44,28 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         postContents = findViewById(R.id.post_contents);
         postStudentID = findViewById(R.id.post_student_id);
         postStatus = findViewById(R.id.post_status);
+        chatting = findViewById(R.id.read_chat_button);
 
         postTitle.setText(title);
         postContents.setText(contents);
         postStudentID.setText(studentID);
 
+        findViewById(R.id.read_close_button).setOnClickListener(this);
+        findViewById(R.id.read_chat_button).setOnClickListener(this);
+
         if (status.equals("true")) {
             postStatus.setText("완료");
             postStatus.setTextColor(Color.BLUE);
+            chatting.setVisibility(View.INVISIBLE);
+            chatting.setFocusable(false);
+            chatting.setClickable(false);
         } else {
             postStatus.setText("미완료");
             postStatus.setTextColor(Color.RED);
+            chatting.setVisibility(View.VISIBLE);
+            chatting.setFocusable(true);
+            chatting.setClickable(true);
         }
-
-
-        findViewById(R.id.read_close_button).setOnClickListener(this);
-        findViewById(R.id.read_chat_button).setOnClickListener(this);
     }
 
     @Override

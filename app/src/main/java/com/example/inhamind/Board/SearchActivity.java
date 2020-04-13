@@ -2,7 +2,10 @@ package com.example.inhamind.Board;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +23,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private InitialStateFragment initialStateFragment = new InitialStateFragment();
 
     private EditText mContents;
-    private String contents;
+    private String contents, choiceCollection;
+    private Spinner spinner;
+    final private String[] list = {"제목", "내용", "학번"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,21 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         transaction.replace(R.id.frameLayout, initialStateFragment).commitAllowingStateLoss();
 
         mContents = findViewById(R.id.search_input);
+        spinner = findViewById(R.id.search_spinner);
+        choiceCollection = "제목";
+
+        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.spin, list);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                choiceCollection = list[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         findViewById(R.id.write_close_button).setOnClickListener(this);
         findViewById(R.id.search_button).setOnClickListener(this);
@@ -54,6 +74,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     else {
                         Bundle bundle = new Bundle(1);
                         bundle.putString(DataName.data, contents);
+                        bundle.putString(DataName.type, choiceCollection);
+
                         fragment.setArguments(bundle);
                         transaction.replace(R.id.frameLayout, fragment).commitAllowingStateLoss();
                     }

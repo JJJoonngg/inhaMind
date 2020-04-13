@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ready"
+        android:title="미완료"/>
+
+    <item
+        android:id="@+id/done"
+        android:title="완료"/>
+
+</menu>
