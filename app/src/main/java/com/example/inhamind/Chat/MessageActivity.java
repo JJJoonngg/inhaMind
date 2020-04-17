@@ -72,7 +72,8 @@ public class MessageActivity extends AppCompatActivity {
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private String postUid;
     private TextView chatTitle;
-    private User destinationUser;
+    private String pushToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,14 +122,24 @@ public class MessageActivity extends AppCompatActivity {
     }
     void sendGcm(){
         Gson gson = new Gson();
+        mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID,destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (queryDocumentSnapshots != null) {
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                        pushToken=String.valueOf(snapshot.get(FirebaseID.pushToken));
+                        destinationId = String.valueOf(snapshot.get(FirebaseID.studentID));
 
+                    }
+                }
+            }
+        });
         NotificationModel notificationModel = new NotificationModel();
-        notificationModel.to = destinationUser.pushToken;
-        notificationModel.notification.title = "보낸이 아이디";
+        notificationModel.to = pushToken;
+        notificationModel.notification.title = destinationId;
         notificationModel.notification.text = editText.getText().toString();
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
-
         Request request = new Request.Builder().header("Content-Type","application/json")
                 .addHeader("Authorization","key=AAAAgyZC7wk:APA91bGyBUpGpnGg_bADAbpq33wlYTD6qwQzXA_HB-2iQaOF1DUxDYCHjsnXhIffEdE9Zz8_dO6RQAmyDz3MkBBiVOR0Qmf4SpQFrWr9ys7nEyApZATzASRh4KAEBpLfbqyNo9K5f93y")
                 //.url("https://fcm.googleapis.com/fcm/send")

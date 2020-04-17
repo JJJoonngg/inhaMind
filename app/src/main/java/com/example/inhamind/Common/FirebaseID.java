@@ -20,4 +20,5 @@ public class FirebaseID {
 
     public static String notice = "notice";
     public static String noticeID = "noticeID";
+    public static String pushToken= "pushToken";
 }
