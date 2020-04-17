@@ -10,10 +10,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inhamind.Board.BoardFragment;
 import com.example.inhamind.Chat.ChattingFragment;
-import com.example.inhamind.Chat.PeopleFragment;
 import com.example.inhamind.R;
 import com.example.inhamind.Setting.SettingFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+
+        passPushTokenToServer();
     }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -56,5 +66,24 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
+    void passPushTokenToServer(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if(!task.isSuccessful()){
+                    return;
+                }
+                String token = task.getResult().getToken();
+                Map<String,Object> map  = new HashMap<>();
+                map.put("pushToken",token);
+                FirebaseFirestore.getInstance().collection(FirebaseID.user).document(uid).update(map);
+            }
+        });
+
+
+
+
     }
 }

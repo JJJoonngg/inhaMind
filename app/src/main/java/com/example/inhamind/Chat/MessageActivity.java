@@ -20,9 +20,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.inhamind.Common.FirebaseID;
+import com.example.inhamind.Models.NotificationModel;
 import com.example.inhamind.R;
 import com.example.inhamind.Models.ChatModel;
-import com.example.inhamind.Models.UserModel;
+import com.example.inhamind.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,12 +38,25 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MessageActivity extends AppCompatActivity {
     private String destinationUid;
@@ -56,7 +70,9 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-
+    private String postUid;
+    private TextView chatTitle;
+    private User destinationUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +81,10 @@ public class MessageActivity extends AppCompatActivity {
         destinationUid = getIntent().getStringExtra("destinationUid");
         button = (Button) findViewById(R.id.messageActivity_button);
         editText = (EditText) findViewById(R.id.messageActivity_editText);
-
+        postUid = getIntent().getStringExtra("postUid");
+        chatTitle = (TextView) findViewById(R.id.chatting_title);
         recyclerView = (RecyclerView) findViewById(R.id.messageActivity_recyclerview);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +109,7 @@ public class MessageActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            sendGcm();
                             editText.setText("");
                         }
                     });
@@ -100,7 +119,37 @@ public class MessageActivity extends AppCompatActivity {
         });
         checkChatRoom();
     }
+    void sendGcm(){
+        Gson gson = new Gson();
 
+        NotificationModel notificationModel = new NotificationModel();
+        notificationModel.to = destinationUser.pushToken;
+        notificationModel.notification.title = "보낸이 아이디";
+        notificationModel.notification.text = editText.getText().toString();
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
+
+        Request request = new Request.Builder().header("Content-Type","application/json")
+                .addHeader("Authorization","key=AAAAgyZC7wk:APA91bGyBUpGpnGg_bADAbpq33wlYTD6qwQzXA_HB-2iQaOF1DUxDYCHjsnXhIffEdE9Zz8_dO6RQAmyDz3MkBBiVOR0Qmf4SpQFrWr9ys7nEyApZATzASRh4KAEBpLfbqyNo9K5f93y")
+                //.url("https://fcm.googleapis.com/fcm/send")
+                .url("https://gcm-http.googleapis.com/gcm/send")
+                .post(requestBody)
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        });
+
+    }
     void checkChatRoom() {
         FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/" + uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -125,17 +174,18 @@ public class MessageActivity extends AppCompatActivity {
 
     class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         List<ChatModel.Comment> comments;
-        UserModel userModel;
+
 
         public RecyclerViewAdapter() {
             comments = new ArrayList<>();
-            mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID, destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID,destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     if (queryDocumentSnapshots != null) {
                         for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
                             destinationImage = String.valueOf(snapshot.get(FirebaseID.profileImageUrl));
                             destinationId = String.valueOf(snapshot.get(FirebaseID.studentID));
+                            chatTitle.setText(destinationId+"님");
                         }
                     }
                     getMessageList();
@@ -221,7 +271,6 @@ public class MessageActivity extends AppCompatActivity {
             public LinearLayout linearLayout_destination;
             public LinearLayout linearLayout_main;
             public TextView textView_timestamp;
-
             public MessageViewHolder(View view) {
                 super(view);
                 textView_message = (TextView) view.findViewById(R.id.messageItem_textView_message);
@@ -232,6 +281,7 @@ public class MessageActivity extends AppCompatActivity {
                 textView_timestamp = (TextView) view.findViewById(R.id.messageItem_textView_timestamp);
             }
         }
+
     }
 
     @Override

@@ -20,7 +20,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 public class PostReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView postTitle, postContents, postStudentID, postStatus;
-    private String title, contents, studentID, status, documentID;
+    private String title, contents, studentID, status, documentID, postID;
     private Intent intent;
     private Post post;
     @ServerTimestamp
@@ -40,6 +40,7 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         status = post.getStatus();
         timestamp = post.getTimestamp();
         documentID = post.getDocumentID();
+        postID = post.getPostID();
 
         postTitle = findViewById(R.id.post_title);
         postContents = findViewById(R.id.post_contents);
@@ -79,6 +80,7 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
             case R.id.read_chat_button:
                 Intent intent = new Intent(view.getContext(), MessageActivity.class);
                 intent.putExtra("destinationUid", documentID);
+                intent.putExtra("postUid", postID);
                 ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright, R.anim.toleft);
                 startActivity(intent, activityOptions.toBundle());
                 break;

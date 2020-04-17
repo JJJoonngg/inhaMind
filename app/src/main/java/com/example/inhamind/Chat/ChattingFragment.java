@@ -21,7 +21,7 @@ import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.R;
 import com.example.inhamind.Chat.MessageActivity;
 import com.example.inhamind.Models.ChatModel;
-import com.example.inhamind.Models.UserModel;
+import com.example.inhamind.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -105,7 +105,8 @@ public class ChattingFragment extends Fragment {
                     destinationUsers.add(destinationUid);
                 }
             }
-            List<UserModel> userModels;
+
+            List<User> userModels;
             userModels = new ArrayList<>();
             mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID, destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
@@ -116,9 +117,10 @@ public class ChattingFragment extends Fragment {
                                     .load(String.valueOf(snapshot.get(FirebaseID.profileImageUrl)))
                                     .apply(new RequestOptions().circleCrop())
                                     .into(customViewHolder.immageView);
-                            customViewHolder.textView_title.setText(String.valueOf(snapshot.get(FirebaseID.studentID)));
+                             customViewHolder.textView_title.setText(String.valueOf(snapshot.get(FirebaseID.studentID)));
                         }
                     }
+
                 }
 
             });
@@ -128,7 +130,6 @@ public class ChattingFragment extends Fragment {
             commentMap.putAll(chatModels.get(position).comments);
             String lastMessageKey = (String) commentMap.keySet().toArray()[0];
             customViewHolder.textView_last_message.setText(chatModels.get(position).comments.get(lastMessageKey).message);
-
             customViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
