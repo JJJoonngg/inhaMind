@@ -62,8 +62,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.customer_service).setOnClickListener(this);
         view.findViewById(R.id.information).setOnClickListener(this);
         view.findViewById(R.id.terms_of_service).setOnClickListener(this);
-        view.findViewById(R.id.app_setting).setOnClickListener(this);
-
 
         return view;
     }
@@ -113,11 +111,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
             case R.id.terms_of_service:
                 break;
-
-            case R.id.app_setting:
-                break;
-
-
+                
         }
 
     }
