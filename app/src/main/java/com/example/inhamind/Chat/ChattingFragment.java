@@ -1,6 +1,7 @@
 package com.example.inhamind.Chat;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +13,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.inhamind.Common.FirebaseID;
+import com.example.inhamind.Common.MainActivity;
 import com.example.inhamind.R;
 import com.example.inhamind.Chat.MessageActivity;
 import com.example.inhamind.Models.ChatModel;
@@ -54,6 +57,7 @@ public class ChattingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.chatfragment_recyclerview);
+        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
         recyclerView.setAdapter(new ChatRecyclerViewAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
         return view;

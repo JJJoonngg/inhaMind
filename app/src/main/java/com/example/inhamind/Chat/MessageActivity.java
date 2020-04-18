@@ -23,7 +23,6 @@ import com.example.inhamind.Common.FirebaseID;
 import com.example.inhamind.Models.NotificationModel;
 import com.example.inhamind.R;
 import com.example.inhamind.Models.ChatModel;
-import com.example.inhamind.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +40,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -110,7 +108,7 @@ public class MessageActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            sendGcm();
+                            sendFcm();
                             editText.setText("");
                         }
                     });
@@ -120,7 +118,7 @@ public class MessageActivity extends AppCompatActivity {
         });
         checkChatRoom();
     }
-    void sendGcm(){
+    void sendFcm(){
         Gson gson = new Gson();
         mStore.collection(FirebaseID.user).whereEqualTo(FirebaseID.documnetID,destinationUid).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -138,12 +136,15 @@ public class MessageActivity extends AppCompatActivity {
         notificationModel.to = pushToken;
         notificationModel.notification.title = destinationId;
         notificationModel.notification.text = editText.getText().toString();
+       // notificationModel.data.title = destinationId;
+       // notificationModel.data.text = editText.getText().toString();
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
-        Request request = new Request.Builder().header("Content-Type","application/json")
-                .addHeader("Authorization","key=AAAAgyZC7wk:APA91bGyBUpGpnGg_bADAbpq33wlYTD6qwQzXA_HB-2iQaOF1DUxDYCHjsnXhIffEdE9Zz8_dO6RQAmyDz3MkBBiVOR0Qmf4SpQFrWr9ys7nEyApZATzASRh4KAEBpLfbqyNo9K5f93y")
-                //.url("https://fcm.googleapis.com/fcm/send")
-                .url("https://gcm-http.googleapis.com/gcm/send")
+        RequestBody requestBody = RequestBody.create(gson.toJson(notificationModel),MediaType.parse("application/json; charset=utf8"));
+        Request request = new Request.Builder()
+                .header("Content-Type","application/json")
+                .addHeader("Authorization","key=AAAAgyZC7wk:APA91bG4KaK-jnlPPIkJq1uqpu99997bMgPfme0HoR0ebSKaud4rKXrpnfatMrVMJnqzATpcOCt-__hersxcCzGR9aVsy9gTF2ktNIhjYIac74JM9DydMXoLr539xiY6kr0FyKuXmzv4")
+                .url("https://fcm.googleapis.com/fcm/send")
+                //.url("https://gcm-http.googleapis.com/gcm/send")
                 .post(requestBody)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -196,7 +197,7 @@ public class MessageActivity extends AppCompatActivity {
                         for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
                             destinationImage = String.valueOf(snapshot.get(FirebaseID.profileImageUrl));
                             destinationId = String.valueOf(snapshot.get(FirebaseID.studentID));
-                            chatTitle.setText(destinationId+"님");
+                            chatTitle.setText(destinationId);
                         }
                     }
                     getMessageList();
@@ -301,3 +302,4 @@ public class MessageActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fromleft, R.anim.toright);
     }
 }
+
