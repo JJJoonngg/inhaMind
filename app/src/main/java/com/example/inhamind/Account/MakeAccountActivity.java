@@ -272,7 +272,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
                 }
         }
     }
-
+    
     public void signUp() {
         boolean tmp = true; //존재하는 이름인지 판별
 
@@ -311,6 +311,7 @@ public class MakeAccountActivity extends LoginActivity implements View.OnClickLi
             }
         }
     }
+
     public static boolean validatePassword(String pwStr) {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pwStr);
         return matcher.matches();

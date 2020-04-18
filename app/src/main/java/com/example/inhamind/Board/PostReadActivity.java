@@ -1,15 +1,16 @@
 package com.example.inhamind.Board;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.inhamind.Chat.MessageActivity;
 import com.example.inhamind.Models.DataName;
 import com.example.inhamind.Models.Post;
 import com.example.inhamind.R;
@@ -20,7 +21,7 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
 
     private TextView postTitle, postContents, postStudentID, postStatus;
     private ImageButton chatting;
-    private String title, contents, studentID, status;
+    private String title, contents, studentID, status, documentID;
     private Intent intent;
     private Post post;
     @ServerTimestamp
@@ -39,6 +40,7 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
         studentID = post.getStudentID();
         status = post.getStatus();
         timestamp = post.getTimestamp();
+        documentID = post.getDocumentID();
 
         postTitle = findViewById(R.id.post_title);
         postContents = findViewById(R.id.post_contents);
@@ -82,7 +84,10 @@ public class PostReadActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.read_chat_button:
-                Toast.makeText(this,"채팅 구현 예정", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), MessageActivity.class);
+                intent.putExtra("destinationUid", documentID);
+                ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright, R.anim.toleft);
+                startActivity(intent, activityOptions.toBundle());
                 break;
         }
 

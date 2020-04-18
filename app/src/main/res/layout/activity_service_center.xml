@@ -6,9 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Account.ServiceCenter">
 
-    <ImageView
-        android:id="@+id/openChatting"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:src="@drawable/open_chatting" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/openChatting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/open_chatting" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
