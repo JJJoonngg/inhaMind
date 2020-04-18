@@ -8,6 +8,7 @@ public class User implements Parcelable {
     private String name;
     private String studentID;
     private String profileUrl;
+    public String pushToken;
 
     public User() {
     }
