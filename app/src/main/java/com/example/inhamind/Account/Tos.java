@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.inhamind.Adapters.RecyclerAdapter;
-import com.example.inhamind.Models.Data;
+import com.example.inhamind.Adapters.TosAdapter;
+import com.example.inhamind.Models.TosData;
 import com.example.inhamind.R;
 
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ import java.util.List;
 
 public class Tos extends AppCompatActivity {
 
-    private RecyclerAdapter recyclerAdapter;
-    private ArrayList<Data> dataArrayList;
+    private TosAdapter recyclerAdapter;
+    private ArrayList<TosData> dataArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class Tos extends AppCompatActivity {
         dataArrayList = new ArrayList<>();
         getData();
 
-        recyclerAdapter = new RecyclerAdapter(dataArrayList);
+        recyclerAdapter = new TosAdapter(dataArrayList);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerAdapter.notifyDataSetChanged(); // adapter의 값이 변경되었다는 것을 알려줍니다.
     }
@@ -140,7 +140,7 @@ public class Tos extends AppCompatActivity {
                         "이 약관은 2020년 3월 11일에 기재하고 2020년 3월 27일부터 시행하며 종전의 약관은 이 약관으로 대체합니다.");
 
         for (int i = 0; i < listTitle.size(); i++) {
-            Data data = new Data();
+            TosData data = new TosData();
             data.setTitle(listTitle.get(i));
             data.setContent(listContent.get(i));
 
