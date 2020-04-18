@@ -20,18 +20,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-<<<<<<< HEAD
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-=======
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
 import java.util.Map;
->>>>>>> 97cb8de25d98a3f369df9649fc017b53898ac8be
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         homeFragment.setArguments(bundle);
         transaction.replace(R.id.frameLayout, homeFragment).commit();
 
-<<<<<<< HEAD
         if (mUser != null) {
             mStore.collection(FirebaseID.user).document(mUser.getUid())
                     .get()
@@ -90,12 +85,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-=======
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
-
         passPushTokenToServer();
->>>>>>> 97cb8de25d98a3f369df9649fc017b53898ac8be
     }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -104,76 +96,89 @@ public class MainActivity extends AppCompatActivity {
             switch (menuItem.getItemId()) {
                 case R.id.home:
                     if (homeFragment == null) {
-                        homeFragment =  new HomeFragment();
+                        homeFragment = new HomeFragment();
                         Bundle bundle = new Bundle();
                         if (user != null) bundle.putParcelable(DataName.user, user);
                         homeFragment.setArguments(bundle);
                         fragmentManager.beginTransaction().add(R.id.frameLayout, homeFragment).commit();
                     }
-                    if (homeFragment != null) fragmentManager.beginTransaction().show(homeFragment).commit();
-                    if (boardFragment != null) fragmentManager.beginTransaction().hide(boardFragment).commit();
-                    if (chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment).commit();
-                    if (settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment).commit();
+                    if (homeFragment != null)
+                        fragmentManager.beginTransaction().show(homeFragment).commit();
+                    if (boardFragment != null)
+                        fragmentManager.beginTransaction().hide(boardFragment).commit();
+                    if (chattingFragment != null)
+                        fragmentManager.beginTransaction().hide(chattingFragment).commit();
+                    if (settingFragment != null)
+                        fragmentManager.beginTransaction().hide(settingFragment).commit();
                     break;
                 case R.id.board:
                     if (boardFragment == null) {
-                        boardFragment =  new BoardFragment();
+                        boardFragment = new BoardFragment();
                         fragmentManager.beginTransaction().add(R.id.frameLayout, boardFragment).commit();
                     }
-                    if (homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
-                    if (boardFragment != null) fragmentManager.beginTransaction().show(boardFragment).commit();
-                    if (chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment).commit();
-                    if (settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment).commit();
+                    if (homeFragment != null)
+                        fragmentManager.beginTransaction().hide(homeFragment).commit();
+                    if (boardFragment != null)
+                        fragmentManager.beginTransaction().show(boardFragment).commit();
+                    if (chattingFragment != null)
+                        fragmentManager.beginTransaction().hide(chattingFragment).commit();
+                    if (settingFragment != null)
+                        fragmentManager.beginTransaction().hide(settingFragment).commit();
                     break;
                 case R.id.chatting:
                     if (chattingFragment == null) {
-                        chattingFragment =  new ChattingFragment();
+                        chattingFragment = new ChattingFragment();
                         fragmentManager.beginTransaction().add(R.id.frameLayout, chattingFragment).commit();
                     }
-                    if (homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
-                    if (boardFragment != null) fragmentManager.beginTransaction().hide(boardFragment).commit();
-                    if (chattingFragment != null) fragmentManager.beginTransaction().show(chattingFragment).commit();
-                    if (settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment).commit();
+                    if (homeFragment != null)
+                        fragmentManager.beginTransaction().hide(homeFragment).commit();
+                    if (boardFragment != null)
+                        fragmentManager.beginTransaction().hide(boardFragment).commit();
+                    if (chattingFragment != null)
+                        fragmentManager.beginTransaction().show(chattingFragment).commit();
+                    if (settingFragment != null)
+                        fragmentManager.beginTransaction().hide(settingFragment).commit();
                     break;
                 case R.id.setting:
-                    if(settingFragment == null) {
+                    if (settingFragment == null) {
                         settingFragment = new SettingFragment();
                         Bundle bundle1 = new Bundle();
                         if (user != null) bundle1.putParcelable(DataName.user, user);
                         settingFragment.setArguments(bundle1);
                         fragmentManager.beginTransaction().add(R.id.frameLayout, settingFragment).commit();
                     }
-                    if (homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment).commit();
-                    if (boardFragment != null) fragmentManager.beginTransaction().hide(boardFragment).commit();
-                    if (chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment).commit();
-                    if (settingFragment != null) fragmentManager.beginTransaction().show(settingFragment).commit();
+                    if (homeFragment != null)
+                        fragmentManager.beginTransaction().hide(homeFragment).commit();
+                    if (boardFragment != null)
+                        fragmentManager.beginTransaction().hide(boardFragment).commit();
+                    if (chattingFragment != null)
+                        fragmentManager.beginTransaction().hide(chattingFragment).commit();
+                    if (settingFragment != null)
+                        fragmentManager.beginTransaction().show(settingFragment).commit();
                     break;
             }
             return true;
         }
     }
-<<<<<<< HEAD
 
     @Override
     public void onBackPressed() {
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
-=======
-    void passPushTokenToServer(){
+    }
+
+    public void passPushTokenToServer() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if(!task.isSuccessful()){
+                if (!task.isSuccessful()) {
                     return;
                 }
                 String token = task.getResult().getToken();
-                Map<String,Object> map  = new HashMap<>();
-                map.put("pushToken",token);
+                Map<String, Object> map = new HashMap<>();
+                map.put("pushToken", token);
                 FirebaseFirestore.getInstance().collection(FirebaseID.user).document(uid).update(map);
             }
         });
-
-
->>>>>>> 97cb8de25d98a3f369df9649fc017b53898ac8be
     }
 }

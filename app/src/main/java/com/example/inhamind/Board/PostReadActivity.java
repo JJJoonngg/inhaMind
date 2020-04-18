@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,12 +20,8 @@ import com.google.firebase.firestore.ServerTimestamp;
 public class PostReadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView postTitle, postContents, postStudentID, postStatus;
-<<<<<<< HEAD
     private ImageButton chatting;
-    private String title, contents, studentID, status;
-=======
     private String title, contents, studentID, status, documentID;
->>>>>>> 97cb8de25d98a3f369df9649fc017b53898ac8be
     private Intent intent;
     private Post post;
     @ServerTimestamp

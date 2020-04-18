@@ -111,7 +111,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
             case R.id.terms_of_service:
                 break;
-                
+
         }
 
     }
