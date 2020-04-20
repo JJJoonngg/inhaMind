@@ -1,12 +1,10 @@
 # **Inha Mind**
 
-------
-
 ### Project - 인심
 
 - **제작 기간 2020년 1월 ~ 4월**
 
-- **멤버 : 김종신(팀장 및 총괄), 최성현(채팅), 남윤호(기획 및 설정), 박성희 (개인정보), 곽지원(디자인)**
+- **멤버 : [김종신](https://github.com/JJJoonngg)(팀장 및 총괄), [최성현](https://github.com/sung96387)(채팅), [남윤호](https://github.com/Bucoco)(기획 및 설정), [박성희](https://github.com/ParkSungHee) (개인정보), [곽지원](https://github.com/jiwon1217)(디자인 및 아이디어)**
 
   
 
