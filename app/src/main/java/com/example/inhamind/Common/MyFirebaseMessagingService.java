@@ -1,4 +1,4 @@
-package com.example.inhamind;
+package com.example.inhamind.Common;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,7 +10,7 @@ import android.net.Uri;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.inhamind.Common.MainActivity;
+import com.example.inhamind.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
