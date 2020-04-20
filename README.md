@@ -14,7 +14,7 @@
 
   
 
-- `Android 9` Android Studio 3.6.1 `Java`
+- `Android 9` `Android Studio 3.6.1` `Java`
 
 - `Firebase (Auth, Database)` `FireStore` `Glide` `Java Mail` 
 

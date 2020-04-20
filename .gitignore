@@ -4,6 +4,10 @@
 
 EmailSend/
 .idea/workspace.xml
+gradle.properties
+gradlew
+gradlew.bat
+setting.gradle
 
 ### Android ###
 # Built application files
