@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:orientation="vertical"
-    tools:context=".Account.PswdFind"
+    tools:context=".Account.PswdFindActivity"
     android:layout_marginLeft="40dp">
 
     <TextView

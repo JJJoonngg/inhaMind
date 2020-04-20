@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Secession extends AppCompatActivity implements View.OnClickListener {
+public class SecessionActivity extends AppCompatActivity implements View.OnClickListener {
     private Button secessionButton;
     private String studentId;
     private String pswd;
@@ -74,20 +74,20 @@ public class Secession extends AppCompatActivity implements View.OnClickListener
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            MailSend mailSend = new MailSend(Secession.this, "inhamindteam@gmail.com", studentId + "가 탈퇴한 이유 :\n" + message.getText().toString());
+                                            MailSend mailSend = new MailSend(SecessionActivity.this, "inhamindteam@gmail.com", studentId + "가 탈퇴한 이유 :\n" + message.getText().toString());
                                             mailSend.sessionsendMail();
                                             mStore.collection(FirebaseID.user)
                                                     .document(mUser.getUid())
                                                     .delete();
-                                            Toast.makeText(Secession.this, "계정이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(Secession.this, LoginActivity.class));
+                                            Toast.makeText(SecessionActivity.this, "계정이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(SecessionActivity.this, LoginActivity.class));
                                         } else {
-                                            Toast.makeText(Secession.this, "계정이 삭제되지 않았습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SecessionActivity.this, "계정이 삭제되지 않았습니다", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     } else {
-                        Toast.makeText(Secession.this, "비밀번호가 틀렸습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SecessionActivity.this, "비밀번호가 틀렸습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

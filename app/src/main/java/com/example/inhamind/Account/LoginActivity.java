@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 save();
                 break;
             case R.id.pswd_find:
-                startActivity(new Intent(LoginActivity.this, PswdFind.class));
+                startActivity(new Intent(LoginActivity.this, PswdFindActivity.class));
                 break;
             case R.id.make_account:
                 startActivity(new Intent(LoginActivity.this, MakeAccountActivity.class));

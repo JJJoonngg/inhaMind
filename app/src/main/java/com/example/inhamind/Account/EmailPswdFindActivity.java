@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.R;
 
-public class EmailPswdFind extends AppCompatActivity {
+public class EmailPswdFindActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,16 +1,16 @@
 package com.example.inhamind.Account;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.inhamind.R;
 
-public class ServiceCenter extends AppCompatActivity {
+public class ServiceCenterActivity extends AppCompatActivity {
     ImageView imageView;
 
     @Override

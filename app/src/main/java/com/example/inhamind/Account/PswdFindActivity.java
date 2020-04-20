@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inhamind.R;
 
-public class PswdFind extends AppCompatActivity {
+public class PswdFindActivity extends AppCompatActivity {
 
     RadioGroup rg;
 

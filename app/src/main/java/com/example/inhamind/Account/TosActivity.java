@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Tos extends AppCompatActivity {
+public class TosActivity extends AppCompatActivity {
 
     private TosAdapter recyclerAdapter;
     private ArrayList<TosData> dataArrayList;

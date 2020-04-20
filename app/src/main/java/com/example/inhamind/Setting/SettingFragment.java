@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.inhamind.Account.LoginActivity;
 import com.example.inhamind.Account.MyPageActivty;
-import com.example.inhamind.Account.ServiceCenter;
-import com.example.inhamind.Account.Tos;
+import com.example.inhamind.Account.ServiceCenterActivity;
+import com.example.inhamind.Account.TosActivity;
 import com.example.inhamind.Board.MyPostListActivity;
 import com.example.inhamind.Models.DataName;
 import com.example.inhamind.Models.User;
@@ -104,14 +104,14 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.customer_service:
-                startActivity(new Intent(context, ServiceCenter.class));
+                startActivity(new Intent(context, ServiceCenterActivity.class));
                 break;
 
             case R.id.information:
                 break;
 
             case R.id.terms_of_service:
-                startActivity(new Intent(context, Tos.class));
+                startActivity(new Intent(context, TosActivity.class));
                 break;
 
         }

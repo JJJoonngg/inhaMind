@@ -1,6 +1,5 @@
 package com.example.inhamind.Account;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -75,7 +74,7 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
             case R.id.secession_button:
                 AlertDialog.Builder build = new AlertDialog.Builder(MyPageActivty.this);
                 build.setTitle("회원탈퇴 하시겠습니까?");
-                Intent intent = new Intent(MyPageActivty.this, Secession.class);
+                Intent intent = new Intent(MyPageActivty.this, SecessionActivity.class);
                 startActivity(intent);
                 break;
 
@@ -107,7 +106,7 @@ public class MyPageActivty extends AppCompatActivity implements View.OnClickList
         } else if (!userPswd.getText().toString().equals(pswd)) {
             Toast.makeText(MyPageActivty.this, "비밀번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
         } else {
-            Intent intent = new Intent(getApplicationContext(), PswdRemake.class);
+            Intent intent = new Intent(getApplicationContext(), PswdRemakeActivity.class);
             startActivityForResult(intent, 101);
         }
     }

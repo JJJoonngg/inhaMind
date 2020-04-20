@@ -2,6 +2,7 @@
 # Created by https://www.gitignore.io/api/java,macos,gradle,kotlin,android,windows,eclipse,intellij,androidstudio
 # Edit at https://www.gitignore.io/?templates=java,macos,gradle,kotlin,android,windows,eclipse,intellij,androidstudio
 
+EmailSend/
 .idea/workspace.xml
 
 ### Android ###

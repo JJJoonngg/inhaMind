@@ -7,7 +7,7 @@
     android:layout_centerHorizontal="true"
     android:layout_marginLeft="40dp"
     android:orientation="vertical"
-    tools:context=".Account.PswdFind">
+    tools:context=".Account.PswdFindActivity">
 
     <TextView
         android:layout_width="wrap_content"

@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PswdRemake extends AppCompatActivity implements View.OnClickListener {
+public class PswdRemakeActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser mUser;
     private FirebaseFirestore mStore;
 
@@ -138,7 +138,7 @@ public class PswdRemake extends AppCompatActivity implements View.OnClickListene
                                 mUser.updatePassword(repswd.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(PswdRemake.this, "비밀번호를 변경하였습니다", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PswdRemakeActivity.this, "비밀번호를 변경하였습니다", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent();
                                         intent.putExtra("change", "confirm");
 
@@ -149,13 +149,13 @@ public class PswdRemake extends AppCompatActivity implements View.OnClickListene
                                 });
                             }
                         } else {
-                            Toast.makeText(PswdRemake.this, "현재 비밀번호와 동일합니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PswdRemakeActivity.this, "현재 비밀번호와 동일합니다", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(PswdRemake.this, "비밀번호가 일치하지 않습니다 ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PswdRemakeActivity.this, "비밀번호가 일치하지 않습니다 ", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(PswdRemake.this, "비밀번호 형식을 지켜주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PswdRemakeActivity.this, "비밀번호 형식을 지켜주세요", Toast.LENGTH_SHORT).show();
                 }
         }
     }
